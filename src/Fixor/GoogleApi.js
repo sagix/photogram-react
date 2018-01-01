@@ -17,9 +17,11 @@ class GoogleApi extends Component{
       }
   }
 
-   handleClientLoad() {
-        window.gapi.load('client:auth2', this.initClient);
-      }
+  handleClientLoad() {
+      window.gapi.load('client:auth2', () => {
+        window.gapi.client.load('drive', 'v3', this.initClient)
+      });
+  }
 
       /**
        *  Initializes the API client library and sets up sign-in state

@@ -179,10 +179,10 @@ class Fixor extends Component {
           </form>
           <button onClick={this.copy}>Copy</button>
           <GoogleApi
-            apiKey="AIzaSyAdxqQ7li94_V0KEr1LipWCgsIGvPeHm5U"
-            clientId="766414170207-9t7rccough76uf2q7vhvkbh1mt6l6u24.apps.googleusercontent.com"
+            apiKey={process.env.REACT_APP_GOOGLE_API_KEY}
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             discoveryDocs={["https://sheets.googleapis.com/$discovery/rest?version=v4"]}
-            scope="https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file">
+            scope="https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file">
               <ExportButton data={this.state.data}  imagePerSeconde={this.state.imagePerSeconde}/>
           </GoogleApi>
           <Table data={this.state.data} imagePerSeconde={this.state.imagePerSeconde}/>

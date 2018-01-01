@@ -1,6 +1,45 @@
 import React, { Component } from 'react';
 import './Table.css'
 
+function createFile(gapi, fileMetadata) {
+  return new Promise((resolve, reject) => {
+    console.log(gapi.client);
+    gapi.client.drive.files.create({
+      resource: fileMetadata,
+    }).then(function(response) {
+      switch(response.status){
+        case 200:
+          resolve(response.result);
+          break;
+        default:
+          reject(new DOMException('Error creating the folder, '+response));
+          break;
+        }
+    }, error => {
+      reject(error);
+    });
+  });
+}
+
+function listFiles(gapi, fileMetadata) {
+  return new Promise((resolve, reject) => {
+    console.log(gapi.client);
+    gapi.client.drive.files.list(fileMetadata).then(function(response) {
+      console.log(response);
+      switch(response.status){
+        case 200:
+          resolve(response.result);
+          break;
+        default:
+          reject(new DOMException('Error creating the folder, '+response));
+          break;
+        }
+    }, error => {
+      reject(error);
+    });
+  });
+}
+
 class ExportButton  extends Component{
   constructor(props){
       super(props)
@@ -8,19 +47,40 @@ class ExportButton  extends Component{
           document: undefined,
       }
   }
+
+  getDir(gapi, name){
+    return listFiles(gapi, {
+          'pageSize': 10,
+          'fields': "nextPageToken, files(id, name)",
+          'q': `name='${name}' and mimeType='application/vnd.google-apps.folder'`
+    }).then(result => {
+      if(result.files.length >= 1){
+        return result.files[0];
+      }else{
+        console.log(result);
+        console.log(`creating new directory ${name}`);
+        return createFile(gapi, {
+          'name' : name,
+          'mimeType' : 'application/vnd.google-apps.folder',
+          'parents': []
+        });
+      }
+    })
+  }
+
   export = () => {
     const gapi = this.props.gapi;
-    gapi.client.sheets.spreadsheets.create({
-      properties: {
-        title: "Fixor test"
-      }
-    }).then((response) => {
-      console.log(response);
-      if(response.status === 200){
-          this.setState(Object.assign(this.state, {document: response.result}))
-      }
-      this.exportData()
-    }, (error) => {
+
+    this.getDir(gapi, "Fixor").then(file => {
+      return createFile(gapi, {
+        'name' : 'data',
+        'mimeType' : "application/vnd.google-apps.spreadsheet",
+        'parents': [file.id]
+      })
+    }).then(file => {
+      this.setState(Object.assign(this.state, {document: file}));
+      this.exportData();
+    }).catch(error => {
       console.warn(error);
     });
   }
@@ -42,7 +102,7 @@ class ExportButton  extends Component{
     };
     console.log(body);
     gapi.client.sheets.spreadsheets.values.update({
-       spreadsheetId: this.state.document.spreadsheetId,
+       spreadsheetId: this.state.document.id,
        range: "A2",
        valueInputOption: "RAW",
        resource: body

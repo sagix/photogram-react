@@ -28,7 +28,6 @@ it('parse one line', () => {
 * FROM CLIP NAME:  201/03-01 CAMA
 * LOC: 1:00:05:10  CYAN    201_010_E02 // MULTIPASSE
 * SOURCE FILE: A062C006_190417TI `)
-  console.log(result);
   if(result.length !== 1){
     throw Error("result should be a empty array: " + result.length)
   }
