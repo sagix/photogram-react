@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import Projects from './Projects';
 import './App.css';
 
 class App extends Component {
@@ -11,9 +12,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Photogram</h1>
           <p>This is the new Photogram</p>
         </header>
-        <p className="App-intro">
-          Add picture and svg file
-        </p>
+        <Projects />
       </div>
     );
   }
