@@ -1,4 +1,28 @@
 import React, { Component } from 'react';
+import TemplateFactory from './templates/TemplateFactory'
+
+
+function Images(props){
+    console.log(props);
+    let type = props.type
+    if(props.files){
+        let imageType = /^image\//;
+    const image = props.files
+    .filter(file => imageType.test(file.type))
+    .map((image) => {
+        return (
+            <TemplateFactory key={image.name} type={type} file={image}/>
+        );
+    }
+    )
+
+    return (
+        <div>{image}</div>
+    )
+}else{
+    return null
+}
+}
 
 function ProjectList(props){
   const project = props.value.map((project) => {
@@ -6,7 +30,9 @@ function ProjectList(props){
         <li
            key={project.name}
            onClick={() => props.onDelete(project.key)}
-          >{project.name}</li>
+          ><h2>{project.name}</h2>
+            <Images files={project.files} type={project.type}/>
+          </li>
       );
   }
   )
@@ -28,6 +54,7 @@ class Projects extends Component {
     }
     this.state= {
       projects: projects,
+      defaultTemplateType: "small",
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -51,12 +78,26 @@ class Projects extends Component {
     projects.push({
       key: index,
       name: 'Project (' + (index + 1) + ')',
+      files: Array.from(event.target.files),
+      type: this.state.defaultTemplateType,
     })
-    localStorage.setItem('projects', JSON.stringify(projects));
+    //localStorage.setItem('projects', JSON.stringify(projects));
     this.setState( {
       projects :projects
     });
     console.log(event.target.files);
+   }
+
+   onChangeTemplate(event){
+       let type = event.target.value;
+       let projects = this.state.projects.map(project =>{
+           project.type = type
+           return project
+       })
+       this.setState({
+           projects: projects,
+           defaultTemplateType: type,
+       });
    }
   render() {
     return (
@@ -66,6 +107,10 @@ class Projects extends Component {
         directory={true.toString()}
           multiple={true}
           onChange={(event) => this.onChange(event)}/>
+          <select onChange={(event) => this.onChangeTemplate(event)}>
+          <option value="small">Small</option>
+          <option value="large">Large</option>
+          </select>
             <ProjectList value={this.state.projects} onDelete={(key) => this.delete(key)}/>
         </div>
     );
