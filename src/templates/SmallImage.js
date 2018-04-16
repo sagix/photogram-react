@@ -18,16 +18,16 @@ onload(event){
 }
         render(){
             return (
-                <div className="ele tpl-small">
-        <img className="img" src={this.state.src} />
-        <div className="legend">
-            <div className="indicators">
-                <span className="sequence"></span>
-                <img className="dot periode" />
-                <img className="dot dot-green fx" />
+                <div className="tpl-small-ele">
+        <img className="tpl-small-img" src={this.state.src} />
+        <div className="tpl-small-legend">
+            <div className="tpl-small-indicators">
+                <span className="tpl-small-sequence"></span>
+                <img className="tpl-small-dot tpl-small-periode" />
+                <img className="tpl-small-dot dot-green fx" />
             </div>
-            <div className="action-container">
-                <p className="action"></p>
+            <div className="tpl-small-action-container">
+                <p className="tpl-small-action"></p>
             </div>
         </div>
     </div>

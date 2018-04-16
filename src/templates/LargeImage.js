@@ -18,19 +18,21 @@ onload(event){
 }
         render(){
             return (
-                <div className="ele tpl-large">
-        <img className="img" src={this.state.src} />
-        <div className="legend">
-            <div className="indicators">
-                <span className="sequence"></span>
-                <img className="dot periode" />
-                <img className="dot dot-green fx" />
-            </div>
-            <div className="action-container">
-                <p className="action"></p>
-            </div>
-        </div>
-    </div>
+                <div className="tpl-large-ele">
+                    <div className="tpl-large-img-container">
+                        <img className="tpl-large-img" src={this.state.src} />
+                    </div>
+                    <div className="tpl-large-legend">
+                        <div className="tpl-large-indicators">
+                            <span className="tpl-large-sequence"></span>
+                            <img className="tpl-large-dot tpl-large-periode" />
+                            <img className="tpl-large-dot dot-green fx" />
+                        </div>
+                        <div className="tpl-large-action-container">
+                            <p className="tpl-large-action"></p>
+                        </div>
+                    </div>
+                </div>
             )
         }
 }
