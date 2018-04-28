@@ -9,12 +9,29 @@ constructor(props){
     }
     let reader = new FileReader()
     reader.onload = (e) => this.onload(e)
-    reader.readAsDataURL(props.file)
+    reader.readAsArrayBuffer(props.file)
 }
 onload(event){
-    this.setState( {
-    src: event.target.result
+    let hearders = new Headers()
+    hearders.append("Content-Type", this.props.file.type)
+    hearders.append("Content-Length", this.props.file.size)
+    caches.open('image-cache')
+    .then( cache => {
+        let h = new Headers()
+        h.append("Content-Type", this.props.file.type)
+        cache.put(
+            new Request('/images/'+ this.props.file.name),
+            new Response(event.target.result, {
+            	status: 200,
+            	statusText: "From Cache",
+            	headers: h
+        }))
+    }).then(_ =>{
+        this.setState( {
+        src: '/images/'+ this.props.file.name
+        })
     })
+
 }
         render(){
             return (
