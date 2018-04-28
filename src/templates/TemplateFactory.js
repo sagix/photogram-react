@@ -16,7 +16,7 @@ class TemplateFactory extends Component{
                 let LargeImage = require('./LargeImage').default
                     return React.createElement(LargeImage, {file: this.props.file})
                 default:
-return null;
+                    return null;
             }
         }
     }
