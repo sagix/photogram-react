@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Repository from '../Project/Repository';
+import Repository from '../Data';
 import Configuration from './Configuration'
 import Tiles from './Tiles'
 class Project extends Component{

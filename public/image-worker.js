@@ -8,7 +8,6 @@ self.addEventListener('fetch', event => {
         && req.url.includes('/images/')){
 
         event.respondWith(async function() {
-            console.log(event);
           // Try to get the response from a cache.
           const cachedResponse = await caches.match(event.request);
           // Return it if we found one.

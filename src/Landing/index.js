@@ -2,31 +2,50 @@ import React, { Component } from 'react';
 import Header from './Header';
 import NewProject from './NewProject';
 import ListProject from './ListProject';
-import Repository from '../Project/Repository';
+import QuotaProgress from './QuotaProgress';
+import Repository from '../Data';
 
 class Landing extends Component{
     constructor(props){
         super(props)
         this.state ={
-            projects:[]
+            projects:[],
+            quotas:{max: 0, value: 0}
         }
         this.repository = new Repository()
     }
 
     componentDidMount(){
+        this._checkQuotas()
         this.repository.list()
         .then((projects) => this.setState({projects: projects}))
+
+    }
+
+    _checkQuotas(){
+        navigator.storage.estimate()
+        .then(estimate =>
+            this.setState(
+                Object.assign(this.state, {quotas: {
+                    max: estimate.quota,
+                    value: estimate.usage
+                }})
+            )
+        );
     }
 
     onNewProject(files){
         this.repository.add(files)
         .then((projects) => this.setState({projects: projects}))
+        .then(_ => this._checkQuotas())
+        .catch(error => console.log(error))
     }
 
     render(){
             return (
                 <div>
                     <Header/>
+                    <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max}/>
                     <NewProject onNewProject={files => this.onNewProject(files)} />
                     <ListProject value={this.state.projects}/>
                 </div>
