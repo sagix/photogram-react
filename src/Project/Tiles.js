@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TemplateFactory from '../templates/TemplateFactory'
+import TemplateFactory from '../Templates/Factory'
 
 export default function Tiles(props){
     let type = props.type

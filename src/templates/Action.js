@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FontSizeAdjuster from './FontSizeAdjuster'
+import './Action.css'
 class Action extends Component{
 
     constructor(props){
@@ -18,8 +19,8 @@ class Action extends Component{
 
     render(){
         return (
-        <div className="tpl-small-action-container">
-            <p className="tpl-small-action" ref={this.textNode}>{this.props.value}</p>
+        <div className="action-container">
+            <p className="action" ref={this.textNode}>{this.props.value}</p>
         </div>
         )
     }

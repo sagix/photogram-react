@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import svgN from './svg/weather-night.svg';
-import svgJ from './svg/weather-sunny.svg';
-import svgM from './svg/weather-sunset-up.svg';
-import svgS from './svg/weather-sunset-down.svg';
+import svgN from './weather-night.svg';
+import svgJ from './weather-sunny.svg';
+import svgM from './weather-sunset-up.svg';
+import svgS from './weather-sunset-down.svg';
+import '../dot.css'
+import './index.css'
 class Periode extends Component{
     render(){
         return (
-            <img className={`tpl-small-dot tpl-small-periode ${this._periodeToClassName(this.props.value)}`} src={this._periodeToSrc(this.props.value)}/>
+            <img className={`dot period ${this._periodeToClassName(this.props.value)}`} src={this._periodeToSrc(this.props.value)}/>
         )
     }
 

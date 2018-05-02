@@ -10,11 +10,11 @@ class TemplateFactory extends Component{
         if(this.props.type){
             switch (this.props.type) {
                 case 'small':
-                    let SmallImage = require('./SmallImage').default
-                    return React.createElement(SmallImage, {file: this.props.file})
+                    let Small = require('./Small').default
+                    return React.createElement(Small, {file: this.props.file})
                 case 'large':
-                let LargeImage = require('./LargeImage').default
-                    return React.createElement(LargeImage, {file: this.props.file})
+                    let Large = require('./Large').default
+                    return React.createElement(Large, {file: this.props.file})
                 default:
                     return null;
             }

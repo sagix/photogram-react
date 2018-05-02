@@ -1,0 +1,38 @@
+.tpl-small.ele {
+    font-family: "Courier New", Courier, monospace;
+    display: inline-block;
+    border: 1px solid silver;
+    width: 31.4rem;
+    margin: .8rem;
+    overflow: auto;
+    background-color: #FFF;
+    padding: .8rem;
+    text-align: left;
+    page-break-inside: avoid;
+    box-sizing: border-box;
+}
+
+@media print {
+    .tpl-small.ele {
+        margin: 2.8rem;
+    }
+}
+
+.tpl-small .action-container {
+    flex: 1;
+}
+
+.tpl-small .indicators {
+    flex: 0;
+}
+
+.tpl-small .legend {
+    height: 9.6rem;
+    overflow: hidden;
+    padding-top: .8rem;
+    display: flex;
+}
+
+.tpl-small .sequence{
+    margin-bottom: .8rem;
+}
