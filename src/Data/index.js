@@ -1,4 +1,5 @@
 import Images from './images'
+import Csv from './csv'
 
 class Repository{
 
@@ -8,7 +9,7 @@ class Repository{
 
     get(id){
         let result = this._projects.filter(project => project.key == id)
-        if(result.length == 0){
+        if(result.length === 0){
             return Promise.reject(new Error(`Could not found project with id=${id}`))
         }
         return Promise.resolve(result[0])
@@ -17,14 +18,17 @@ class Repository{
     add(files){
         var projects = this._projects
         var index = this._index(projects);
-        return Promise.all([new Images(index).execute(files)]).then( results => {
-            let [images] = results
-            console.log(images);
+        return Promise.all([
+            new Images(index).execute(files),
+            new Csv().execute(files)
+        ]).then( results => {
+            let [images, data] = results
 
             projects.push({
               key: index,
               name: 'Project (' + (index + 1) + ')',
-              files: Array.from(images),
+              data: this._mergeDateWithImages(data, Array.from(images)),
+              colors: this._calculateColors(data),
               type: "small",
             })
             try{
@@ -42,6 +46,30 @@ class Repository{
 
     get _projects(){
         return JSON.parse(localStorage.getItem('projects')) || []
+    }
+
+    _mergeDateWithImages(data, images){
+        return data.map(d =>{
+            let results = images.filter(i => i.name.startsWith(`${d.id}.`))
+            if(results.length === 0){
+                return d
+            }else{
+                return Object.assign(d, {
+                    url: results[0].url
+                })
+            }
+        })
+    }
+
+    _calculateColors(data){
+        let colors = [
+            '#F44336','#E91E63','#9C27B0','#3F51B5',
+            '#2196F3','#03A9F4','#00BCD4','#009688',
+            '#4CAF50','#8BC34A','#CDDC39','#FFEB3B',
+            '#FFC107','#FF9800','#FF5722','#795548'
+        ]
+        let unique = [...new Set(data.map(d => d.place))]
+        return Object.assign({}, ...unique.map((p, i) => ({[p]: colors[i]})))
     }
 
     _index(projects){

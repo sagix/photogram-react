@@ -1,4 +1,4 @@
-import pFileReader from './FileReader';
+import {readAsArrayBuffer} from './FileReader';
 
 class Images{
     constructor(identifier){
@@ -10,7 +10,7 @@ class Images{
     return Promise.all(
         Array.from(files)
         .filter(file => imageType.test(file.type))
-        .map(file => pFileReader(file))
+        .map(file => readAsArrayBuffer(file))
     ).then ( fileResults =>
         Promise.all(
             fileResults.map(fileResult => this._writeFile(fileResult))
@@ -26,7 +26,7 @@ class Images{
         h.append("Content-Length", event.file.size)
 
         return cache.put(
-                new Request('/images/'+ event.file.name),
+                new Request(`/project/${this.identifier}/images/${event.file.name}/`),
                 new Response(event.result, {
                     status: 200,
                     statusText: "From Cache",
@@ -39,7 +39,10 @@ class Images{
         })
 
     }).then(_ =>{
-        return '/images/'+ event.file.name
+        return {
+            name: event.file.name,
+            url:`/project/${this.identifier}/images/${event.file.name}/`
+        }
     })
 
 }

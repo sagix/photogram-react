@@ -1,15 +1,25 @@
-export default function (file) {
-  const reader = new FileReader();
+function readAsArrayBuffer(file){
+    return new Promise((resolve, reject) => {
+        _createReader(resolve, reject, file).readAsArrayBuffer(file);
+    });
+}
 
-  return new Promise((resolve, reject) => {
+function readAsText(file){
+    return new Promise((resolve, reject) => {
+        _createReader(resolve, reject, file).readAsText(file);
+    });
+}
+
+function _createReader(resolve, reject, file){
+    const reader = new FileReader();
     reader.onerror = () => {
-      reader.abort();
-      reject(new DOMException("Problem parsing input file."));
+        reader.abort();
+        reject(new Error("Problem parsing input file."));
     };
-
     reader.onload = () => {
-      resolve({file: file, result:reader.result});
+        resolve({file: file, result:reader.result});
     };
-    reader.readAsArrayBuffer(file);
-  });
-};
+    return reader
+}
+
+export {readAsText, readAsArrayBuffer}

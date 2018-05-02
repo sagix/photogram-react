@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
+import Action from './Action';
+import Sequence from './Sequence';
+import Periode from './Periode';
+import Fx from './Fx';
+import svgEmpty from './svg/empty.svg';
 import '../styles.css'
 import './small.css';
 class SmallImage extends Component{
     render(){
+        const {id, sequence, action, place, periode, fx, url, color} = this.props.file
         return (
             <div className="tpl-small-ele">
-                <img className="tpl-small-img" src={this.props.file} />
+                <img className="tpl-small-img" src={url ? url : svgEmpty} />
                 <div className="tpl-small-legend">
                     <div className="tpl-small-indicators">
-                        <span className="tpl-small-sequence"></span>
-                        <img className="tpl-small-dot tpl-small-periode" />
-                        <img className="tpl-small-dot dot-green fx" />
+                        <Sequence color={color} value={sequence}/>
+                        <Periode value={periode}/>
+                        <Fx value={fx}/>
                     </div>
-                    <div className="tpl-small-action-container">
-                        <p className="tpl-small-action"></p>
-                    </div>
+                    <Action value={action}/>
                 </div>
             </div>
         )

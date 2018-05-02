@@ -15,7 +15,6 @@ class Project extends Component{
     componentDidMount(){
         this.repository.get(this.props.match.params.id)
         .then((project) => {
-            console.log(project);
             this.setState(Object.assign(this.state, {project: project}))
         }).catch(e => console.log(e))
     }
@@ -26,7 +25,10 @@ class Project extends Component{
                 <Configuration onChange={type =>
                     this.setState(Object.assign(this.state, {template: type}))
                 }/>
-                <Tiles value={this.state.project.files} type={this.state.template}/>
+                <Tiles
+                    colors={this.state.project.colors}
+                    value={this.state.project.data}
+                    type={this.state.template}/>
             </div>
         )
     }

@@ -3,7 +3,7 @@ self.addEventListener('activate', () => self.clients.claim());
 self.addEventListener('fetch', event => {
     let req = event.request;
     //req.headers.entries().forEach( c => console.log(c));
-
+    console.log(event);
     if(req.method === 'GET'
         && req.url.includes('/images/')){
 
