@@ -8,12 +8,15 @@ export default function Tiles(props){
         const images = props.value.map((image) => {
             let i
             if(image.place){
-                i = Object.assign(image, {color: props.colors[image.place]})
+                i = Object.assign(image, {
+                    color: props.colors[image.place],
+                    colorDistribution: props.colorDistribution ? "full" : "limited"
+                })
             }else{
                 i= image
             }
             return (
-                <TemplateFactory key={image.id} type={type} file={i}/>
+                <TemplateFactory key={image.id} type={type} file={i} />
             );
         })
         return (

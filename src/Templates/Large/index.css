@@ -1,15 +1,11 @@
 .tpl-large.ele {
-    font-family: "Courier New", Courier, monospace;
-    display: inline-block;
-    border: 1px solid silver;
     width: 73rem;
     margin: .8rem;
-    overflow: auto;
-    background-color: #FFF;
     padding: .8rem;
     text-align: left;
     page-break-inside: avoid;
     box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
 }
 
 @media print {

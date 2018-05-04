@@ -22,10 +22,13 @@ class Project extends Component{
     render(){
         return (
             <div>
-                <Configuration onChange={type =>
-                    this.setState(Object.assign(this.state, {template: type}))
-                }/>
+                <Configuration
+                    title={this.state.project.name}
+                    onChange={type => this.setState(Object.assign(this.state, {template: type}))}
+                    onColorDistributionChange={full => this.setState(Object.assign(this.state, {color_distribution: full}))}
+                />
                 <Tiles
+                    colorDistribution={this.state.color_distribution}
                     colors={this.state.project.colors}
                     value={this.state.project.data}
                     type={this.state.template}/>

@@ -1,15 +1,15 @@
 .dot-light {
-    background-color: #aaa;
+    background-color: #aaaaaabb;
 }
 
 .dot-dark {
-    background-color: #666;
+    background-color: #666666bb;
 }
 
 .dot-lighter {
-    background-color: #eee;
+    background-color: #eeeeeebb;
 }
 
 .dot-darker {
-    background-color: #111;
+    background-color: #111111bb;
 }

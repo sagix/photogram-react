@@ -1,0 +1,11 @@
+.ele {
+    font-family: "Courier New", Courier, monospace;
+    display: inline-block;
+    border: 1px solid silver;
+    overflow: auto;
+    background-color: #FFF;
+    text-align: left;
+    page-break-inside: avoid;
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+}
