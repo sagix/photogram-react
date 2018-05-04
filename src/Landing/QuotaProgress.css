@@ -1,0 +1,24 @@
+.quota-progress-container{
+    display: inline-flex;
+    background-color: white;
+    margin: auto;
+    min-height: 3.2rem;
+
+    align-items: center;
+    justify-content:center;
+    padding: .8rem 1.6rem;
+
+    position: fixed;
+    bottom: 0;
+    max-width: 560px;
+    left: 0;
+    right:0;
+}
+
+.quota-progress-container progress{
+    margin: 0 .8rem;
+}
+
+#grid{
+    padding-bottom: 6.4rem;
+}

@@ -51,11 +51,11 @@ class Landing extends Component{
 
     render(){
             return (
-                <div>
+                <div className="landing-container">
                     <Header/>
-                    <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max}/>
                     <NewProject onNewProject={files => this.onNewProject(files)} />
                     <ListProject value={this.state.projects} onDelete={(key) => this.onDeleteProject(key)}/>
+                    <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max}/>
                 </div>
             )
         }
