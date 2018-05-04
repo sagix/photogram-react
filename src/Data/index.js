@@ -33,6 +33,7 @@ class Repository{
     add(files){
         var projects = this._projects
         var index = this._index(projects);
+        var name = this._name(files, `Project (${index + 1})`)
         return Promise.all([
             new Images(index).execute(files),
             new Csv().execute(files)
@@ -41,7 +42,7 @@ class Repository{
 
             projects.push({
               key: index,
-              name: 'Project (' + (index + 1) + ')',
+              name: name,
               data: this._mergeDateWithImages(data, Array.from(images)),
               colors: this._calculateColors(data),
               type: "small",
@@ -92,6 +93,20 @@ class Repository{
           index = projects[projects.length -1].key + 1;
         }
         return index
+    }
+
+    _name(files, defaultName){
+        if(files.length === 0){
+            return defaultName
+        }
+        let relativePath = files[0].webkitRelativePath
+        if(relativePath){
+            let name = relativePath.split('/')[0]
+            if(name){
+                return name
+            }
+        }
+        return defaultName
     }
 
 }
