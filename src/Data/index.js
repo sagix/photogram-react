@@ -15,6 +15,21 @@ class Repository{
         return Promise.resolve(result[0])
     }
 
+    delete(id){
+        var projects = this._projects
+        let result = projects.filter(project => project.key != id)
+        if(result.length === projects.length){
+            return Promise.reject(new Error(`Could not found project with id=${id}`))
+        }
+        try{
+            localStorage.setItem('projects', JSON.stringify(result));
+            return Promise.resolve(result)
+                .then(new Images(id).clear())
+        }catch (error){
+            return Promise.reject(error)
+        }
+    }
+
     add(files){
         var projects = this._projects
         var index = this._index(projects);
@@ -35,10 +50,7 @@ class Repository{
                 localStorage.setItem('projects', JSON.stringify(projects));
                 return projects
             }catch (error){
-                return Promise.reject({
-                    message: 'Cannot save project',
-                    cause: error
-                })
+                return Promise.reject(error)
             }
 
         })

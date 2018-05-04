@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Repository from '../Data';
 import Configuration from './Configuration'
 import Tiles from './Tiles'
+import '../styles.css'
+
 class Project extends Component{
     constructor(props){
       super(props);
