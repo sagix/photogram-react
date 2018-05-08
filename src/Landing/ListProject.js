@@ -12,7 +12,7 @@ class ListProject extends Component{
                     src = img.url
                 }
                 return (
-                  <li key={project.name}>
+                  <li key={project.key}>
                     <Link to={"/project/" + project.key}>
                         <div className="picture"><img alt="project cover" src={src}/></div>
                         <span>{project.name}</span>
