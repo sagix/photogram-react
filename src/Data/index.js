@@ -1,5 +1,6 @@
 import Images from './images'
 import Csv from './csv'
+import {uuidv4} from './uuidv4.js'
 
 class Repository{
 
@@ -8,7 +9,7 @@ class Repository{
     }
 
     get(id){
-        let result = this._projects.filter(project => project.key == id)
+        let result = this._projects.filter(project => project.key === id)
         if(result.length === 0){
             return Promise.reject(new Error(`Could not found project with id=${id}`))
         }
@@ -17,7 +18,7 @@ class Repository{
 
     delete(id){
         var projects = this._projects
-        let result = projects.filter(project => project.key != id)
+        let result = projects.filter(project => project.key !== id)
         if(result.length === projects.length){
             return Promise.reject(new Error(`Could not found project with id=${id}`))
         }
@@ -32,16 +33,16 @@ class Repository{
 
     add(files){
         var projects = this._projects
-        var index = this._index(projects);
-        var name = this._name(files, `Project (${index + 1})`)
+        var identifier = uuidv4()
+        var name = this._name(files, `Project (${projects.length})`)
         return Promise.all([
-            new Images(index).execute(files),
+            new Images(identifier).execute(files),
             new Csv().execute(files)
         ]).then( results => {
             let [images, data] = results
 
             projects.push({
-              key: index,
+              key: identifier,
               name: name,
               data: this._mergeDateWithImages(data, Array.from(images)),
               colors: this._calculateColors(data),
@@ -83,16 +84,6 @@ class Repository{
         ]
         let unique = [...new Set(data.map(d => d.place))]
         return Object.assign({}, ...unique.map((p, i) => ({[p]: colors[i]})))
-    }
-
-    _index(projects){
-        let index
-        if(projects.length === 0){
-          index = 0;
-        }else{
-          index = projects[projects.length -1].key + 1;
-        }
-        return index
     }
 
     _name(files, defaultName){
