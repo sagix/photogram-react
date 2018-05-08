@@ -10,7 +10,7 @@ class QuotaProgress extends Component{
 
     render(){
         return (
-            <div class="quota-progress-container">
+            <div className="quota-progress-container">
                 <span>Utilisation de l&apos;espace disque&nbsp;: </span>
                 <progress max={this.props.max} value={this.props.value}/>
                 <em>{this.humanFileSize(this.props.value)} / {this.humanFileSize(this.props.max)}</em>
