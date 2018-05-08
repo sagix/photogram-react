@@ -9,7 +9,7 @@ import './index.css';
 class LargeImage extends Component{
 
     render(){
-        const {id, sequence, action, place, periode, fx, url, color, colorDistribution} = this.props.file
+        const {sequence, action, periode, fx, url, color, colorDistribution} = this.props.file
 
         return (
             <Container className="tpl-large" color={color} colorDistribution={colorDistribution}>

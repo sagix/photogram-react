@@ -8,7 +8,10 @@ import './index.css'
 class Periode extends Component{
     render(){
         return (
-            <img className={`dot period ${this._periodeToClassName(this.props.value)}`} src={this._periodeToSrc(this.props.value)}/>
+            <img
+                alt="period"
+                className={`dot period ${this._periodeToClassName(this.props.value)}`}
+                src={this._periodeToSrc(this.props.value)}/>
         )
     }
 
@@ -45,7 +48,7 @@ class Periode extends Component{
     }
 
     _toSingleLetter(value) {
-        return value === undefined || value.length == 0
+        return value === undefined || value.length === 0
             ? undefined
             : value.toLowerCase()[0];
     }

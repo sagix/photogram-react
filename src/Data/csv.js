@@ -1,4 +1,3 @@
-import {readAsText} from './FileReader';
 import Papa from 'papaparse';
 class Csv{
 

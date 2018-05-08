@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './ListProject.css';
 class ListProject extends Component{
 
@@ -14,7 +14,7 @@ class ListProject extends Component{
                 return (
                   <li key={project.name}>
                     <Link to={"/project/" + project.key}>
-                        <div className="picture"><img src={src}/></div>
+                        <div className="picture"><img alt="project cover" src={src}/></div>
                         <span>{project.name}</span>
                         <button className="btn-delete" onClick={(event) => {
                             event.preventDefault()

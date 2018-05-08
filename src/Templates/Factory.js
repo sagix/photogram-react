@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 
 class TemplateFactory extends Component{
 
-    constructor(props){
-        super(props);
-    }
-
     renderImage(){
         if(this.props.type){
             switch (this.props.type) {

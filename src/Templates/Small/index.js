@@ -9,7 +9,7 @@ import './index.css';
 class SmallImage extends Component{
 
     render(){
-        const {id, sequence, action, place, periode, fx, url, color, colorDistribution} = this.props.file
+        const {sequence, action, periode, fx, url, color, colorDistribution} = this.props.file
 
         return (
             <Container className="tpl-small" color={color} colorDistribution={colorDistribution}>
