@@ -7,10 +7,10 @@ class TemplateFactory extends Component{
             switch (this.props.type) {
                 case 'small':
                     let Small = require('./Small').default
-                    return React.createElement(Small, {file: this.props.file})
+                    return React.createElement(Small, {file: this.props.file, onTile: this.props.onTile})
                 case 'large':
                     let Large = require('./Large').default
-                    return React.createElement(Large, {file: this.props.file})
+                    return React.createElement(Large, {file: this.props.file, onTile: this.props.onTile})
                 default:
                     return null;
             }

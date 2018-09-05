@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Repository from '../Data';
 import Configuration from './Configuration'
 import Tiles from './Tiles'
+import Form from './Form'
 import '../styles.css'
 
 class Project extends Component{
@@ -24,6 +25,7 @@ class Project extends Component{
     render(){
         return (
             <div>
+                <Form data={this.state.data} />
                 <Configuration
                     title={this.state.project.name}
                     onChange={type => this.setState(Object.assign(this.state, {template: type}))}
@@ -33,7 +35,8 @@ class Project extends Component{
                     colorDistribution={this.state.color_distribution}
                     colors={this.state.project.colors}
                     value={this.state.project.data}
-                    type={this.state.template}/>
+                    type={this.state.template}
+                    onTile={data => this.setState(Object.assign(this.state, {data: data}))}/>
             </div>
         )
     }

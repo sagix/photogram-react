@@ -10,7 +10,7 @@ class Container extends Component{
             backgroundColor= null
         }
         return (
-            <div className={`ele ${this.props.className}`} style={{backgroundColor: backgroundColor}} >
+            <div className={`ele ${this.props.className}`} style={{backgroundColor: backgroundColor}} onClick={this.props.onClick}>
                 {this.props.children}
             </div>
         )

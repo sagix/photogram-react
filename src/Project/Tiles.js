@@ -16,7 +16,7 @@ export default function Tiles(props){
                 i= image
             }
             return (
-                <TemplateFactory key={image.id} type={type} file={i} />
+                <TemplateFactory key={image.id} type={type} file={i} onTile={data => props.onTile(data)}/>
             );
         })
         return (

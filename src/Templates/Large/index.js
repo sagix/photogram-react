@@ -8,11 +8,17 @@ import Fx from '../Fx';
 import './index.css';
 class LargeImage extends Component{
 
+    handleClick = () => {
+        console.log("onClick")
+        this.props.onTile(this.props.file)
+    }
+
     render(){
         const {sequence, action, periode, fx, url, color, colorDistribution} = this.props.file
 
         return (
-            <Container className="tpl-large" color={color} colorDistribution={colorDistribution}>
+            <Container className="tpl-large" color={color} colorDistribution={colorDistribution}
+                onClick={this.handleClick}>
                 <div className="img-container">
                     <Image url={url}/>
                 </div>
