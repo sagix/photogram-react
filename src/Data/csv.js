@@ -13,10 +13,11 @@ class Csv{
         .then(parsed => {
             var result = [];
             for (let r of parsed.data) {
-                if(r[0] && r[0].length > 0){
+                const id = this.parseId(r[0])
+                if(id !== null){
                     result.push({
-                        id: r[0],
-                        sequence: r[0],
+                        id: id,
+                        sequence: id,
                         action: r[1],
                         place: (r[2] || "").trim(),
                         periode: (r[3] || "").trim(),
@@ -26,6 +27,18 @@ class Csv{
             }
             return result
         })
+    }
+
+    parseId(id){
+        if(id === undefined || id === null){
+            return null
+        }
+        const trimedId = id.trim()
+        const pattern = /^\d/
+        if(trimedId.match(pattern) !== null){
+            return trimedId
+        }
+        return null
     }
 }
 
