@@ -3,6 +3,12 @@ import Csv from './csv'
 import {uuidv4} from './uuidv4.js'
 
 class Repository{
+    colors = [
+        '#F44336','#E91E63','#9C27B0','#3F51B5',
+        '#2196F3','#03A9F4','#00BCD4','#009688',
+        '#4CAF50','#8BC34A','#CDDC39','#FFEB3B',
+        '#FFC107','#FF9800','#FF5722','#795548'
+    ]
 
     list(){
         return Promise.resolve(this._projects)
@@ -29,6 +35,37 @@ class Repository{
         }catch (error){
             return Promise.reject(error)
         }
+    }
+
+    update(id, data){
+        return this.get(id).then((project) => {
+                project.data = project.data.map(item => {
+                    if(item.id == data.id){
+                        return data
+                    }else{
+                        return item
+                    }
+                })
+
+console.log( this.colors);
+console.log( project.colors.size);
+                if(project.colors[data.place] === undefined){
+                    project.colors[data.place] = this.colors[Object.keys(project.colors).length]
+                }
+
+                this.save(id, project)
+        })
+    }
+
+    save(id, project){
+        const projects = this._projects.map(p => {
+            if(project.key == p.key){
+                return project
+            }else{
+                return p
+            }
+        })
+        localStorage.setItem('projects', JSON.stringify(projects));
     }
 
     add(files){
@@ -76,14 +113,8 @@ class Repository{
     }
 
     _calculateColors(data){
-        let colors = [
-            '#F44336','#E91E63','#9C27B0','#3F51B5',
-            '#2196F3','#03A9F4','#00BCD4','#009688',
-            '#4CAF50','#8BC34A','#CDDC39','#FFEB3B',
-            '#FFC107','#FF9800','#FF5722','#795548'
-        ]
         let unique = [...new Set(data.map(d => d.place))]
-        return Object.assign({}, ...unique.map((p, i) => ({[p]: colors[i]})))
+        return Object.assign({}, ...unique.map((p, i) => ({[p]: this.colors[i]})))
     }
 
     _name(files, defaultName){

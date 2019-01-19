@@ -16,6 +16,10 @@ class Project extends Component{
     }
 
     componentDidMount(){
+        this.loadData()
+    }
+
+    loadData(){
         this.repository.get(this.props.match.params.id)
         .then((project) => {
             this.setState(Object.assign(this.state, {project: project}))
@@ -25,7 +29,12 @@ class Project extends Component{
     render(){
         return (
             <div>
-                <Form data={this.state.data} />
+                <Form
+                    data={this.state.data}
+                    colors={this.state.project.colors}
+                    onCancel={() => this.setState(Object.assign(this.state, {data: undefined}))}
+                    onSave={data => this.repository.update(this.props.match.params.id, data).then(() => this.loadData())}
+                />
                 <Configuration
                     title={this.state.project.name}
                     onChange={type => this.setState(Object.assign(this.state, {template: type}))}
