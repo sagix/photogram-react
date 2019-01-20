@@ -63,6 +63,16 @@ class Repository{
         })
     }
 
+    updateColor(id, colors){
+        return this.get(id).then((project) => {
+                Object.keys(colors).forEach((key) => {
+                    project.colors[key] = colors[key]
+                })
+
+                this.save(id, project)
+        })
+    }
+
     save(id, project){
         const projects = this._projects.map(p => {
             if(project.key == p.key){

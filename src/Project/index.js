@@ -4,6 +4,7 @@ import Configuration from './Configuration'
 import Tiles from './Tiles'
 import Form from './Form'
 import '../styles.css'
+import './index.css'
 
 class Project extends Component{
     constructor(props){
@@ -35,17 +36,23 @@ class Project extends Component{
                     onCancel={() => this.setState(Object.assign(this.state, {data: undefined}))}
                     onSave={data => this.repository.update(this.props.match.params.id, data).then(() => this.loadData())}
                 />
-                <Configuration
-                    title={this.state.project.name}
-                    onChange={type => this.setState(Object.assign(this.state, {template: type}))}
-                    onColorDistributionChange={full => this.setState(Object.assign(this.state, {color_distribution: full}))}
-                />
-                <Tiles
-                    colorDistribution={this.state.color_distribution}
-                    colors={this.state.project.colors}
-                    value={this.state.project.data}
-                    type={this.state.template}
-                    onTile={data => this.setState(Object.assign(this.state, {data: data}))}/>
+                <div className="layout-parent">
+                    <Tiles
+                        className="layout-left"
+                        colorDistribution={this.state.color_distribution}
+                        colors={this.state.project.colors}
+                        value={this.state.project.data}
+                        type={this.state.template}
+                        onTile={data => this.setState(Object.assign(this.state, {data: data}))}/>
+
+                    <Configuration
+                        title={this.state.project.name}
+                        colors={this.state.project.colors}
+                        onChange={type => this.setState(Object.assign(this.state, {template: type}))}
+                        onColorChange={color => this.repository.updateColor(this.props.match.params.id, color).then(() => this.loadData())}
+                        onColorDistributionChange={full => this.setState(Object.assign(this.state, {color_distribution: full}))}
+                    />
+                </div>
             </div>
         )
     }

@@ -9,13 +9,11 @@ import './index.css';
 class SmallImage extends Component{
 
     handleClick = () => {
-        console.log("onClick")
         this.props.onTile(this.props.file)
     }
 
     render(){
         const {sequence, action, periode, fx, url, color, colorDistribution} = this.props.file
-console.log(sequence + " : " + fx);
         return (
             <Container className="tpl-small" color={color} colorDistribution={colorDistribution} onClick={this.handleClick}>
                 <Image url={url}/>

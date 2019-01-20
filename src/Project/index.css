@@ -1,0 +1,7 @@
+.layout-parent {
+    display: flex;
+}
+
+.layout-left {
+    flex-grow: 1;
+}

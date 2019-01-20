@@ -9,7 +9,6 @@ import './index.css';
 class LargeImage extends Component{
 
     handleClick = () => {
-        console.log("onClick")
         this.props.onTile(this.props.file)
     }
 
