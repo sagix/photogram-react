@@ -71,6 +71,7 @@ class Form extends Component{
                     <input id="place" name="place" placeholder="New place" onChange={this.handleInputChange}/>
                     <span>or</span>
                     <select id="placeList" name="place" value={place} onChange={this.handleInputChange}>
+                        <option key={"none"} value={""}>None</option>
                         {places.map(p =>
                             <option key={p} value={p}>{p}</option>
                       )}

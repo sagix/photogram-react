@@ -3,6 +3,7 @@ import svgN from './weather-night.svg';
 import svgJ from './weather-sunny.svg';
 import svgM from './weather-sunset-up.svg';
 import svgS from './weather-sunset-down.svg';
+import svgNull from './weather-none.svg';
 import '../dot.css'
 import './index.css'
 class Periode extends Component{
@@ -42,7 +43,7 @@ class Periode extends Component{
             case "n":
                 return svgN
             default:
-                return undefined;
+                return svgNull;
 
         }
     }

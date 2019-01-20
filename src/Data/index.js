@@ -55,7 +55,7 @@ class Repository{
                     }
                 })
 
-                if(project.colors[data.place] === undefined){
+                if(data.place && project.colors[data.place] === undefined){
                     project.colors[data.place] = this.colors[Object.keys(project.colors).length]
                 }
 
@@ -119,7 +119,7 @@ class Repository{
     }
 
     _calculateColors(data){
-        let unique = [...new Set(data.map(d => d.place))]
+        let unique = [...new Set(data.map(d => d.place).filter(p => p !== null && p !== ""))]
         return Object.assign({}, ...unique.map((p, i) => ({[p]: this.colors[i]})))
     }
 

@@ -15,7 +15,7 @@ class SmallImage extends Component{
 
     render(){
         const {sequence, action, periode, fx, url, color, colorDistribution} = this.props.file
-
+console.log(sequence + " : " + fx);
         return (
             <Container className="tpl-small" color={color} colorDistribution={colorDistribution} onClick={this.handleClick}>
                 <Image url={url}/>
