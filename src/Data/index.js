@@ -41,14 +41,20 @@ class Repository{
         return this.get(id).then((project) => {
                 project.data = project.data.map(item => {
                     if(item.id == data.id){
-                        return data
+                        return {
+                            id: data.id,
+                            url: item.url,
+                            sequence: data.sequence,
+                            action: data.action,
+                            place: data.place,
+                            periode: data.periode,
+                            fx: data.fx,
+                        }
                     }else{
                         return item
                     }
                 })
 
-console.log( this.colors);
-console.log( project.colors.size);
                 if(project.colors[data.place] === undefined){
                     project.colors[data.place] = this.colors[Object.keys(project.colors).length]
                 }
