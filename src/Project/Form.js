@@ -5,6 +5,19 @@ import './Form.css'
 class Form extends Component{
     state = {}
 
+ componentDidMount(){
+   document.addEventListener("keydown", this.escFunction, false);
+ }
+ componentWillUnmount(){
+   document.removeEventListener("keydown", this.escFunction, false);
+ }
+
+ escFunction = (event) =>{
+   if(event.keyCode === 27) {
+     this.close(event)
+   }
+ }
+
       handleSubmit = (event) => {
         event.preventDefault();
         this.props.onSave(this.mergePropsWithState())
