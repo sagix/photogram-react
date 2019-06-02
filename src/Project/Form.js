@@ -40,6 +40,20 @@ class Form extends Component{
 
      }
 
+     clearPlace = (event) => {
+         event.preventDefault();
+         let data = this.state.data ===  undefined ? {} : this.state.data
+      this.setState(state => {
+          return {
+              data : Object.assign(
+                  data,
+                  {["place"]: ""}
+              )
+          }
+    });
+
+    }
+
     close = (event) => {
         this.setState({data: undefined}, () => console.log(this.state))
         this.props.onCancel()
@@ -80,14 +94,13 @@ class Form extends Component{
                 <input id="fx" name="fx" type="checkbox" checked={fx} onChange={this.handleInputChange}/>
                 <div>
                     <label htmlFor="place">Place</label>
-                    <input id="place" name="place" placeholder="New place" onChange={this.handleInputChange}/>
-                    <span>or</span>
-                    <select id="placeList" name="place" value={place} onChange={this.handleInputChange}>
-                        <option key={"none"} value={""}>None</option>
+                    <input id="place" list="country-list" name="place" placeholder="Place" value={place} onChange={this.handleInputChange} />
+                    <datalist id="country-list">
                         {places.map(p =>
-                            <option key={p} value={p}>{p}</option>
-                      )}
-                    </select>
+                            <option key={p} value={p}/>
+                        )}
+                    </datalist>
+                    <button onClick={this.clearPlace}>&#x2573;</button>
                 </div>
                 <textarea id="form-action" name="action" placeholder="action" rows="4" onChange={this.handleInputChange} value={action}></textarea>
                 <button type="submit" className="md-button">Save</button>
