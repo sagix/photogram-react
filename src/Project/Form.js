@@ -77,8 +77,8 @@ class Form extends Component{
         const places = Object.keys(this.props.colors === undefined ? {} : this.props.colors).sort()
         return (
 
-            <div className={"modal" + (this.props.data ? " display" : "")}>
-            <form id="form" className={"modal-content group "} onSubmit={this.handleSubmit}>
+            <div className={"modal" + (this.props.data ? " display" : "")} onClick={ this.close }>
+            <form id="form" className={"modal-content group "} onSubmit={this.handleSubmit} onClick={(event) => event.stopPropagation()}>
                 <input id="form-id" type="hidden" name="id" defaultValue={sequence} onChange={this.handleInputChange}/>
                 <img id="form-img" src={url} alt="Photogram"/>
                 <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange}/>
