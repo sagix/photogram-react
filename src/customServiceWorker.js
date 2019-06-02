@@ -1,4 +1,4 @@
-export default function register() {if ('serviceWorker' in navigator) {
+export function register() {if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
 
         navigator.serviceWorker.register('/image-worker.js').then(function(registration) {

@@ -20,5 +20,13 @@
   },
   "devDependencies": {
     "jest-localstorage-mock": "^2.2.0"
+  },
+  "browserslist": {
+    "production": [
+      "last 5 chrome version"
+    ],
+    "development": [
+      "last 1 chrome version"
+    ]
   }
 }
