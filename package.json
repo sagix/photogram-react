@@ -10,7 +10,7 @@
     "react-dom": "^16.3.0",
     "react-dropzone": "^4.2.3",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.5"
+    "react-scripts": "2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
