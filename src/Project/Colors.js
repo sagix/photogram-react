@@ -14,16 +14,23 @@ class ColorWrapper extends Component{
 
   render() {
     const onTogglePicker = () => this.setState({ pickerVisible: !this.state.pickerVisible })
+    const hidePicker = () => this.setState({ pickerVisible: false })
+    const showPicker = () => this.setState({ pickerVisible: true })
 
     return (
-      <div>
+      <div onMouseEnter={ showPicker } onMouseLeave={ hidePicker }>
         <button onClick={ onTogglePicker }
          style={{
+             padding:2,
+             borderRadius:4
+        }}><span style={{
             color: "transparent",
             backgroundColor:this.state.color,
-         }}>>
-          {this.state.color}
-        </button>
+            display:"block",
+            width:24,
+            height:24,
+            borderRadius:2
+        }}></span></button>
 
         { this.state.pickerVisible && (
           <div style={{
@@ -55,14 +62,16 @@ class Colors extends Component{
                     {
                         Object.keys(this.props.colors).map((key) => {
                             return(
-                                <tr key={key}><td>{key}</td><td>
+                                <tr key={key}><td>
                                 <ColorWrapper
                                     color={ this.props.colors[key] }
                                     onChangeComplete={ (color, event) => {
                                         this.props.onColorChange({[key]: color.hex})
                                      }}
                                   />
-                                </td></tr>
+                                </td>
+                                <td>{key}</td>
+                                </tr>
                             )
                         })
                     }

@@ -18,9 +18,14 @@ class Configuration extends Component{
 
                     <section>
                         <h2>Colors</h2>
-                        <input id="color-distribution" type="checkBox"
-                        onChange={(event) => this.props.onColorDistributionChange( event.target.checked)}/>
-                        <label htmlFor="color-distribution">Background color</label>
+                        <div style={{
+                            marginTop:8,
+                            marginBottom:8,
+                        }}>
+                            <input id="color-distribution" type="checkBox"
+                            onChange={(event) => this.props.onColorDistributionChange( event.target.checked)}/>
+                            <label htmlFor="color-distribution">Background color</label>
+                        </div>
                         <Colors colors={this.props.colors} onColorChange={ this.props.onColorChange }/>
                     </section>
                 </div>
