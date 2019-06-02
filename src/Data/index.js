@@ -40,7 +40,7 @@ class Repository{
     update(id, data){
         return this.get(id).then((project) => {
                 project.data = project.data.map(item => {
-                    if(item.id == data.id){
+                    if(item.id === data.id){
                         return {
                             id: data.id,
                             url: item.url,
@@ -75,7 +75,7 @@ class Repository{
 
     save(id, project){
         const projects = this._projects.map(p => {
-            if(project.key == p.key){
+            if(project.key === p.key){
                 return project
             }else{
                 return p

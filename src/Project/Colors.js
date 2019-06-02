@@ -51,10 +51,11 @@ class Colors extends Component{
         if(this.props.colors){
             return (
                 <table className="colors">
+                    <tbody>
                     {
                         Object.keys(this.props.colors).map((key) => {
                             return(
-                                <tr><td>{key}</td><td>
+                                <tr key={key}><td>{key}</td><td>
                                 <ColorWrapper
                                     color={ this.props.colors[key] }
                                     onChangeComplete={ (color, event) => {
@@ -65,6 +66,7 @@ class Colors extends Component{
                             )
                         })
                     }
+                    </tbody>
                 </table>
             )
         }else{

@@ -53,7 +53,7 @@ class Form extends Component{
             <div className={"modal" + (this.props.data ? " display" : "")}>
             <form id="form" className={"modal-content group "} onSubmit={this.handleSubmit}>
                 <input id="form-id" type="hidden" name="id" defaultValue={sequence} onChange={this.handleInputChange}/>
-                <img id="form-img" src={url}/>
+                <img id="form-img" src={url} alt="Photogram"/>
                 <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange}/>
                 <label htmlFor='periode'>Periode</label>
                 <select id="periode" name="periode" defaultValue={periode} onChange={this.handleInputChange}>
