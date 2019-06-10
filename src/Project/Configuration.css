@@ -20,6 +20,10 @@
     margin: 1.6rem
 }
 
+.configuration #font-family{
+    margin-left: 1.6rem;
+}
+
 .configuration .template input{
     display: none;
 }

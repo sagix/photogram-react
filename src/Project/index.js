@@ -23,6 +23,9 @@ class Project extends Component{
     loadData(){
         this.repository.get(this.props.match.params.id)
         .then((project) => {
+            if(project.template === undefined){
+                project.template = "small"
+            }
             this.setState(Object.assign(this.state, {project: project}))
         }).catch(e => console.log(e))
     }
@@ -42,17 +45,20 @@ class Project extends Component{
                         colorDistribution={this.state.color_distribution}
                         colors={this.state.project.colors}
                         value={this.state.project.data}
-                        type={this.state.template}
+                        type={this.state.project.template}
+                        fontFamily={this.state.project.fontFamily}
                         onTile={data => this.setState(Object.assign(this.state, {data: data}))}/>
                         </div>
 
                     <Configuration
                         title={this.state.project.name}
                         colors={this.state.project.colors}
-                        template={this.state.template}
-                        onChange={type => this.setState(Object.assign(this.state, {template: type}))}
+                        template={this.state.project.template}
+                        fontFamily={this.state.project.fontFamily}
+                        onChange={template => this.repository.updateTemplate(this.props.match.params.id, template).then(() => this.loadData())}
                         onColorChange={color => this.repository.updateColor(this.props.match.params.id, color).then(() => this.loadData())}
                         onColorDistributionChange={full => this.setState(Object.assign(this.state, {color_distribution: full}))}
+                        onFontFamilyChange={fontFamily => this.repository.updateFontFamily(this.props.match.params.id, fontFamily).then(() => this.loadData())}
                     />
                 </div>
             </div>

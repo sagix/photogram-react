@@ -73,6 +73,20 @@ class Repository{
         })
     }
 
+    updateFontFamily(id, fontFamily){
+        return this.get(id).then((project) => {
+                project.fontFamily = fontFamily;
+                this.save(id, project)
+        })
+    }
+
+    updateTemplate(id, template){
+        return this.get(id).then((project) => {
+                project.template = template;
+                this.save(id, project)
+        })
+    }
+
     save(id, project){
         const projects = this._projects.map(p => {
             if(project.key === p.key){
@@ -99,7 +113,7 @@ class Repository{
               name: name,
               data: this._mergeDateWithImages(data, Array.from(images)),
               colors: this._calculateColors(data),
-              type: "small",
+              template: "small",
             })
             try{
                 localStorage.setItem('projects', JSON.stringify(projects));

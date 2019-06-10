@@ -4,7 +4,7 @@ import TemplateFactory from '../Templates/Factory'
 import './Tiles.css'
 
 export default function Tiles(props){
-    let type = props.type
+    let type = props.type 
     if(props.value){
         const images = props.value.map((image) => {
             let i
@@ -21,7 +21,7 @@ export default function Tiles(props){
             );
         })
         return (
-            <div className="tiles-container">{images}</div>
+            <div className="tiles-container" style={{fontFamily:props.fontFamily}}>{images}</div>
         )
     }else{
         return null
