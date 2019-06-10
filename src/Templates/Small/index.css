@@ -4,6 +4,21 @@
     padding: .8rem;
 }
 
+.preview .tpl-small.ele {
+    width: 50%;
+    margin: 0;
+    padding: 2%;
+}
+
+
+.preview .tpl-small .legend {
+    height: 0%;
+}
+
+.preview .tpl-small .dot {
+    display: none;
+}
+
 @media print {
     .tpl-small.ele {
         margin: 2.8rem;

@@ -8,6 +8,16 @@
     -webkit-print-color-adjust: exact;
 }
 
+.preview .tpl-large.ele {
+    width: 100%;
+    margin: 0;
+    padding: 2%;
+}
+
+.preview .tpl-large .legend {
+    display: none;
+}
+
 @media print {
     .tpl-large-ele {
         margin: 2.8rem;
@@ -15,9 +25,9 @@
 }
 
 .tpl-large .img-container {
-        width: 50%;
-        float: left;
-    }
+    width: 50%;
+    float: left;
+}
 
 .tpl-large .legend {
     padding-left: 1.6rem;

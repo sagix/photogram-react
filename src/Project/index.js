@@ -48,6 +48,7 @@ class Project extends Component{
                     <Configuration
                         title={this.state.project.name}
                         colors={this.state.project.colors}
+                        template={this.state.template}
                         onChange={type => this.setState(Object.assign(this.state, {template: type}))}
                         onColorChange={color => this.repository.updateColor(this.props.match.params.id, color).then(() => this.loadData())}
                         onColorDistributionChange={full => this.setState(Object.assign(this.state, {color_distribution: full}))}

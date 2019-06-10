@@ -1,8 +1,7 @@
 .configuration{
     background: #FFF;
     text-align: left;
-    padding: 0 2.4rem;
-    min-width: 20rem;
+    min-width: 25rem;
 }
 
 @media print {
@@ -13,10 +12,27 @@
 
 .configuration h1{
     font-size: 2.4rem;
-    margin-right: 1.6rem
+    margin: 1.6rem
 }
 
 .configuration h2{
     font-size: 2.0rem;
-    margin-right: 1.6rem
+    margin: 1.6rem
+}
+
+.configuration .template input{
+    display: none;
+}
+
+.configuration .template label{
+    display: block;
+}
+
+.configuration .template input[type="radio"]:checked+label{
+    background-color: #EEE;
+}
+
+.configuration .colors{
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
 }
