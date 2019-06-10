@@ -37,13 +37,14 @@ class Project extends Component{
                     onSave={data => this.repository.update(this.props.match.params.id, data).then(() => this.loadData())}
                 />
                 <div className="layout-parent">
+                <div className="layout-left">
                     <Tiles
-                        className="layout-left"
                         colorDistribution={this.state.color_distribution}
                         colors={this.state.project.colors}
                         value={this.state.project.data}
                         type={this.state.template}
                         onTile={data => this.setState(Object.assign(this.state, {data: data}))}/>
+                        </div>
 
                     <Configuration
                         title={this.state.project.name}

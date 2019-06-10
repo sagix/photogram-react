@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TemplateFactory from '../Templates/Factory'
+import './Tiles.css'
 
 export default function Tiles(props){
     let type = props.type
@@ -20,7 +21,7 @@ export default function Tiles(props){
             );
         })
         return (
-            <div>{images}</div>
+            <div className="tiles-container">{images}</div>
         )
     }else{
         return null

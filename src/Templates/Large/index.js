@@ -18,9 +18,7 @@ class LargeImage extends Component{
         return (
             <Container className="tpl-large" color={color} colorDistribution={colorDistribution}
                 onClick={this.handleClick}>
-                <div className="img-container">
-                    <Image url={url}/>
-                </div>
+                <Image url={url}/>
                 <div className="legend">
                     <div className="indicators">
                         <Sequence color={color} value={sequence}/>

@@ -2,7 +2,9 @@
     width: 73rem;
     margin: .8rem;
     padding: .8rem;
-    text-align: left;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: .8rem;
     page-break-inside: avoid;
     box-sizing: border-box;
     -webkit-print-color-adjust: exact;
@@ -24,19 +26,7 @@
     }
 }
 
-.tpl-large .img-container {
-    width: 50%;
-    float: left;
-}
-
-.tpl-large .legend {
-    padding-left: 1.6rem;
-    display: flex;
-    flex-direction: column;
-}
-
 .tpl-large .action-container {
-    height: 14rem;
     overflow: hidden;
 }
 
