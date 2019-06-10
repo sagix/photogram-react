@@ -40,20 +40,6 @@ class Form extends Component{
 
      }
 
-     clearPlace = (event) => {
-         event.preventDefault();
-         let data = this.state.data ===  undefined ? {} : this.state.data
-      this.setState(state => {
-          return {
-              data : Object.assign(
-                  data,
-                  {["place"]: ""}
-              )
-          }
-    });
-
-    }
-
     close = (event) => {
         this.setState({data: undefined}, () => console.log(this.state))
         this.props.onCancel()
@@ -81,18 +67,8 @@ class Form extends Component{
             <form id="form" className={"modal-content group "} onSubmit={this.handleSubmit} onClick={(event) => event.stopPropagation()}>
                 <input id="form-id" type="hidden" name="id" defaultValue={sequence} onChange={this.handleInputChange}/>
                 <img id="form-img" src={url} alt="Photogram"/>
-                <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange}/>
-                <label htmlFor='periode'>Periode</label>
-                <select id="periode" name="periode" defaultValue={periode} onChange={this.handleInputChange}>
-                    <option value="">None</option>
-                    <option value="matin">Morning</option>
-                    <option value="soir">Evening</option>
-                    <option value="jour">Day</option>
-                    <option value="nuit">Night</option>
-                </select>
-                <label htmlFor='fx'>Fx</label>
-                <input id="fx" name="fx" type="checkbox" checked={fx} onChange={this.handleInputChange}/>
-                <div>
+                <div id="form-meta-datas">
+                    <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange}/>
                     <label htmlFor="place">Place</label>
                     <input id="place" list="country-list" name="place" placeholder="Place" value={place} onChange={this.handleInputChange} />
                     <datalist id="country-list">
@@ -100,7 +76,16 @@ class Form extends Component{
                             <option key={p} value={p}/>
                         )}
                     </datalist>
-                    <button onClick={this.clearPlace}>&#x2573;</button>
+                    <label htmlFor='periode'>Periode</label>
+                    <select id="periode" name="periode" defaultValue={periode} onChange={this.handleInputChange}>
+                        <option value="">None</option>
+                        <option value="matin">Morning</option>
+                        <option value="soir">Evening</option>
+                        <option value="jour">Day</option>
+                        <option value="nuit">Night</option>
+                    </select>
+                    <label htmlFor='fx'>Fx</label>
+                    <input id="fx" name="fx" type="checkbox" checked={fx} onChange={this.handleInputChange}/>
                 </div>
                 <textarea id="form-action" name="action" placeholder="action" rows="4" onChange={this.handleInputChange} value={action}></textarea>
                 <button type="submit" className="md-button">Save</button>
