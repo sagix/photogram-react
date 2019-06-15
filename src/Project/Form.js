@@ -59,8 +59,8 @@ class Form extends Component{
     render(){
         if(this.props.data !== undefined){
 
-        const {sequence, action, periode, place, fx, url} = this.mergePropsWithState()
-        const places = Object.keys(this.props.colors === undefined ? {} : this.props.colors).sort()
+        const {sequence, action, periode, label, fx, url} = this.mergePropsWithState()
+        const labels = Object.keys(this.props.colors === undefined ? {} : this.props.colors).sort()
         return (
 
             <div className={"modal" + (this.props.data ? " display" : "")} onClick={ this.close }>
@@ -69,11 +69,11 @@ class Form extends Component{
                 <img id="form-img" src={url} alt="Photogram"/>
                 <div id="form-meta-datas">
                     <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange}/>
-                    <label htmlFor="place">Place</label>
-                    <input id="place" list="country-list" name="place" placeholder="Place" value={place} onChange={this.handleInputChange} />
+                    <label htmlFor="label">Label</label>
+                    <input id="label" list="country-list" name="label" placeholder="Label" value={label} onChange={this.handleInputChange} />
                     <datalist id="country-list">
-                        {places.map(p =>
-                            <option key={p} value={p}/>
+                        {labels.map(l =>
+                            <option key={l} value={l}/>
                         )}
                     </datalist>
                     <label htmlFor='periode'>Periode</label>

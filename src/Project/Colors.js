@@ -57,7 +57,7 @@ class Colors extends Component{
 
         if(this.props.colors){
             return (
-                <table className="colors">
+                <table className={this.props.className}>
                     <tbody>
                     {
                         Object.keys(this.props.colors).map((key) => {

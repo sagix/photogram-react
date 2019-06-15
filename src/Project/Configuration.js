@@ -103,13 +103,13 @@ class Configuration extends Component{
                     </section>
 
                     <section>
-                        <h2>Colors</h2>
-                        <div className="colors" >
+                        <h2>Labels</h2>
+                        <div className="labels" >
                             <input id="color-distribution" type="checkBox"
                             onChange={(event) => this.props.onColorDistributionChange( event.target.checked)}/>
                             <label htmlFor="color-distribution">Background color</label>
                         </div>
-                        <Colors className="colors" colors={this.props.colors} onColorChange={ this.props.onColorChange }/>
+                        <Colors className="labels" colors={this.props.colors} onColorChange={ this.props.onColorChange }/>
                     </section>
                 </div>
             )

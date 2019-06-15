@@ -4,13 +4,13 @@ import TemplateFactory from '../Templates/Factory'
 import './Tiles.css'
 
 export default function Tiles(props){
-    let type = props.type 
+    let type = props.type
     if(props.value){
         const images = props.value.map((image) => {
             let i
-            if(image.place){
+            if(image.label){
                 i = Object.assign(image, {
-                    color: props.colors[image.place],
+                    color: props.colors[image.label],
                     colorDistribution: props.colorDistribution ? "full" : "limited"
                 })
             }else{

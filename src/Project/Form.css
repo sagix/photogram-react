@@ -33,7 +33,7 @@
 #form-meta-datas{
 
 }
-#form-sequence, #form-action, #place, #periode, #fx {
+#form-sequence, #form-action, #label, #periode, #fx {
     border-radius: 2px;
     background-color: #EEE;
     border: none;
@@ -58,6 +58,6 @@ label {
     width: 14rem;
 }
 
-#place {
-    width: 17rem;
+#label {
+    width: 16rem;
 }

@@ -46,7 +46,7 @@ class Repository{
                             url: item.url,
                             sequence: data.sequence,
                             action: data.action,
-                            place: data.place,
+                            label: data.label,
                             periode: data.periode,
                             fx: data.fx,
                         }
@@ -55,8 +55,8 @@ class Repository{
                     }
                 })
 
-                if(data.place && project.colors[data.place] === undefined){
-                    project.colors[data.place] = this.colors[Object.keys(project.colors).length]
+                if(data.label && project.colors[data.label] === undefined){
+                    project.colors[data.label] = this.colors[Object.keys(project.colors).length]
                 }
 
                 this.save(id, project)
@@ -143,7 +143,7 @@ class Repository{
     }
 
     _calculateColors(data){
-        let unique = [...new Set(data.map(d => d.place).filter(p => p !== null && p !== ""))]
+        let unique = [...new Set(data.map(d => d.label).filter(p => p !== null && p !== ""))]
         return Object.assign({}, ...unique.map((p, i) => ({[p]: this.colors[i]})))
     }
 
