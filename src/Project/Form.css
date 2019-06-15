@@ -18,11 +18,13 @@
 
 /* Modal Content/Box */
 .modal-content {
+    box-sizing: border-box;
     background-color: rgba(255, 255, 255, .98);
-    margin: 5% auto; /* 15% from the top and centered */
+    margin: 4% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 40%; /* Could be more or less, depending on screen size */
+    width: 100%; /* Could be more or less, depending on screen size */
+    max-width: 62rem;
     text-align: left;
 }
 
