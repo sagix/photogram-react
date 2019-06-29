@@ -81,8 +81,8 @@ class Form extends Component{
                     <select id="periode" name="periode" defaultValue={periode} onChange={this.handleInputChange}>
                         <option value="">None</option>
                         <option value="matin">Morning</option>
-                        <option value="soir">Evening</option>
                         <option value="jour">Day</option>
+                        <option value="soir">Evening</option>
                         <option value="nuit">Night</option>
                     </select>
                     <label htmlFor='fx'>Fx</label>
