@@ -2,6 +2,8 @@
     background: #FFF;
     text-align: left;
     width: 25rem;
+    height: 100%;
+    overflow-y: auto;
 }
 
 @media print {

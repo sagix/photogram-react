@@ -48,7 +48,7 @@ class Project extends Component{
                         type={this.state.project.template}
                         fontFamily={this.state.project.fontFamily}
                         onTile={data => this.setState(Object.assign(this.state, {data: data}))}/>
-                        </div>
+                </div>
 
                     <Configuration
                         title={this.state.project.name}

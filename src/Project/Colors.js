@@ -7,6 +7,20 @@ class ColorWrapper extends Component{
         pickerVisible: false,
   }
 
+  componentDidMount(){
+    document.addEventListener("keydown", this.escFunction, false);
+
+  }
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.escFunction, false);
+  }
+
+  escFunction = (event) =>{
+    if(event.keyCode === 27) {
+      this.setState({ pickerVisible: false });
+    }
+  }
+
   handleColorChange = (color, event) => {
       this.setState({color: color.hex})
       this.props.onChangeComplete(color, event)
@@ -14,11 +28,18 @@ class ColorWrapper extends Component{
 
   render() {
     const onTogglePicker = () => this.setState({ pickerVisible: !this.state.pickerVisible })
-    const hidePicker = () => this.setState({ pickerVisible: false })
-    const showPicker = () => this.setState({ pickerVisible: true })
 
     return (
-      <div onMouseEnter={ showPicker } onMouseLeave={ hidePicker }>
+      <div >
+        { this.state.pickerVisible && (
+          <div className="outsidePicker" style={{
+                position: 'fixed',
+                right:'0',
+                top:'0',
+                left:'0',
+                bottom:'0',
+          }} onClick={() => this.setState({ pickerVisible: false })}/>
+        )}
         <button onClick={ onTogglePicker }
          style={{
              padding:2,
@@ -34,8 +55,9 @@ class ColorWrapper extends Component{
 
         { this.state.pickerVisible && (
           <div style={{
-              position: 'absolute',
-              right:0,
+              position: 'fixed',
+              right:'20rem',
+              bottom:'0',
            }}>
             <SketchPicker
               color={this.state.color}
@@ -43,6 +65,7 @@ class ColorWrapper extends Component{
             />
           </div>
         ) }
+
       </div>
     )
   }
