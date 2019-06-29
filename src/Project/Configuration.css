@@ -1,7 +1,7 @@
 .configuration{
     background: #FFF;
     text-align: left;
-    min-width: 25rem;
+    width: 25rem;
 }
 
 @media print {
@@ -30,6 +30,13 @@
 
 .configuration .template label{
     display: block;
+    padding: 5%;
+}
+
+.configuration .template label i{
+    display: inline-block;
+    color: #666;
+    margin-bottom: 5%;
 }
 
 .configuration .template input[type="radio"]:checked+label{

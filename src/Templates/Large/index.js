@@ -19,14 +19,12 @@ class LargeImage extends Component{
             <Container className="tpl-large" color={color} colorDistribution={colorDistribution}
                 onClick={this.handleClick}>
                 <Image url={url}/>
-                <div className="legend">
-                    <div className="indicators">
-                        <Sequence color={color} value={sequence}/>
-                        <Period value={periode}/>
-                        <Fx value={fx}/>
-                    </div>
-                    <Action value={action}/>
+                <div className="indicators">
+                    <Sequence color={color} value={sequence}/>
+                    <Period value={periode}/>
+                    <Fx value={fx}/>
                 </div>
+                <Action value={action}/>
             </Container>
         )
     }

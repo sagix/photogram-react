@@ -7,6 +7,7 @@ class Form extends Component{
 
  componentDidMount(){
    document.addEventListener("keydown", this.escFunction, false);
+
  }
  componentWillUnmount(){
    document.removeEventListener("keydown", this.escFunction, false);
@@ -68,7 +69,7 @@ class Form extends Component{
                 <input id="form-id" type="hidden" name="id" defaultValue={sequence} onChange={this.handleInputChange}/>
                 <img id="form-img" src={url} alt="Photogram"/>
                 <div id="form-meta-datas">
-                    <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange}/>
+                    <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange} autoFocus="true"/>
                     <label htmlFor="label">Label</label>
                     <input id="label" list="country-list" name="label" placeholder="Label" value={label} onChange={this.handleInputChange} />
                     <datalist id="country-list">

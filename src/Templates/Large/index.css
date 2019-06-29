@@ -4,6 +4,8 @@
     padding: .8rem;
     display: inline-grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 30% 70%;
+    grid-template-areas: "img indicators" "img action";
     grid-column-gap: .8rem;
     page-break-inside: avoid;
     box-sizing: border-box;
@@ -12,8 +14,12 @@
 
 .preview .tpl-large.ele {
     width: 100%;
-    margin: 0;
     padding: 2%;
+    margin: 0;
+}
+
+.preview .tpl-large .indicators {
+    display: none;
 }
 
 .preview .tpl-large .legend {
@@ -26,11 +32,18 @@
     }
 }
 
+.tpl-large .img {
+    grid-area: img;
+}
+
 .tpl-large .action-container {
     overflow: hidden;
+
+    grid-area: action;
 }
 
 .tpl-large .indicators {
+    grid-area: indicators;
     display: flex;
     align-items: center;
     align-content: flex-start;
