@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import './Form.css'
 
+class FormImage extends React.Component {
+  render() {
+    let url = this.props.url
+    if(url){
+      return <img id="form-img" src={url} alt="Photogram"/>
+    }else{
+      return (
+        <div className="photogram-form-container">
+        <input id="photogram" type="file" accept="image/*" onChange={(event) => {
+            this.props.onNewImage(event.target.files)
+            event.target.form.reset()
+        }}/>
+        <label htmlFor="photogram"><span>Add new photogram</span></label>
+        </div>
+      );
+    }
+
+  }
+}
 
 class Form extends Component{
     state = {}
@@ -51,6 +70,10 @@ class Form extends Component{
        this.close()
    }
 
+   onNewImage = (file) => {
+
+   }
+
     mergePropsWithState(){
         const fromState  = this.state.data === undefined ? {} : this.state.data
         const fromProps  = this.props.data === undefined ? {} : this.props.data
@@ -67,7 +90,7 @@ class Form extends Component{
             <div className={"modal" + (this.props.data ? " display" : "")} onClick={ this.close }>
             <form id="form" className={"modal-content group "} onSubmit={this.handleSubmit} onClick={(event) => event.stopPropagation()}>
                 <input id="form-id" type="hidden" name="id" defaultValue={sequence} onChange={this.handleInputChange}/>
-                <img id="form-img" src={url} alt="Photogram"/>
+                <FormImage url={url} onNewImage={this.props.onNewImage}/>
                 <div id="form-meta-datas">
                     <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange} autoFocus="true"/>
                     <label htmlFor="label">Label</label>

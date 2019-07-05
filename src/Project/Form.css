@@ -63,3 +63,18 @@
 #label {
     width: 16rem;
 }
+
+.photogram-form-container{
+  background-color: #DDD;
+  margin-bottom: 1rem;
+  min-height: 24rem;
+  text-align: center;
+}
+
+.photogram-form-container input{
+  display: none;
+}
+
+.photogram-form-container label{
+  
+}

@@ -43,7 +43,7 @@ class Repository{
                     if(item.id === data.id){
                         return {
                             id: data.id,
-                            url: item.url,
+                            url: data.url,
                             sequence: data.sequence,
                             action: data.action,
                             label: data.label,

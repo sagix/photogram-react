@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Repository from '../Data';
+import Image from '../Data/images';
 import Configuration from './Configuration'
 import Tiles from './Tiles'
 import Form from './Form'
@@ -38,6 +39,14 @@ class Project extends Component{
                     colors={this.state.project.colors}
                     onCancel={() => this.setState(Object.assign(this.state, {data: undefined}))}
                     onSave={data => this.repository.update(this.props.match.params.id, data).then(() => this.loadData())}
+                    onNewImage={file => {
+                      console.log(file);
+                      new Image(this.props.match.params.id).execute(file).then((result) => {
+                          console.log(result);
+                          this.state.data.url = result[0].url
+                          this.setState(Object.assign(this.state, {data: this.state.data}))
+                      })
+                    }}
                 />
                 <div className="layout-parent">
                 <div className="layout-left">
