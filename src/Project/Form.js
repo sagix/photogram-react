@@ -92,7 +92,7 @@ class Form extends Component{
                 <input id="form-id" type="hidden" name="id" defaultValue={sequence} onChange={this.handleInputChange}/>
                 <FormImage url={url} onNewImage={this.props.onNewImage}/>
                 <div id="form-meta-datas">
-                    <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange} autoFocus="true"/>
+                    <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange} autoFocus={true}/>
                     <label htmlFor="label">Label</label>
                     <input id="label" list="country-list" name="label" placeholder="Label" value={label} onChange={this.handleInputChange} />
                     <datalist id="country-list">
