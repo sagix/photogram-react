@@ -31,6 +31,10 @@ class Configuration extends Component{
             return (
                 <div className="configuration">
                     <h1>{this.props.title}</h1>
+                    <div className={"button-container"}>
+                      <button className={"button button-print"}onClick={window.print}>Print</button>
+                      <button className={"button button-close"}onClick={event => {window.history.back()}}>Close</button>
+                    </div>
                     <section>
                         <h2>Font</h2>
                         <form onSubmit={(event)=>{event.preventDefault();}}>
