@@ -1,10 +1,11 @@
 .tpl-large.ele {
-    width: 73rem;
+    width: 80rem;
+    height: 23.6rem;
     margin: .8rem;
     padding: .8rem;
     display: inline-grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 30% 70%;
+    grid-template-rows: 3fr 7fr;
     grid-template-areas: "img indicators" "img action";
     grid-column-gap: .8rem;
     page-break-inside: avoid;
@@ -14,6 +15,7 @@
 
 .preview .tpl-large.ele {
     width: 100%;
+    height: 5.9rem;
     padding: 2%;
     margin: 0;
 }
@@ -34,6 +36,9 @@
 
 .tpl-large .img {
     grid-area: img;
+    height: 100%;
+    object-fit: contain;
+    background-color: #111;
 }
 
 .tpl-large .action-container {
