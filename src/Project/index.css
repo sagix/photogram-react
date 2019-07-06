@@ -1,22 +1,41 @@
 .layout-parent {
-    display: flex;
+
+    display: grid;
+    grid-template-columns: auto 24rem;
+    grid-template-rows: 5.4rem auto;
+    grid-template-areas: "layout-top layout-top" "layout-left layout-right";
     height: 100vh;
 }
 
+.layout-top{
+  grid-area: layout-top;
+}
+
 .layout-left {
+  grid-area: layout-left;
     width: 100%;
     height: 100%;
     overflow-y: auto;
 }
 
+.layout-right{
+  grid-area: layout-right;
+}
+
 @media print {
   .layout-parent {
+      display: block;
       height: inherit;
   }
 
   .layout-left {
     height: inherit;
     overflow-y: visible;
-
+  }
+  .layout-top{
+    display: none;
+  }
+  .layout-right{
+    display: none;
   }
 }

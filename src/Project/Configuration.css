@@ -1,15 +1,9 @@
 .configuration{
     background: #FFF;
     text-align: left;
-    width: 25rem;
+    width: 100%;
     height: 100%;
     overflow-y: auto;
-}
-
-@media print {
-    .configuration{
-        display: none;
-    }
 }
 
 .configuration h1{
@@ -48,13 +42,4 @@
 .configuration .labels{
     margin-left: 1.6rem;
     margin-right: 1.6rem;
-}
-
-.configuration .button-container{
-  text-align: center;
-}
-
-.configuration .button{
-  background-color: transparent;
-  margin: 0 2rem;
 }
