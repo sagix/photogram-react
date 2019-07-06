@@ -65,9 +65,7 @@
 }
 
 .photogram-form-container{
-  background-color: #DDD;
   margin-bottom: 1rem;
-  min-height: 24rem;
   text-align: center;
 }
 
@@ -75,6 +73,27 @@
   display: none;
 }
 
-.photogram-form-container label{
-  
+.photogram-form-container #photogram-label{
+  display: block;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  opacity: .7;
+  transition: opacity .4s;
+}
+.photogram-form-container #photogram-label:hover{
+  opacity: 1;
+}
+
+.photogram-form-container #photogram-label img{
+  width: 100%;
+}
+.photogram-form-container #photogram-label em{
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #2228;
+
 }

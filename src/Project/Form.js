@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Form.css'
+import empty from '../Templates/Image/empty.svg'
 
 class FormImage extends React.Component {
   render() {
@@ -13,7 +14,10 @@ class FormImage extends React.Component {
             this.props.onNewImage(event.target.files)
             event.target.form.reset()
         }}/>
-        <label htmlFor="photogram"><span>Add new photogram</span></label>
+        <label htmlFor="photogram" id="photogram-label">
+          <img src={empty}/>
+          <em>Add new photogram</em>
+        </label>
         </div>
       );
     }

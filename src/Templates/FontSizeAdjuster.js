@@ -3,7 +3,7 @@ export default class {
         this.min = min
         this.max = max
     }
-    
+
     apply(node){
         node.style.fontSize = this.max + 'rem';
         if (this._hasOverflow(node.parentNode)) {
