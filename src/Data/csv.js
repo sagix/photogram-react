@@ -19,7 +19,7 @@ class Csv{
                         id: id,
                         sequence: id,
                         action: r[1],
-                        place: (r[2] || "").trim(),
+                        label: (r[2] || "").trim(),
                         periode: (r[3] || "").trim(),
                         fx: r[4],
                     })

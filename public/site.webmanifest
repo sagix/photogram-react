@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Photogram",
+    "short_name": "Photogram",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -15,5 +15,6 @@
     ],
     "theme_color": "#111111",
     "background_color": "#111111",
+    "start_url": "./index.html",
     "display": "standalone"
 }

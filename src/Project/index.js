@@ -42,9 +42,9 @@ class Project extends Component{
                     onNewImage={file => {
                       console.log(file);
                       new Image(this.props.match.params.id).execute(file).then((result) => {
-                          console.log(result);
-                          this.state.data.url = result[0].url
-                          this.setState(Object.assign(this.state, {data: this.state.data}))
+                          this.setState(Object.assign(this.state,
+                            Object.assign(this.state.data, {url: result[0].url}))
+                          )
                       })
                     }}
                 />
