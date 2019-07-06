@@ -14,7 +14,7 @@ class NewProject extends Component{
                         this.props.onNewProject(event.target.files)
                         event.target.form.reset()
                     }}/>
-                <label htmlFor="new-project-file" id="new-project-label">Nouveau projet</label>
+                <label htmlFor="new-project-file" id="new-project-label">New project</label>
             </form>
         )
     }
