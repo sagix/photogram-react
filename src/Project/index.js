@@ -79,6 +79,7 @@ class Project extends Component{
                           fontFamily={this.state.project.fontFamily}
                           onChange={template => this.repository.updateTemplate(this.props.match.params.id, template).then(() => this.loadData())}
                           onColorChange={color => this.repository.updateColor(this.props.match.params.id, color).then(() => this.loadData())}
+                          onDeleteColor={key => this.repository.deleteColor(this.props.match.params.id, key).then(() => this.loadData())}
                           onColorDistributionChange={full => this.setState(Object.assign(this.state, {color_distribution: full}))}
                           onFontFamilyChange={fontFamily => this.repository.updateFontFamily(this.props.match.params.id, fontFamily).then(() => this.loadData())}
                       />

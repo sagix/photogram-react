@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { SketchPicker } from 'react-color';
+import './Colors.css'
 
 class ColorWrapper extends Component{
     state = {
@@ -94,6 +95,10 @@ class Colors extends Component{
                                   />
                                 </td>
                                 <td>{key}</td>
+                                <td><button className="btn-color" onClick={(event) => {
+                                    event.preventDefault()
+                                    this.props.onDelete(key)
+                                }}>&#x2715;</button></td>
                                 </tr>
                             )
                         })

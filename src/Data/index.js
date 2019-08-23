@@ -73,6 +73,22 @@ class Repository{
         })
     }
 
+    deleteColor(id, key){
+        return this.get(id).then((project) => {
+                project.colors[key] = undefined;
+                project.data = project.data.map(item => {
+                    if(key === item.label){
+                        return Object.assign(item, {
+                            label: undefined,
+                        })
+                    }else{
+                        return item
+                    }
+                });
+                this.save(id, project)
+        });
+    }
+
     updateFontFamily(id, fontFamily){
         return this.get(id).then((project) => {
                 project.fontFamily = fontFamily;

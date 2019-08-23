@@ -108,7 +108,11 @@ class Configuration extends Component{
                             onChange={(event) => this.props.onColorDistributionChange( event.target.checked)}/>
                             <label htmlFor="color-distribution">Background color</label>
                         </div>
-                        <Colors className="labels" colors={this.props.colors} onColorChange={ this.props.onColorChange }/>
+                        <Colors className="labels"
+                          colors={this.props.colors}
+                          onColorChange={ this.props.onColorChange }
+                          onDelete={this.props.onDeleteColor}
+                          />
                     </section>
                 </div>
             )

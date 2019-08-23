@@ -1,0 +1,18 @@
+.btn-color {
+    display: inline-block;
+    opacity: 0;
+    background: #fff;
+    color: #444;
+    font-weight: bold;
+    border: 1px solid silver;
+    border-radius: 100px;
+    transition: opacity 0.4s;
+}
+.btn-color:active {
+    background: #ddd;
+    color: #222;
+}
+
+tr:hover .btn-color {
+    opacity: 1;
+}
