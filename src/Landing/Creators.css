@@ -1,0 +1,48 @@
+.creator-layout{
+  display: grid;
+  background-color: #222;
+  grid-template-areas: "creator-title creator-title" "creator-one creator-two" ;
+  align-content: center;
+  padding-bottom: 7.2rem;
+}
+.creator-layout h2{
+  grid-area: creator-title;
+  color: white;
+}
+
+.creator-item {
+  display: block;
+  width:25.6rem;
+  transition-property: transform;
+  transition-duration: 0.5s;
+  color: white;
+  text-decoration: none;
+}
+
+.creator-item:hover {
+  transform: scale(1.1);
+}
+
+.creator-item img{
+  width:12.8rem;
+  height:12.8rem;
+  border-radius: 12.8rem;
+}
+
+.creator-name{
+  display: inline-block;
+  padding-top: 1.6rem;
+  padding-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+.creator-one{
+  grid-area: creator-one;
+  justify-self: end;
+}
+
+.creator-two{
+  grid-area: creator-two;
+  justify-self: start;
+
+}

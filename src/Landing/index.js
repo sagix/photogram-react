@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import Creators from './Creators';
 import NewProject from './NewProject';
 import ListProject from './ListProject';
 import QuotaProgress from './QuotaProgress';
@@ -56,6 +57,7 @@ class Landing extends Component{
                     <NewProject onNewProject={files => this.onNewProject(files)} />
                     <ListProject value={this.state.projects} onDelete={(key) => this.onDeleteProject(key)}/>
                     <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max}/>
+                    <Creators/>
                 </div>
             )
         }
