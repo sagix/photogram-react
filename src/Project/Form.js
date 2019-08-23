@@ -6,7 +6,13 @@ class FormImage extends React.Component {
   render() {
     let url = this.props.url
     if(url){
-      return <img id="form-img" src={url} alt="Photogram"/>
+      return <div className="photogram-form-container">
+        <img id="form-img" src={url} alt="Photogram"/>
+        <span className="button-container">
+          <button type="button" onClick={this.props.onDeleteImage}>Delete</button>
+          <button type="button" onClick={()=>this.props.setAsMain(url)}>Set as main</button>
+        </span>
+      </div>
     }else{
       return (
         <div className="photogram-form-container">
@@ -94,7 +100,11 @@ class Form extends Component{
             <div className={"modal" + (this.props.data ? " display" : "")} onClick={ this.close }>
             <form id="form" className={"modal-content group "} onSubmit={this.handleSubmit} onClick={(event) => event.stopPropagation()}>
                 <input id="form-id" type="hidden" name="id" defaultValue={sequence} onChange={this.handleInputChange}/>
-                <FormImage url={url} onNewImage={this.props.onNewImage}/>
+                <FormImage url={url}
+                  onNewImage={this.props.onNewImage}
+                  onDeleteImage={this.props.onDeleteImage}
+                  setAsMain={this.props.setAsMain}
+                  />
                 <div id="form-meta-datas">
                     <input id="form-sequence" name="sequence" placeholder="sequence" defaultValue={sequence} onChange={this.handleInputChange} autoFocus={true}/>
                     <label htmlFor="label">Label</label>

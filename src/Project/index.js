@@ -41,12 +41,21 @@ class Project extends Component{
                     onCancel={() => this.setState(Object.assign(this.state, {data: undefined}))}
                     onSave={data => this.repository.update(this.props.match.params.id, data).then(() => this.loadData())}
                     onNewImage={file => {
-                      console.log(file);
                       new Image(this.props.match.params.id).execute(file).then((result) => {
                           this.setState(Object.assign(this.state,
                             Object.assign(this.state.data, {url: result[0].url}))
                           )
                       })
+                    }}
+                    onDeleteImage={()=>{
+                      this.setState(Object.assign(this.state,
+                        Object.assign(this.state.data, {url: null}))
+                      )
+                    }
+                    }
+                    setAsMain={url => {
+                      this.repository.updateMainPicture(this.props.match.params.id, url)
+                      this.setState(Object.assign(this.state, {data: undefined}))
                     }}
                 />
                 <div className="layout-parent">

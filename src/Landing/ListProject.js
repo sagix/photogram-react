@@ -6,10 +6,11 @@ class ListProject extends Component{
     render(){
         return (
             <ul id="grid">{this.props.value.map((project) => {
-                let img = project.data[0];
-                let src
-                if(img){
-                    src = img.url
+                let src;
+                if(project.mainPicture){
+                    src = project.mainPicture;
+                } else if(project.data[0]){
+                    src = project.data[0].url;
                 }
                 return (
                   <li key={project.key}>
