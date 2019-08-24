@@ -29,7 +29,7 @@ class Creators extends Component{
                 img="/thomas.jpeg"
                 name="Thomas Heutier"
                 job="Editor"
-                link="https://thomasheurtier.com"
+                link="https://www.linkedin.com/in/thomas-heurtier-a1207061/"
               />
             </div>
         )
