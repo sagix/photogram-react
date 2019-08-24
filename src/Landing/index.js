@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Creators from './Creators';
 import NewProject from './NewProject';
+import EmptyProject from './EmptyProject';
 import ListProject from './ListProject';
 import QuotaProgress from './QuotaProgress';
 import Repository from '../Data';
@@ -54,8 +55,15 @@ class Landing extends Component{
             return (
                 <div className="landing-container">
                     <Header/>
-                    <NewProject onNewProject={files => this.onNewProject(files)} />
-                    <ListProject value={this.state.projects} onDelete={(key) => this.onDeleteProject(key)}/>
+                    {this.state.projects.length <= 0
+                        ? <EmptyProject onNewProject={files => this.onNewProject(files)} />
+                        : (
+                          <div>
+                            <NewProject onNewProject={files => this.onNewProject(files)} />
+                            <ListProject value={this.state.projects} onDelete={(key) => this.onDeleteProject(key)}/>
+                          </div>
+                        )
+                    }
                     <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max}/>
                     <Creators/>
                 </div>

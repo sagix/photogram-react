@@ -4,7 +4,19 @@
   grid-template-areas: "creator-title creator-title" "creator-one creator-two" ;
   align-content: center;
   padding-bottom: 7.2rem;
+
+  background-image: url("/illus/undraw_web_developer_p3e5.svg"), url("/illus/undraw_videographer_nnc7.svg");
+  background-position: left 1.6rem center, right 1.6rem center;
+  background-size: 25.6rem;
+  background-repeat: no-repeat;
+  transition-property: background-size background-position;
+  transition-duration: 0.5s;
 }
+.creator-layout:hover{
+  background-size: 17.4rem;
+  background-position: left -1.6rem center, right -1.6rem center;
+}
+
 .creator-layout h2{
   grid-area: creator-title;
   color: white;
@@ -20,7 +32,7 @@
 }
 
 .creator-item:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .creator-item img{
