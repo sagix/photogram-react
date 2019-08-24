@@ -1,0 +1,44 @@
+.tutorial-container{
+  background-image: url("/illus/undraw_editable_dywm.svg"), url("/illus/undraw_detailed_examination_joef.svg");
+  background-position: left 1.6rem bottom, right 1.6rem bottom;
+  background-size: 25.6rem;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.tutorial-layout{
+  background-color: #FFF;
+  max-width: 82rem;
+  margin: auto;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+}
+
+.tutorial-layout > h1{
+  margin-top: 0;
+  padding-top: 3.2rem;
+  padding-bottom: 3.2rem;
+}
+.tutorial-layout > p{
+  max-width: 48rem;
+  margin: auto;
+}
+
+.tutorial-layout > section {
+  text-align: left;
+  padding: 0 4.8rem;
+}
+
+.tutorial-example-layout{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-column-gap: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.tutorial-example-form{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-row-gap: 1.6rem;
+  align-content: center;
+}
