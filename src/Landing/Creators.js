@@ -4,7 +4,7 @@ import './Creators.css';
 class Creator  extends Component{
   render(){
       return (
-        <a href={this.props.link}  className={this.props.className + " creator-item"}>
+        <a href={this.props.link} target="_blank" className={this.props.className + " creator-item"}>
             <img src={this.props.img} alt="Photo"/><br/>
             <strong  className="creator-name">{this.props.name}</strong><br/>
             <span>{this.props.job}</span>
