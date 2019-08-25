@@ -27,7 +27,7 @@ class Creators extends Component{
               />
               <Creator className="creator-two"
                 img="/thomas.jpeg"
-                name="Thomas Heutier"
+                name="Thomas Heurtier"
                 job="Editor"
                 link="https://www.linkedin.com/in/thomas-heurtier-a1207061/"
               />
