@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import Header from './Header';
 import Creators from './Creators';
 import NewProject from './NewProject';
@@ -38,6 +39,10 @@ class Landing extends Component{
     }
 
     onNewProject(files){
+        ReactGA.event({
+          category: 'Project',
+          action: 'create'
+        });
         this.repository.add(files)
         .then((projects) => this.setState({projects: projects}))
         .then(_ => this._checkQuotas())
@@ -45,6 +50,10 @@ class Landing extends Component{
     }
 
     onDeleteProject(key){
+        ReactGA.event({
+          category: 'Project',
+          action: 'delete'
+        });
         this.repository.delete(key)
         .then((projects) => this.setState({projects: projects}))
         .then(_ => this._checkQuotas())

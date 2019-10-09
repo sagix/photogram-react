@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import Image from '../Data/images';
 import Toolbar from './Toolbar'
 import Configuration from './Configuration'
@@ -31,6 +32,24 @@ class Page extends Component{
         }).catch(e => console.log(e))
     }
 
+    back(){
+      ReactGA.event({
+        category: 'Project',
+        action: 'back'
+      });
+      window.history.back();
+    }
+
+    print(){
+      let projectSize = this.state.project.data.length;
+      ReactGA.event({
+        category: 'Project',
+        action: 'print',
+        value: projectSize
+      });
+      window.print();
+    }
+
     render(){
         return (
             <div>
@@ -60,7 +79,9 @@ class Page extends Component{
                 <div className="layout-parent">
                   <div className="layout-top">
                     <Toolbar
-                      title={this.state.project.name}/>
+                      title={this.state.project.name}
+                      onPrint={() => this.print()}
+                      onBack={() => this.back()}/>
                   </div>
                   <div className="layout-left">
                       <Tiles

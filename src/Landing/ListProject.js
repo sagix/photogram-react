@@ -18,8 +18,8 @@ class ListProject extends Component{
                         <div className="picture"><img alt="project cover" src={src}/></div>
                         <span>{project.name}</span>
                         <button className="btn-delete" onClick={(event) => {
-                            event.preventDefault()
-                            this.props.onDelete(project.key)
+                            event.preventDefault();
+                            this.props.onDelete(project.key);
                         }}>&#x2715;</button>
                     </Link>
                   </li>
