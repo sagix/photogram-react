@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Repository from '../Data';
-import Page from './Page'
+import Repository from './data';
+import Page from '../Project/Page'
 
 class Project extends Component {
   constructor(props){
@@ -10,7 +10,7 @@ class Project extends Component {
 
   render(){
       return (
-          <Page repository={this.repository} id={this.props.match.params.id}/>
+          <Page repository={this.repository}/>
       );
     }
 }

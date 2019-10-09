@@ -42,12 +42,13 @@ class EmptyProject  extends Component{
                   />
               </label>
           </form>
-
+          <a href="/project-demo">
           <EmptyCell className="empty-project-item"
             src="/illus/undraw_Presentation_62e1.svg"
             title="Try"
             desc="See a live demo of Photogram"
             />
+            </a>
         </div>
       )
   }
