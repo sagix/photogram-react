@@ -73,7 +73,7 @@ class Tutorial extends Component{
       <div className="tutorial-container">
         <Helmet>
            <title>Photogram - Learn more about the tool for assistant editors</title>
-           <meta name="description" content="Discover all the feature of Photogram and learn how to build your own data set" />
+           <meta name="description" content="Discover all the features of Photogram and learn how to build your own data set" />
         </Helmet>
       <article className="tutorial-layout">
         <h1>Comment utiliser Photogram</h1>
