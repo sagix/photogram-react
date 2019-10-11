@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Helmet} from "react-helmet";
 import './index.css'
 import TemplateSmall from '../Templates/Small'
 
@@ -70,6 +71,10 @@ class Tutorial extends Component{
   render() {
     return (
       <div className="tutorial-container">
+        <Helmet>
+           <title>Photogram - Learn more about the tool for assistant editors</title>
+           <meta name="description" content="Discover all the feature of Photogram and learn how to build your own data set" />
+        </Helmet>
       <article className="tutorial-layout">
         <h1>Comment utiliser Photogram</h1>
         <p><strong>Photogram</strong> permet de créer un séquencier image des différentes scènes composant un film ou une série.</p>

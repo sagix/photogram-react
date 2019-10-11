@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Helmet} from "react-helmet";
 import Repository from './data';
 import Page from '../Project/Page'
 
@@ -10,7 +11,12 @@ class Project extends Component {
 
   render(){
       return (
-          <Page repository={this.repository}/>
+          <Page repository={this.repository}>
+            <Helmet>
+               <title>Photogram - Try the tool for assistant editors</title>
+               <meta name="description" content="Learn and play with our demo data set" />
+            </Helmet>
+          </Page>
       );
     }
 }
