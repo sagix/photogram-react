@@ -4,9 +4,9 @@ class Header extends Component{
     render(){
             return (
                 <header className="App-header">
-                  <img src={logo} className="App-logo" alt="logo" />
-                  <h1 className="App-title">Welcome to Photogram</h1>
-                  <p>This is the new Photogram</p>
+                  <img src={logo} className="App-logo" alt="logo of Photogram" />
+                  <h1 className="App-title">Photogram</h1>
+                  <p>A tool for assistant editor</p>
                 </header>
             )
         }
