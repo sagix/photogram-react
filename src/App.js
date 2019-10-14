@@ -4,6 +4,7 @@ import Landing from './Landing';
 import Project from './Project';
 import Demo from './Demo';
 import Tutorial from './Tutorial';
+import Fixor from './Fixor';
 import ReactGA from 'react-ga';
 import history from './history';
 import './App.css';
@@ -29,6 +30,7 @@ class App extends Component {
             <Route exact path="/tutorial" component={Tutorial} />
             <Route exact path="/project/:id" component={Project} />
             <Route exact path="/project-demo" component={Demo} />
+            <Route exact path="/fixor" component={Fixor} />
           </div>
         </Router>
     );

@@ -1,0 +1,23 @@
+.edl-table {
+  background: white;
+  margin: auto;
+  border-collapse: collapse;
+}
+
+.edl-table, .edl-table th, .edl-table td{
+  border: 1px solid #111;
+}
+
+.edl-table thead th{
+  padding-top:1.6rem;
+  padding-bottom:1.6rem;
+  background-color: #BBB;
+}
+
+.edl-table tbody tr:nth-child(2n){
+  background-color: #eee;
+}
+
+.edl-table img {
+  width: 16rem;
+}
