@@ -42,6 +42,42 @@ const readUploadedFileAsUrl = (inputFile) => {
   });
 };
 
+const compress = (inputFile) => {
+  const temporaryFileReader = new FileReader();
+
+  return new Promise((resolve, reject) => {
+    temporaryFileReader.onerror = () => {
+      temporaryFileReader.abort();
+      reject(new DOMException("Problem parsing input file."));
+    };
+
+    temporaryFileReader.onload = () => {
+      const img = new Image();
+      img.src = temporaryFileReader.result;
+      img.onload = () => {
+        const elem = document.createElement('canvas');
+        const width= 320;
+        const height= img.height * (width/img.width);
+        elem.width = width;
+        elem.height = height;
+        const ctx = elem.getContext('2d');
+        // img.width and img.height will contain the original dimensions
+        ctx.drawImage(img, 0, 0, width, height);
+        ctx.canvas.toBlob((blob) => {
+            resolve(new File([blob], inputFile.name, {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+            }));
+        }, 'image/jpeg', 1);
+      }
+      img.onerror = () => {
+        reject(new DOMException("Problem parsing input file."));
+      };
+    };
+    temporaryFileReader.readAsDataURL(inputFile);
+  });
+};
+
 class Fixor extends Component {
 
   constructor(props){
@@ -72,7 +108,7 @@ class Fixor extends Component {
     let imageType = /^image\//;
 
     return Promise.all(Array.from(files).filter(file => imageType.test(file.type))).then(images => {
-      return Promise.all(images.map(image => readUploadedFileAsUrl(image)))
+      return Promise.all(images.map(image => compress(image).then(smallImage => readUploadedFileAsUrl(smallImage))))
     });
   }
 
@@ -104,6 +140,26 @@ class Fixor extends Component {
     }))
   }
 
+ selectElementContents(el, callback) {
+    var body = document.body;
+    var range = document.createRange();
+    var sel =  window.getSelection();
+    sel.removeAllRanges();
+    try {
+        range.selectNodeContents(el);
+        sel.addRange(range);
+    } catch (e) {
+        range.selectNode(el);
+        sel.addRange(range);
+    }
+    callback()
+    sel.removeAllRanges();
+}
+
+  copy= () => {
+    this.selectElementContents(document.getElementById("fixor-table"), () => document.execCommand("copy"));
+  }
+
   render(){
       return (
           <div>
@@ -119,6 +175,7 @@ class Fixor extends Component {
               <label htmlFor="new-project-file" id="new-project-label">New project</label>
               <input type="number" onChange={this.onImagePerSecond} defaultValue={this.state.imagePerSeconde}/>
           </form>
+          <button onClick={this.copy}>Copy</button>
           <Table data={this.state.data} imagePerSeconde={this.state.imagePerSeconde}/>
           </div>
       );

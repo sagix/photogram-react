@@ -6,7 +6,7 @@ class Table  extends Component{
         console.log(this.props.data);
         if(this.props.data.length > 0 ){
           return(
-              <table className="edl-table">
+              <table className="edl-table" id="fixor-table">
                 <thead>
                 <tr>
                   <th>id</th>
