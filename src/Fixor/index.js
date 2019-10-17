@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import parser from './parser';
 import Table from './Table';
+import GoogleApi from './GoogleApi'
+import ExportButton from './ExportButton'
 import './index.css'
 
 const readUploadedFileAsText = (inputFile) => {
@@ -176,6 +178,13 @@ class Fixor extends Component {
               <input type="number" onChange={this.onImagePerSecond} defaultValue={this.state.imagePerSeconde}/>
           </form>
           <button onClick={this.copy}>Copy</button>
+          <GoogleApi
+            apiKey="AIzaSyAdxqQ7li94_V0KEr1LipWCgsIGvPeHm5U"
+            clientId="766414170207-9t7rccough76uf2q7vhvkbh1mt6l6u24.apps.googleusercontent.com"
+            discoveryDocs={["https://sheets.googleapis.com/$discovery/rest?version=v4"]}
+            scope="https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file">
+              <ExportButton data={this.state.data}  imagePerSeconde={this.state.imagePerSeconde}/>
+          </GoogleApi>
           <Table data={this.state.data} imagePerSeconde={this.state.imagePerSeconde}/>
           </div>
       );
