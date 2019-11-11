@@ -56,7 +56,7 @@ class Repository{
                 })
 
                 if(data.label && project.colors[data.label] === undefined){
-                    project.colors[data.label] = this.colors[Object.keys(project.colors).length]
+                    project.colors[data.label] = this.colors[Object.keys(project.colors).length % this.colors.length]
                 }
 
                 this.save(id, project)
@@ -167,7 +167,7 @@ class Repository{
 
     _calculateColors(data){
         let unique = [...new Set(data.map(d => d.label).filter(p => p !== null && p !== ""))]
-        return Object.assign({}, ...unique.map((p, i) => ({[p]: this.colors[i]})))
+        return Object.assign({}, ...unique.map((p, i) => ({[p]: this.colors[i % this.colors.length]})))
     }
 
     _name(files, defaultName){
