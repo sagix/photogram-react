@@ -5,7 +5,31 @@ function parse(rawData){
 }
 
 function splitLines(rawData){
-  return rawData.replace(/\s{0,1}[\n\r]{1,2}\*\s{0,1}/g, "").split("\n").filter(line => line.length > 0);
+  let results = [];
+  var group = "";
+  let lines = rawData.split(/[\n\r]{1,2}/);
+  var inComment = false;
+  let matcher = RegExp(/\s{0,1}\*\s/g)
+  for(const line of lines){
+    if(RegExp(/\s{0,1}\*\s/g).test(line)){
+      group += line.replace(/\*\s{0,1}/, "");
+      inComment = true;
+    }else{
+      if(inComment){
+        results.push(group);
+        group = ""
+        group += line.trim();
+        inComment = false;
+      } else {
+        if(group.length === 0){
+          group += line.trim();
+        }
+      }
+    }
+  }
+  results.push(group);
+
+  return results.filter(g => g !== undefined && g.length > 0);
 }
 
 function parseLine(value){
