@@ -33,6 +33,18 @@ it('parse one line', () => {
   }
 })
 
+
+
+it('parse one line', () => {
+  let result = parser(`010  A062C006 V     C        15:57:46:02 15:57:49:09 01:00:04:01 01:00:07:08
+*FROM CLIP NAME:  201/03-01 CAMA
+*LOC: 1:00:05:10  CYAN    201_010_E02 // MULTIPASSE
+*SOURCE FILE: A062C006_190417TI `)
+  if(result.length !== 1){
+    throw Error("result should be an array of size: " + result.length)
+  }
+})
+
 it('parse two lines', () => {
   let result = parser(`088  A003C003 V     C        16:51:25:10 16:51:28:00 01:01:05:19 01:01:08:09
 * FROM CLIP NAME:  210/01-03* CAMA

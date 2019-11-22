@@ -9,9 +9,8 @@ function splitLines(rawData){
   var group = "";
   let lines = rawData.split(/[\n\r]{1,2}/);
   var inComment = false;
-  let matcher = RegExp(/\s{0,1}\*\s/g)
   for(const line of lines){
-    if(RegExp(/\s{0,1}\*\s/g).test(line)){
+    if(RegExp(/\s{0,1}\*\s{0,1}/g).test(line)){
       group += line.replace(/\*\s{0,1}/, "");
       inComment = true;
     }else{
