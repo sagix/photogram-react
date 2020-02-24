@@ -79,3 +79,15 @@ it('parse two lines', () => {
     throw Error("result should be an array of size: " + result.length)
   }
 })
+
+it('parse one line with header', () => {
+  let result = parser(`TITLE:   test
+FCM: NON-DROP FRAME
+000001  B061C018_200217I0                V     C        17:13:19:22 17:13:22:12 01:00:00:00 01:00:02:14
+*FROM CLIP NAME:  137/06-01*
+*LOC: 01:00:00:17 CYAN    000_001 // TEST 1
+*SOURCE FILE: B061C018_200217I0`)
+  if(result.length !== 1){
+    throw Error("result should be an array of size: " + result.length)
+  }
+})

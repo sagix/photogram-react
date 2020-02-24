@@ -1,4 +1,5 @@
 function parse(rawData){
+  console.log(splitLines(rawData));
   return splitLines(rawData)
     .map(parseLine)
     .filter(line => line !== undefined);
@@ -10,7 +11,10 @@ function splitLines(rawData){
   let lines = rawData.split(/[\n\r]{1,2}/);
   var inComment = false;
   for(const line of lines){
-    if(RegExp(/\s{0,1}\*\s{0,1}/g).test(line)){
+    if(RegExp(/^\w+:/g).test(line)){
+      console.log(line);
+      results.push(line);
+    }else if(RegExp(/\s{0,1}\*\s{0,1}/g).test(line)){
       group += line.replace(/\*\s{0,1}/, "");
       inComment = true;
     }else{
