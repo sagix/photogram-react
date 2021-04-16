@@ -62,6 +62,10 @@ class ListProject extends Component{
         <div className="projects-container">
           <Header nav="projects"/>
           <NewProject onNewProject={files => this.onNewProject(files)} />
+            {this.state.projects.length <= 0
+                ? (<img  className="projects-empty" src="/illus/undraw_empty_street_sfxm.svg" alt="No project"/>)
+                : null
+            }
             <ul id="grid">{this.state.projects.map((project) => {
                 let src;
                 if(project.mainPicture){
