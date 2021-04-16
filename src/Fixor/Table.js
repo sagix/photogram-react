@@ -23,7 +23,7 @@ class Table  extends Component{
                     return (
                       <tr key={line.id}>
                         <td>{line.id}</td>
-                        <td><img src={line.image}/></td>
+                        <td><img alt="vfx" src={line.image}/></td>
                         <td>{line.description}</td>
                         <td>{line.sourceDuration(this.props.imagePerSeconde)}</td>
                         <td>{line.vfxName}</td>

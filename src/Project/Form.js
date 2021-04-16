@@ -21,7 +21,7 @@ class FormImage extends React.Component {
             event.target.form.reset()
         }}/>
         <label htmlFor="photogram" id="photogram-label">
-          <img src={empty}/>
+          <img alt="" src={empty}/>
           <em>Add new photogram</em>
         </label>
         </div>

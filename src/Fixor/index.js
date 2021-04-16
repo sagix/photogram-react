@@ -143,7 +143,6 @@ class Fixor extends Component {
   }
 
  selectElementContents(el, callback) {
-    var body = document.body;
     var range = document.createRange();
     var sel =  window.getSelection();
     sel.removeAllRanges();

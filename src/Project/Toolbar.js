@@ -8,9 +8,9 @@ class Toolbar extends Component{
     render(){
             return (
                 <div className="toolbar">
-                  <img className={"button button-close"} onClick={this.props.onBack} src={back}/>
+                  <img alt="Close" className={"button button-close"} onClick={this.props.onBack} src={back}/>
                   <h1>{this.props.title}</h1>
-                  <img className={"button button-print"}onClick={this.props.onPrint} src={print}/>
+                  <img alt="Print" className={"button button-print"}onClick={this.props.onPrint} src={print}/>
 
                 </div>
             )
