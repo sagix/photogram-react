@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import './ListProject.css';
+import NewProject from '../NewProject';
 class ListProject extends Component{
 
     render(){
         return (
+        <div className="list-project">
+          <div className="list-project-header">
+              <h2>Projects</h2>
+              <NewProject onNewProject={files => this.props.onNewProject(files)} />
+          </div>
+            <div className="list-project-container">
             <ul id="grid">{this.props.value.map((project) => {
                 let src;
                 if(project.mainPicture){
@@ -25,6 +32,8 @@ class ListProject extends Component{
                   </li>
                 );
             })}</ul>
+            </div>
+            </div>
         )
     }
 }

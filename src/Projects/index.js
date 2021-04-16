@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import ReactGA from 'react-ga';
+import './index.css';
 import Header from '../Header';
-import Creators from './Creators';
-import EmptyProject from './EmptyProject';
-import ListProject from './ListProject';
+import NewProject from '../NewProject';
 import QuotaProgress from '../QuotaProgress';
 import Repository from '../Data';
-import '../styles.css'
-import './index.css';
-
-class Landing extends Component{
+class ListProject extends Component{
     constructor(props){
         super(props)
         this.state ={
@@ -61,25 +58,34 @@ class Landing extends Component{
     }
 
     render(){
-            return (
-                <div className="landing-container">
-                    <Header/>
-                    {this.state.projects.length <= 0
-                        ? null
-                        : (
-                          <div>
-                            <ListProject value={this.state.projects}
-                                onDelete={(key) => this.onDeleteProject(key)}
-                                onNewProject={files => this.onNewProject(files)}/>
-                          </div>
-                        )
-                    }
-                    <EmptyProject onNewProject={files => this.onNewProject(files)} />
-                    <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max}/>
-                    <Creators/>
-                </div>
-            )
-        }
+        return (
+        <div className="projects-container">
+          <Header nav="projects"/>
+          <NewProject onNewProject={files => this.onNewProject(files)} />
+            <ul id="grid">{this.state.projects.map((project) => {
+                let src;
+                if(project.mainPicture){
+                    src = project.mainPicture;
+                } else if(project.data[0]){
+                    src = project.data[0].url;
+                }
+                return (
+                  <li key={project.key}>
+                    <Link to={"/project/" + project.key}>
+                        <div className="picture"><img alt="project cover" src={src}/></div>
+                        <span>{project.name}</span>
+                        <button className="btn-delete" onClick={(event) => {
+                            event.preventDefault();
+                            this.onDeleteProject(project.key);
+                        }}>&#x2715;</button>
+                    </Link>
+                  </li>
+                );
+            })}</ul>
+            <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max}/>
+            </div>
+        )
+    }
 }
 
-export default Landing;
+export default ListProject;

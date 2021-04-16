@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './QuotaProgress.css'
+import './index.css'
 
 class QuotaProgress extends Component{
 

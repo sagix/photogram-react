@@ -1,3 +1,13 @@
+.projects-container{
+    max-width: 80rem;
+    margin: auto;
+    padding: 0 6.4rem;
+}
+
+.projects-container .new-project {
+    text-align:center;
+}
+
 .btn-delete {
     display: inline-block;
     opacity: 0;
@@ -17,26 +27,16 @@
     background: #ddd;
     color: #222;
 }
-
-.list-project-container{
-  display: flex;
-  overflow-x: scroll;
-}
-
-.list-project-header{
-    display:flex;
-    align-items:center;
-}
-
-.list-project-header h2{
-    flex-grow:1;
-}
-.list-project #grid {
+.projects-container #grid {
     display: flex;
     list-style-type: none;
+    padding: 0;
+    margin: auto;
+    overflow-y: hidden;
+    flex-flow: wrap;
     padding: .4rem;
 }
-.list-project #grid> li {
+.projects-container #grid> li {
     position: relative;
     display: flex;
     align-content: flex-end;
@@ -50,14 +50,14 @@
     border: 1px solid silver;
     background-color: #FFF;
 }
-.list-project #grid> li:hover {
+.projects-container #grid> li:hover {
     outline: .3rem solid #CCC;
     cursor: pointer;
 }
-.list-project #grid> li:hover .btn-delete {
+.projects-container #grid> li:hover .btn-delete {
     opacity: 1;
 }
-.list-project #grid .picture {
+.projects-container #grid .picture {
     min-height: 16rem;
     display: flex;
     align-items: center;
@@ -65,15 +65,15 @@
     flex-grow: 1;
     background-color: #000;
 }
-.list-project #grid .picture img {
+.projects-container #grid .picture img {
     width: 100%;
     display: block;
 }
-.list-project #grid span {
+.projects-container #grid span {
     padding: 1.6rem;
     display:block;
     color: #000000BB
 }
-.list-project #grid a{
+.projects-container #grid a{
     text-decoration: none;
 }

@@ -1,5 +1,4 @@
 .layout-parent {
-
     display: grid;
     grid-template-columns: auto 24rem;
     grid-template-rows: 5.4rem auto;

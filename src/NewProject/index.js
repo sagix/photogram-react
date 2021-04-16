@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import './NewProject.css'
+import './index.css'
 
 class NewProject extends Component{
 
     render(){
         return (
-            <form>
+            <form className="new-project">
                 <input type="file" id="new-project-file"
                     webkitdirectory={true.toString()}
                     directory={true.toString()}

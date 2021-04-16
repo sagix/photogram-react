@@ -6,8 +6,10 @@ class EmptyCell extends Component {
     return(
       <section className={this.props.className}>
         <img src={this.props.src} alt=""/>
-        <h1>{this.props.title}</h1>
-        <span>{this.props.desc}</span>
+        <div className="empty-cell-text">
+            <h1>{this.props.title}</h1>
+            <span>{this.props.desc}</span>
+        </div>
       </section>
     )
   }
@@ -18,6 +20,7 @@ class EmptyProject  extends Component{
   render(){
       return (
         <div className="empty-project-layout">
+          <h2>How to start</h2>
           <a href="/tutorial">
             <EmptyCell className="empty-project-item"
               src="illus/undraw_learning_2q1h.svg"

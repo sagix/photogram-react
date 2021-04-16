@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Helmet} from "react-helmet";
 import './index.css'
+import Header from '../Header'
 import TemplateSmall from '../Templates/Small'
 
 const colors = [
@@ -75,7 +76,10 @@ class Tutorial extends Component{
            <title>Photogram - Learn more about the tool for assistant editors</title>
            <meta name="description" content="Discover all the features of Photogram and learn how to build your own data set" />
         </Helmet>
-      <article className="tutorial-layout">
+
+      <div className="tutorial-layout">
+      <Header nav="tutorial"/>
+      <article>
         <h1>Comment utiliser Photogram</h1>
         <p><strong>Photogram</strong> permet de créer un séquencier image des différentes scènes composant un film ou une série.</p>
         <section>
@@ -125,6 +129,7 @@ class Tutorial extends Component{
           </ul>
         </section>
       </article>
+      </div>
       </div>
     )
   }

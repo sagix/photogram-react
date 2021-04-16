@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Router, Route } from "react-router-dom";
 import Landing from './Landing';
+import Projects from './Projects';
 import Project from './Project';
 import Demo from './Demo';
 import Tutorial from './Tutorial';
@@ -28,6 +29,7 @@ class App extends Component {
           <div className="App">
             <Route exact path="/" component={Landing} />
             <Route exact path="/tutorial" component={Tutorial} />
+            <Route exact path="/projects" component={Projects} />
             <Route exact path="/project/:id" component={Project} />
             <Route exact path="/project-demo" component={Demo} />
             <Route exact path="/fixor" component={Fixor} />
