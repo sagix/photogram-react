@@ -6,7 +6,7 @@ class Creator  extends Component{
       return (
         <a href={this.props.link} target="_blank" rel="noopener noreferrer" className={this.props.className + " creator-item"}>
             <img src={this.props.img} alt={this.props.name}/><br/>
-            <strong  className="creator-name"></strong><br/>
+            <strong  className="creator-name">{this.props.name}</strong><br/>
             <span>{this.props.job}</span>
         </a>
       )
