@@ -1,33 +1,8 @@
-.fixor-container {
-    max-width: 80rem;
-    margin: auto;
-    padding: 0 6.4rem;
-}
-
-.header-container {
-    display: flex;
-    align-items: center;
-    padding: 20px 0;
-}
-
-
-.header-text{
-    margin: 2.4rem;
-    flex-grow:1;
-    text-decoration: none;
-    color: black;
-}
-
-.header-text > h1{
-  font-size: 3.2rem;
-  margin: 0;
-}
-
-#new-project-file{
+.import-button-input{
     display: none;
 }
 
-#new-project-label{
+.import-button-label{
     display: inline-block;
     font-weight: bold;
     cursor: pointer;
@@ -48,11 +23,11 @@
     font-size: 16px;
 }
 
-#new-project-label:not([disabled]) {
+.import-button-label:not([disabled]) {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
-#new-project-label:not([disabled]):hover {
+.import-button-label:not([disabled]):hover {
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.26);
   color : #FFFFFFFF;
 }

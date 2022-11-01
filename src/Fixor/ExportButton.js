@@ -128,6 +128,7 @@ class ExportButton  extends Component{
 
 class SpeadSheetLink extends Component{
   render(){
+    console.log(this.props.document)
     let url;
     if(this.props.document !== undefined && this.props.document.spreadsheetUrl !== undefined ){
       url = this.props.document.spreadsheetUrl;

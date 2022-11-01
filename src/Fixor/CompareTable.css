@@ -1,0 +1,31 @@
+.edl-compare-table {
+  background: white;
+  margin: auto;
+  border-collapse: collapse;
+}
+
+.edl-compare-able, .edl-compare-table th, .edl-compare-table td{
+  border: 1px solid #111;
+}
+
+.edl-compare-table thead th{
+  padding-top:1.6rem;
+  padding-bottom:1.6rem;
+  background-color: #BBB;
+}
+
+.edl-compare-table tbody tr:nth-child(2n){
+  background-color: #eee;
+}
+
+.edl-compare-table img {
+  width: 16rem;
+}
+
+.with-history del {
+	display: inherit;
+}
+
+.without-history del {
+	display: none;
+}

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import parser from './parser';
-import Table from './Table';
-import GoogleApi from './GoogleApi'
-import ExportButton from './ExportButton'
+import Empty from './Empty';
+import Edls from './Edls';
 import './index.css'
 
 const readUploadedFileAsText = (inputFile) => {
@@ -84,10 +83,23 @@ class Fixor extends Component {
 
   constructor(props){
       super(props)
+      this.onFiles = this.onFiles.bind(this);
       this.state ={
-          data: [],
-          imagePerSeconde: 25
+          edls: []
       }
+  }
+
+
+  parseName(files, defaultName){
+    return Promise.resolve(Array.from(files).find(file => true)).then(file => {
+      let name;
+      if(file !== undefined && file.webkitRelativePath){
+          name = file.webkitRelativePath.split("/")[0];
+      } else {
+          name = defaultName
+      }
+      return name;
+    });
   }
 
   parseData(files){
@@ -101,7 +113,6 @@ class Fixor extends Component {
         data: parser(rawContent.result)
       }})
     }).then(results => {
-      console.log(results);
       return results.map(r => r.data).flat().sort((a, b) => a.id.localeCompare(b.id));
     })
   }
@@ -116,10 +127,11 @@ class Fixor extends Component {
 
   onFiles(files){
     Promise.all([
+      this.parseName(files, "edl " + (this.state.edls.length + 1)),
       this.parseData(files),
       this.parseImages(files)
     ]).then(results => {
-      let [data, images] = results;
+      let [name, data, images] = results;
 
       data.forEach(d => {
         let image = images.filter(i => i.file.name.toLowerCase().includes(d.id.toLowerCase()))[0]
@@ -127,19 +139,16 @@ class Fixor extends Component {
           d.image = image.result;
         }
       });
-
-      this.setState({
+    
+      let edl = {
+        name: name,
         data: data
-      });
+      }
+
+      this.setState({ edls: [...this.state.edls, edl] });
     }).catch(error => {
       console.warn(error);
     });
-  }
-
-  onImagePerSecond = (event) => {
-    this.setState(Object.assign(this.state, {
-      imagePerSeconde: event.target.value
-    }))
   }
 
  selectElementContents(el, callback) {
@@ -157,34 +166,19 @@ class Fixor extends Component {
     sel.removeAllRanges();
 }
 
-  copy= () => {
-    this.selectElementContents(document.getElementById("fixor-table"), () => document.execCommand("copy"));
-  }
 
   render(){
+      let content
+      if(this.state.edls.length === 0){
+        content= (<Empty onFiles={this.onFiles}/>)
+      } else {
+        content = (
+          <Edls onFiles={this.onFiles} edls={this.state.edls}/>
+        )
+      }
       return (
-          <div>
-          <form>
-              <input type="file" id="new-project-file"
-                  webkitdirectory={true.toString()}
-                  directory={true.toString()}
-                  multiple={true}
-                  onChange={(event) => {
-                      this.onFiles(event.target.files)
-                      event.target.form.reset()
-                  }}/>
-              <label htmlFor="new-project-file" id="new-project-label">New project</label>
-              <input type="number" onChange={this.onImagePerSecond} defaultValue={this.state.imagePerSeconde}/>
-          </form>
-          <button onClick={this.copy}>Copy</button>
-          <GoogleApi
-            apiKey={process.env.REACT_APP_GOOGLE_API_KEY}
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            discoveryDocs={["https://sheets.googleapis.com/$discovery/rest?version=v4"]}
-            scope="https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file">
-              <ExportButton data={this.state.data}  imagePerSeconde={this.state.imagePerSeconde}/>
-          </GoogleApi>
-          <Table data={this.state.data} imagePerSeconde={this.state.imagePerSeconde}/>
+          <div className="fixor-container">
+              {content}
           </div>
       );
     }

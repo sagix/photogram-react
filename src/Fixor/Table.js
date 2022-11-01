@@ -3,7 +3,6 @@ import './Table.css'
 
 class Table  extends Component{
   render(){
-        console.log(this.props.data);
         if(this.props.data.length > 0 ){
           return(
               <table className="edl-table" id="fixor-table">
