@@ -14,7 +14,7 @@ class Empty extends Component{
             </a>
           </header>
           <div className="empty-button">
-          	<ImportButton onFiles={this.props.onFiles}>New project</ImportButton>
+          	<ImportButton onFiles={this.props.onFiles}>Add first project</ImportButton>
           </div>
           <img  className="projects-empty" src="/illus/undraw_empty_street_sfxm.svg" alt="No project"/>
         </div>

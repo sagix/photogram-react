@@ -75,7 +75,7 @@ class Edls extends Component{
 	              <h1 className="App-title">Fixor</h1>
 	              <p>A tool for assistant editor</p>
 	            </a>
-	            <ImportButton onFiles={this.props.onFiles}>New project</ImportButton>
+	            <ImportButton onFiles={this.props.onFiles}>Add another project</ImportButton>
 	            <form>
 	                <input type="number" onChange={this.onImagePerSecond} defaultValue={this.state.imagePerSeconde}/>
 	            </form>
