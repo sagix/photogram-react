@@ -56,10 +56,10 @@ function parseLine(value){
     recordIn: toDate(dates[2]),
     recordOut: toDate(dates[3]),
     sourceDuration: function(imagePerSeconde) {
-      return dateDuration(this.sourceIn, this.sourceOut, imagePerSeconde);;
+      return dateDuration(this.sourceIn, this.sourceOut, imagePerSeconde).toFixed(2);
     },
     recordDuration: function(imagePerSeconde) {
-      return dateDuration(this.recordIn, this.recordOut, imagePerSeconde);
+      return dateDuration(this.recordIn, this.recordOut, imagePerSeconde).toFixed(2);
     }
   };
 }

@@ -23,8 +23,9 @@ class Edls extends Component{
 	}
 
   onImagePerSecond = (event) => {
+  	let value = event.target.value
     this.setState(Object.assign(this.state, {
-      imagePerSeconde: event.target.value
+      imagePerSeconde: parseFloat(value)
     }))
   }
     copy= () => {
