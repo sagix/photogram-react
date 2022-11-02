@@ -12,7 +12,7 @@ class Edls extends Component{
       this.state ={
       	selected: props.edls[0].name,
       	compare: "",
-        imagePerSeconde: 25
+        imagePerSeconde: NaN
       }
   }
 
@@ -77,7 +77,17 @@ class Edls extends Component{
 	            </a>
 	            <ImportButton onFiles={this.props.onFiles}>Add another project</ImportButton>
 	            <form>
-	                <input type="number" onChange={this.onImagePerSecond} defaultValue={this.state.imagePerSeconde}/>
+	                <input type="number" 
+	                	placeholder="FPS"
+	                	list="imagePerSeconde" 
+	                	onChange={this.onImagePerSecond} 
+	                	defaultValue={this.state.imagePerSeconde}/>
+	                <datalist id="imagePerSeconde">
+					    <option value="23.98" />
+					    <option value="24" />
+					    <option value="25" />
+					    <option value="29.97" />
+					</datalist>
 	            </form>
 	            <button onClick={this.copy}>Copy</button>
 	          </header>
