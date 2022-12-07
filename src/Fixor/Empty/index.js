@@ -8,7 +8,7 @@ class Empty extends Component{
         return (
         <div className="fixor-empty-container">
     	  <header className="header-container">
-            <a className="header-text" href="/fixoe">
+            <a className="header-text" href="/fixor">
               <h1 className="App-title">Fixor</h1>
               <p>A tool for assistant editor</p>
             </a>
