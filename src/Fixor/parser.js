@@ -1,28 +1,64 @@
-function parse(rawData){
+
+class Line {
+  constructor(
+    id,
+    number,
+    reelName,
+    description,
+    vfxName,
+    fileName,
+    sourceIn,
+    sourceOut,
+    recordIn,
+    recordOut
+  ) {
+    this.id = id;
+    this.number = number;
+    this.reelName = reelName;
+    this.description = description;
+    this.vfxName = vfxName;
+    this.fileName = fileName;
+    this.sourceIn = sourceIn;
+    this.sourceOut = sourceOut;
+    this.recordIn = recordIn;
+    this.recordOut = recordOut
+  }
+  get key() {
+    return `${this.number}_${this.id}`;
+  }
+  sourceDuration(imagePerSeconde) {
+    return dateDuration(this.sourceIn, this.sourceOut, imagePerSeconde).toFixed(2);
+  }
+  recordDuration(imagePerSeconde) {
+    return dateDuration(this.recordIn, this.recordOut, imagePerSeconde).toFixed(2);
+  }
+};
+
+function parse(rawData) {
   return splitLines(rawData)
     .map(parseLine)
     .filter(line => line !== undefined);
 }
 
-function splitLines(rawData){
+function splitLines(rawData) {
   let results = [];
   var group = "";
   let lines = rawData.split(/[\n\r]{1,2}/);
   var inComment = false;
-  for(const line of lines){
-    if(RegExp(/^\w+:/g).test(line)){
+  for (const line of lines) {
+    if (RegExp(/^\w+:/g).test(line)) {
       results.push(line);
-    }else if(RegExp(/\s{0,1}\*\s{0,1}/g).test(line)){
+    } else if (RegExp(/\s{0,1}\*\s{0,1}/g).test(line)) {
       group += line.replace(/\*\s{0,1}/, "");
       inComment = true;
-    }else{
-      if(inComment){
+    } else {
+      if (inComment) {
         results.push(group);
         group = ""
         group += line.trim();
         inComment = false;
       } else {
-        if(group.length === 0){
+        if (group.length === 0) {
           group += line.trim();
         }
       }
@@ -30,43 +66,36 @@ function splitLines(rawData){
   }
   results.push(group);
 
-  return results.filter(g => g !== undefined && g.length > 0);
+  return results.filter(g => g !== undefined && g.length > 0);
 }
 
-function parseLine(value){
-  let number = value.match(/(^\d+)/);
+function parseLine(value) {
+  let number = value.match(/(^\d+)\s+(\S+)\s+/);
   let dates = value.match(/(\d+:\d+:\d+:\d+)/g);
   let vfxName = value.match(/.*FROM CLIP NAME:\s*(.*)\s*LOC/)
   let idAndDesc = value.match(/\s([\S]+)\s\/\/\s(.*)SOURCE FILE:/)
   let sourceFile = value.match(/SOURCE FILE: ([\S]+)/)
-  if(number === null || dates === null || vfxName === null || idAndDesc === null || sourceFile === null){
+
+  if (number === null || dates === null || vfxName === null || idAndDesc === null || sourceFile === null) {
     return undefined;
   }
-  return {
-    id: idAndDesc[1],
-    number: number[1],
-    key: function(){
-      return `${this.number}_${this.id}`;
-    },
-    description: idAndDesc[2].trim().toLowerCase(),
-    vfxName: vfxName[1].trim(),
-    fileName: sourceFile[1].trim(),
-    sourceIn: toDate(dates[0]),
-    sourceOut: toDate(dates[1]),
-    recordIn: toDate(dates[2]),
-    recordOut: toDate(dates[3]),
-    sourceDuration: function(imagePerSeconde) {
-      return dateDuration(this.sourceIn, this.sourceOut, imagePerSeconde).toFixed(2);
-    },
-    recordDuration: function(imagePerSeconde) {
-      return dateDuration(this.recordIn, this.recordOut, imagePerSeconde).toFixed(2);
-    }
-  };
+  return new Line(
+    /*id*/ idAndDesc[1],
+    /*number*/ number[1],
+    /*reelName*/ number[2],
+    /*description*/ idAndDesc[2].trim().toLowerCase(),
+    /*vfxName*/ vfxName[1].trim(),
+    /*fileName*/ sourceFile[1].trim(),
+    /*sourceIn*/ toDate(dates[0]),
+    /*sourceOut*/ toDate(dates[1]),
+    /*recordIn*/ toDate(dates[2]),
+    /*recordOut*/ toDate(dates[3])
+  );
 }
 
-function toDate(value){
+function toDate(value) {
   let stringValues = value.split(":");
-  if(stringValues.length === 4){
+  if (stringValues.length === 4) {
     let values = stringValues.map(s => parseInt(s));
     return {
       hours: values[0],
@@ -74,19 +103,17 @@ function toDate(value){
       secondes: values[2],
       images: values[3],
     }
-  }else{
+  } else {
     return undefined;
   }
 }
 
-function dateDuration(din, dout, numberOfImages){
+function dateDuration(din, dout, numberOfImages) {
   return ((dout.hours - din.hours) * 3600
     + (dout.minutes - din.minutes) * 60
     + (dout.secondes - din.secondes)
   ) * numberOfImages + (dout.images - din.images)
 }
 
-export default parse
-
-
-//[\sA-Z]+(\d+:\d+:\d+:\d+)\s(\d+:\d+:\d+:\d+)\s(\d+:\d+:\d+:\d+)\s(\d+:\d+:\d+:\d+)[\s]+FROM CLIP NAME:[\s]+([\w\/\-\*\s]*)[\s*\w\r\n]+LOC: (\d+:\d+:\d+:\d+)[\s\w]+(\d{3}_\d{3})[\s\/]+([\w\s+]*)[\s\w]+SOURCE FILE:\s+([\w_]+)
+export default parse;
+export {Line};

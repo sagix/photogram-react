@@ -20,11 +20,11 @@ class Table  extends Component{
                 {
                   this.props.data.map((line) => {
                     return (
-                      <tr key={line.id}>
+                      <tr key={line.key}>
                         <td>{line.id}</td>
                         <td><img alt="vfx" src={line.image}/></td>
                         <td>{line.description}</td>
-                        <td>{line.sourceDuration(this.props.imagePerSeconde)}</td>
+                        <td>{line.sourceDuration(this.props.imagePerSeconde).toString()}</td>
                         <td>{line.vfxName}</td>
                         <td>{line.fileName}</td>
                       </tr>
