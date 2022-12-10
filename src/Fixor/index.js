@@ -134,9 +134,14 @@ class Fixor extends Component {
       let [name, data, images] = results;
 
       data.forEach(d => {
-        let image = images.filter(i => i.file.name.toLowerCase().includes(d.id.toLowerCase()))[0]
-        if(image !== undefined){
-          d.image = image.result;
+        let imageResults = images.filter(i => i.file.name.toLowerCase().includes(d.id.toLowerCase()))
+        if(imageResults.length === 1) {
+          d.image = imageResults[0].result;
+        } else {
+          let imageResults2 = imageResults.filter(i => i.file.name.toLowerCase().includes(d.description.toLowerCase() + '.'));
+          if(imageResults2.length === 1) {
+            d.image = imageResults2[0].result;
+          }
         }
       });
     
