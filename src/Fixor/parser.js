@@ -45,15 +45,19 @@ function splitLines(rawData) {
   var group = "";
   let lines = rawData.split(/[\n\r]{1,2}/);
   var inComment = false;
+  const newComment = new RegExp(/\*\s{0,1}[\w\s]+:/);
   for (const line of lines) {
     if (RegExp(/^\w+:/g).test(line)) {
       results.push(line);
-    } else if (RegExp(/\s{0,1}\*\s{0,1}/g).test(line)) {
+    } else if (RegExp(/\s{0,1}\*\s{0,1}.+/g).test(line)) {
+      if(newComment.test(line)){
+        group += "\n"
+      }
       group += line.replace(/\*\s{0,1}/, "");
       inComment = true;
     } else {
       if (inComment) {
-        results.push(group);
+        results.push(group + "\n");
         group = ""
         group += line.trim();
         inComment = false;
@@ -72,8 +76,8 @@ function splitLines(rawData) {
 function parseLine(value) {
   let number = value.match(/(^\d+)\s+(\S+)\s+/);
   let dates = value.match(/(\d+:\d+:\d+:\d+)/g);
-  let vfxName = value.match(/.*FROM CLIP NAME:\s*(.*)\s*LOC/)
-  let idAndDesc = value.match(/\s([\S]+)\s\/\/\s(.*)SOURCE FILE:/)
+  let vfxName = value.match(/.*FROM CLIP NAME:\s*(.*)\s*\n/)
+  let idAndDesc = value.match(/LOC:.*\s([\S]+)\s\/\/\s(.*)\n/)
   let sourceFile = value.match(/SOURCE FILE: ([\S]+)/)
 
   if (number === null || dates === null || vfxName === null || idAndDesc === null || sourceFile === null) {

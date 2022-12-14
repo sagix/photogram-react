@@ -22,8 +22,8 @@ it('parse one line', () => {
     { hours: 1, minutes: 1, secondes: 5, images: 19 },
     { hours: 1, minutes: 1, secondes: 8, images: 9 }
   )]);
-  expect(result[0].sourceDuration(25)).toEqual("65.00");
-  expect(result[0].recordDuration(25)).toEqual("65.00");
+  expect(result[0].sourceDuration(25)).toEqual(65);
+  expect(result[0].recordDuration(25)).toEqual(65);
 })
 
 it('parse one line', () => {
@@ -151,21 +151,22 @@ FCM: NON-DROP FRAME
   )]);
 })
 
-it('parse one line with header', () => {
-  let result = parser(`000555  A_0048C002_220908_183153_A1BYR_H V     C        18:34:14:00 18:34:17:03 01:40:12:23 01:40:16:02 
-  *FROM CLIP NAME:  686/2-2* CAMA 
-  *LOC: 01:00:00:17 CYAN    000_001 // TEST 1
-  *SOURCE FILE: A_0048_1BYR`)
+it('parse one line with to clip name', () => {
+  let result = parser(`000049  A_0003C005_220826_191043_A1BYR_H V     W001 006 19:14:41:12 19:14:41:18 01:04:33:16 01:04:33:22 
+  *FROM CLIP NAME:  501/07-02* 
+  *TO CLIP NAME:  501/07-02* 
+  *LOC: 01:04:36:10 GREEN   501_030 // MORPHING 
+  *SOURCE FILE: A_0003_1BYR`)
   expect(result).toStrictEqual([new Line(
-    "000_001",
-    "000555",
-    "A_0048C002_220908_183153_A1BYR_H",
-    "test 1",
-    "686/2-2* CAMA",
-    "A_0048_1BYR",
-    { hours: 18, minutes: 34, secondes: 14, images: 0 },
-    { hours: 18, minutes: 34, secondes: 17, images: 3 },
-    { hours: 1, minutes: 40, secondes: 12, images: 23 },
-    { hours: 1, minutes: 40, secondes: 16, images: 2 },
+    "501_030",
+    "000049",
+    "A_0003C005_220826_191043_A1BYR_H",
+    "morphing",
+    "501/07-02*",
+    "A_0003_1BYR",
+    { hours: 19, minutes: 14, secondes: 41, images: 12 },
+    { hours: 19, minutes: 14, secondes: 41, images: 18 },
+    { hours: 1, minutes: 4, secondes: 33, images: 16 },
+    { hours: 1, minutes: 4, secondes: 33, images: 22 },
   )]);
 })
