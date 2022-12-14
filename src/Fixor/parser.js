@@ -27,10 +27,10 @@ class Line {
     return `${this.number}_${this.id}`;
   }
   sourceDuration(imagePerSeconde) {
-    return dateDuration(this.sourceIn, this.sourceOut, imagePerSeconde).toFixed(2);
+    return dateDuration(this.sourceIn, this.sourceOut, imagePerSeconde);
   }
   recordDuration(imagePerSeconde) {
-    return dateDuration(this.recordIn, this.recordOut, imagePerSeconde).toFixed(2);
+    return dateDuration(this.recordIn, this.recordOut, imagePerSeconde);
   }
 };
 
@@ -109,10 +109,11 @@ function toDate(value) {
 }
 
 function dateDuration(din, dout, numberOfImages) {
-  return ((dout.hours - din.hours) * 3600
+  let duration = ((dout.hours - din.hours) * 3600
     + (dout.minutes - din.minutes) * 60
     + (dout.secondes - din.secondes)
-  ) * numberOfImages + (dout.images - din.images)
+  ) * numberOfImages + (dout.images - din.images);
+  return Math.round((duration + Number.EPSILON) * 100) / 100
 }
 
 export default parse;
