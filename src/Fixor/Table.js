@@ -26,7 +26,7 @@ class Table  extends Component{
                         <td>{line.description}</td>
                         <td>{line.sourceDuration(this.props.imagePerSeconde).toString()}</td>
                         <td>{line.vfxName}</td>
-                        <td>{line.fileName}</td>
+                        <td>{line[this.props.source]}</td>
                       </tr>
                     )
                   })

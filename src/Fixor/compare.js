@@ -1,7 +1,5 @@
 function parse(edl1, edl2){
 	let ids = [...new Set(edl1.map((line) => line.id).concat(edl2.map((line) => line.id)))]
-	console.log(edl1);
-	console.log(edl2);
 	return ids.map((id) => {
 		let line1 = edl1.find((line) => line.id === id)
 		let line2 = edl2.find((line) => line.id === id)
