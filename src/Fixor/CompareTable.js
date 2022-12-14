@@ -66,7 +66,6 @@ class OneLine extends Component {
       line = this.props.diffLine.lineA;
     }
 
-    console.log(this.props.diffLine.type + line.key)
     return (
       <tr>
         <td title={this.props.diffLine.changes}>{this.props.diffLine.type}</td>
