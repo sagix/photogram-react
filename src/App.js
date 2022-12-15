@@ -26,6 +26,7 @@ class App extends Component {
 
   render() {
     return (
+      <React.StrictMode>
         <Router history={history}>
           <div className="App">
             <Route exact path="/" component={Landing} />
@@ -37,6 +38,7 @@ class App extends Component {
             <Route exact path="/fixor" component={Fixor} />
           </div>
         </Router>
+      </React.StrictMode>
     );
   }
 }
