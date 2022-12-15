@@ -17,7 +17,7 @@ function line(id, number, description, vfxName, fileName, sourceIn, sourceOut, r
   recordIn: 3,
   recordOut: 4,
   sourceDuration: function(imagePerSeconde) {
-    return dateDuration(this.sourceIn, this.sourceOut, imagePerSeconde);;
+    return dateDuration(this.sourceIn, this.sourceOut, imagePerSeconde);
   },
   recordDuration: function(imagePerSeconde) {
     return dateDuration(this.recordIn, this.recordOut, imagePerSeconde);

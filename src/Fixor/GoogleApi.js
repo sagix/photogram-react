@@ -1,108 +1,95 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function loadScript(src, callback) {
-   var tag = document.createElement('script');
-   tag.src = src;
-   tag.onload = callback;
-   document.body.appendChild(tag);
- }
+  var tag = document.createElement('script');
+  tag.src = src;
+  tag.onload = callback;
+  document.body.appendChild(tag);
+}
 
-class GoogleApi extends Component{
-  constructor(props){
-      super(props)
-      this.state ={
-          loaded:false,
-          signin:false,
-          error:null,
-      }
-  }
+function GoogleApi(props) {
+  const [loaded, setLoaded] = useState(false);
+  const [signin, setSignin] = useState(false);
+  const [error, setError] = useState(null);
 
-  handleClientLoad() {
-      window.gapi.load('client:auth2', () => {
-        window.gapi.client.load('drive', 'v3', this.initClient)
-      });
-  }
-
-      /**
-       *  Initializes the API client library and sets up sign-in state
-       *  listeners.
-       */
-   initClient= () => {
-    window.gapi.client.init({
-      apiKey: this.props.apiKey,
-      clientId: this.props.clientId,
-      discoveryDocs: this.props.discoveryDocs,
-      scope: this.props.scope
-    }).then( () => {
-      // Listen for sign-in state changes.
-      window.gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
-
-      // Handle the initial sign-in state.
-      this.updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
-    }, (error) =>{
-      console.warn(error);
-      this.setState(Object.assign(this.state, {
-        error : "Api error"
-      }))
+  function handleClientLoad() {
+    window.gapi.load('client:auth2', () => {
+      window.gapi.client.load('drive', 'v3', initClient)
     });
   }
 
-  updateSigninStatus= (isSignedIn)=>{
-    this.setState(Object.assign(this.state, {
-      signin : isSignedIn
-    }))
+  /**
+   *  Initializes the API client library and sets up sign-in state
+   *  listeners.
+   */
+  function initClient() {
+    window.gapi.client.init({
+      apiKey: props.apiKey,
+      clientId: props.clientId,
+      discoveryDocs: props.discoveryDocs,
+      scope: props.scope
+    }).then(() => {
+      // Listen for sign-in state changes.
+      window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+      // Handle the initial sign-in state.
+      updateSigninStatus(window.gapi.auth2.getAuthInstance().isSignedIn.get());
+    }, (error) => {
+      console.warn(error);
+      setError("Api error");
+    });
   }
 
-  componentDidMount(){
-    if(window.gapi === undefined){
+  function updateSigninStatus(isSignedIn) {
+    setSignin(isSignedIn);
+  }
+
+  useEffect(() => {
+    if (window.gapi === undefined) {
       loadScript("https://apis.google.com/js/api.js", () => {
-        this.setState({
-          loaded: true,
-          error : window.gapi !== undefined ? null : "Api not loaded"
-        })
-        this.handleClientLoad()
+        setLoaded(true);
+        setError(window.gapi !== undefined ? null : "Api not loaded");
+        handleClientLoad()
       })
     }
-  }
+  });
 
-  signIn(){
+  function signIn() {
     window.gapi.auth2.getAuthInstance().signIn();
   }
 
-  signOut(){
+  function signOut() {
     window.gapi.auth2.getAuthInstance().signOut();
   }
 
-  render(){
-    const children = React.Children.map(this.props.children, (child, index) => {
-        return React.cloneElement(child, {
-            index,
-            gapi: this.state.signin ? window.gapi : undefined
-        });
+  const children = React.Children.map(props.children, (child, index) => {
+    return React.cloneElement(child, {
+      index,
+      gapi: signin ? window.gapi : undefined
     });
+  });
 
-      return (
-        <div>
-          <p>{this.state.loaded ? (
-            <span>
-              {children}
-              {gApiButton(this.state.signin, this.signIn, this.signOut)}
-            </span>
-          ) : (
-              <strong>Loading...</strong>
-            )
-          }
-          <span>{this.state.error}</span>
-          </p>
-        </div>
-      );
-  }
+  return (
+    <div>
+      <p>{loaded ? (
+        <span>
+          {children}
+          {gApiButton(signin, signIn, signOut)}
+        </span>
+      ) : (
+        <strong>Loading...</strong>
+      )
+      }
+        <span>{error}</span>
+      </p>
+    </div>
+  );
 }
 
 function gApiButton(signed, signIn, signOut) {
-  if(signed){
+  if (signed) {
     return (<button onClick={signOut} >Sign out</button>)
-  }else{
+  } else {
     return (<button onClick={signIn} >Sign in</button>)
   }
 }
