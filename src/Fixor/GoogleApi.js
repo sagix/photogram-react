@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './GoogleApi.css'
 
 function loadScript(src, callback) {
   var tag = document.createElement('script');
@@ -70,8 +71,8 @@ function GoogleApi(props) {
   });
 
   return (
-    <div>
-      <p>{loaded ? (
+    <div className='google-api'>
+      {loaded ? (
         <span>
           {children}
           {gApiButton(signin, signIn, signOut)}
@@ -80,8 +81,7 @@ function GoogleApi(props) {
         <strong>Loading...</strong>
       )
       }
-        <span>{error}</span>
-      </p>
+      <span>{error}</span>
     </div>
   );
 }

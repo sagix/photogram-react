@@ -1,0 +1,47 @@
+.fixor-tool-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(200, 200, 200, .5);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.4rem;
+}
+
+.fixor-tool-header>form {
+    width: 100%;
+    align-self: flex-end;
+}
+
+.fixor-tool-header-button {
+    border-radius: 3.2rem;
+}
+
+.fixor-tool-header-button:hover,
+.fixor-tool-header-button:focus {
+    background-color: rgba(200, 200, 200, .3);
+}
+
+.fixor-tool-header-logo {
+    margin: 1.6rem;
+    width: 3.2rem;
+}
+
+.fixor-tool-actions {
+    display: flex;
+}
+
+.fixor-tool-action {
+    display: inline-flex;
+    padding: 0.4rem 0.8rem;
+    min-height: 2.4rem;
+    align-items: center;
+}
+
+
+.fixor-tool-action:hover,
+.fixor-tool-action:focus {
+    background-color: rgba(200, 200, 200, .3);
+}
+
+#fps-input {
+    width: 7.2rem;
+}

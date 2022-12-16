@@ -152,20 +152,15 @@ function Fixor(props) {
     });
   }
 
-  let content;
   if (edls.length === 0) {
-    content = (<Empty onFiles={onFiles} />)
+    return (
+      <div className="fixor-container"><Empty onFiles={onFiles} /></div>
+    );
   } else {
-    content = (
+    return (
       <Edls onFiles={onFiles} edls={edls} />
-    )
+    );
   }
-  return (
-    <div className="fixor-container">
-      {content}
-    </div>
-  );
-
 }
 
 export default Fixor;
