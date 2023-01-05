@@ -43,3 +43,18 @@
     margin-left: 1.6rem;
     margin-right: 1.6rem;
 }
+
+.preview {
+    overflow: hidden;
+    height: 12rem;
+}
+
+.preview:hover {
+    cursor: pointer;
+    background-color: rgba(180, 220, 220, 0.5);
+}
+
+.preview .ele {
+    transform: scale(.25);
+    transform-origin: top left;
+}

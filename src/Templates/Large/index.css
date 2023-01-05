@@ -14,21 +14,6 @@
     print-color-adjust: exact;
 }
 
-.preview .tpl-large.ele {
-    width: 100%;
-    height: 5.9rem;
-    padding: 2%;
-    margin: 0;
-}
-
-.preview .tpl-large .indicators {
-    display: none;
-}
-
-.preview .tpl-large .legend {
-    display: none;
-}
-
 @media print {
     .tpl-large-ele {
         margin: 2.8rem;
