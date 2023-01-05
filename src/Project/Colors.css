@@ -8,6 +8,7 @@
     border-radius: 100px;
     transition: opacity 0.4s;
 }
+
 .btn-color:active {
     background: #ddd;
     color: #222;

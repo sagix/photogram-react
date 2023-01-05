@@ -1,10 +1,10 @@
 export default class {
-    constructor(min, max){
+    constructor(min, max) {
         this.min = min
         this.max = max
     }
 
-    apply(node){
+    apply(node) {
         node.style.fontSize = this.max + 'rem';
         if (this._hasOverflow(node.parentNode)) {
             node.style.fontSize = this.min + 'rem';

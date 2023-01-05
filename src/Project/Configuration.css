@@ -1,4 +1,4 @@
-.configuration{
+.configuration {
     background: #FFF;
     text-align: left;
     width: 100%;
@@ -6,40 +6,40 @@
     overflow-y: auto;
 }
 
-.configuration h1{
+.configuration h1 {
     font-size: 2.4rem;
     margin: 1.6rem
 }
 
-.configuration h2{
+.configuration h2 {
     font-size: 2.0rem;
     margin: 1.6rem
 }
 
-.configuration #font-family{
+.configuration #font-family {
     margin-left: 1.6rem;
 }
 
-.configuration .template input{
+.configuration .template input {
     display: none;
 }
 
-.configuration .template label{
+.configuration .template label {
     display: block;
     padding: 5%;
 }
 
-.configuration .template label i{
+.configuration .template label i {
     display: inline-block;
     color: #666;
     margin-bottom: 5%;
 }
 
-.configuration .template input[type="radio"]:checked+label{
+.configuration .template input[type="radio"]:checked+label {
     background-color: #EEE;
 }
 
-.configuration .labels{
+.configuration .labels {
     margin-left: 1.6rem;
     margin-right: 1.6rem;
 }

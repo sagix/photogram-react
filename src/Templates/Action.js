@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import FontSizeAdjuster from './FontSizeAdjuster'
 import './Action.css'
-class Action extends Component{
+class Action extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.textNode = React.createRef();
         this.fontSizeAdjuster = new FontSizeAdjuster(.2, 2)
     }
 
-    componentDidUpdate( prevProps,  prevState){
+    componentDidUpdate(prevProps, prevState) {
         this.fontSizeAdjuster.apply(this.textNode.current)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fontSizeAdjuster.apply(this.textNode.current)
     }
 
-    render(){
+    render() {
         return (
-        <div className="action-container">
-            <p className="action" ref={this.textNode}>{this.props.value}</p>
-        </div>
+            <div className="action-container">
+                <p className="action" ref={this.textNode}>{this.props.value}</p>
+            </div>
         )
     }
 }

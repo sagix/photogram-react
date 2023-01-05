@@ -1,14 +1,14 @@
-.projects-container{
+.projects-container {
     max-width: 80rem;
     margin: auto;
     padding: 0 6.4rem;
 }
 
 .projects-container .new-project {
-    text-align:center;
+    text-align: center;
 }
 
-.projects-empty{
+.projects-empty {
     display: block;
     width: 51.2rem;
     margin: 12.8rem auto;
@@ -29,10 +29,12 @@
     left: -1.3rem;
     transition: opacity 0.4s;
 }
+
 .btn-delete:active {
     background: #ddd;
     color: #222;
 }
+
 .projects-container #grid {
     display: flex;
     list-style-type: none;
@@ -42,7 +44,8 @@
     flex-flow: wrap;
     padding: .4rem;
 }
-.projects-container #grid> li {
+
+.projects-container #grid>li {
     position: relative;
     display: flex;
     align-content: flex-end;
@@ -56,13 +59,16 @@
     border: 1px solid silver;
     background-color: #FFF;
 }
-.projects-container #grid> li:hover {
+
+.projects-container #grid>li:hover {
     outline: .3rem solid #CCC;
     cursor: pointer;
 }
-.projects-container #grid> li:hover .btn-delete {
+
+.projects-container #grid>li:hover .btn-delete {
     opacity: 1;
 }
+
 .projects-container #grid .picture {
     min-height: 16rem;
     display: flex;
@@ -71,15 +77,18 @@
     flex-grow: 1;
     background-color: #000;
 }
+
 .projects-container #grid .picture img {
     width: 100%;
     display: block;
 }
+
 .projects-container #grid span {
     padding: 1.6rem;
-    display:block;
+    display: block;
     color: #000000BB
 }
-.projects-container #grid a{
+
+.projects-container #grid a {
     text-decoration: none;
 }

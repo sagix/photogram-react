@@ -13,30 +13,33 @@
     left: -1.3rem;
     transition: opacity 0.4s;
 }
+
 .btn-delete:active {
     background: #ddd;
     color: #222;
 }
 
-.list-project-container{
-  display: flex;
-  overflow-x: scroll;
+.list-project-container {
+    display: flex;
+    overflow-x: scroll;
 }
 
-.list-project-header{
-    display:flex;
-    align-items:center;
+.list-project-header {
+    display: flex;
+    align-items: center;
 }
 
-.list-project-header h2{
-    flex-grow:1;
+.list-project-header h2 {
+    flex-grow: 1;
 }
+
 .list-project #grid {
     display: flex;
     list-style-type: none;
     padding: .4rem;
 }
-.list-project #grid> li {
+
+.list-project #grid>li {
     position: relative;
     display: flex;
     align-content: flex-end;
@@ -50,13 +53,16 @@
     border: 1px solid silver;
     background-color: #FFF;
 }
-.list-project #grid> li:hover {
+
+.list-project #grid>li:hover {
     outline: .3rem solid #CCC;
     cursor: pointer;
 }
-.list-project #grid> li:hover .btn-delete {
+
+.list-project #grid>li:hover .btn-delete {
     opacity: 1;
 }
+
 .list-project #grid .picture {
     min-height: 16rem;
     display: flex;
@@ -65,15 +71,18 @@
     flex-grow: 1;
     background-color: #000;
 }
+
 .list-project #grid .picture img {
     width: 100%;
     display: block;
 }
+
 .list-project #grid span {
     padding: 1.6rem;
-    display:block;
+    display: block;
     color: #000000BB
 }
-.list-project #grid a{
+
+.list-project #grid a {
     text-decoration: none;
 }

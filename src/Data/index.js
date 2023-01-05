@@ -1,163 +1,163 @@
 import Images from './images'
 import Csv from './csv'
-import {uuidv4} from './uuidv4.js'
+import { uuidv4 } from './uuidv4.js'
 
-class Repository{
+class Repository {
     colors = [
-        '#F44336','#E91E63','#9C27B0','#3F51B5',
-        '#2196F3','#03A9F4','#00BCD4','#009688',
-        '#4CAF50','#8BC34A','#CDDC39','#FFEB3B',
-        '#FFC107','#FF9800','#FF5722','#795548'
+        '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
+        '#2196F3', '#03A9F4', '#00BCD4', '#009688',
+        '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B',
+        '#FFC107', '#FF9800', '#FF5722', '#795548'
     ]
 
-    list(){
+    list() {
         return Promise.resolve(this._projects)
     }
 
-    get(id){
+    get(id) {
         let result = this._projects.filter(project => project.key === id)
-        if(result.length === 0){
+        if (result.length === 0) {
             return Promise.reject(new Error(`Could not found project with id=${id}`))
         }
         return Promise.resolve(result[0])
     }
 
-    delete(id){
+    delete(id) {
         var projects = this._projects
         let result = projects.filter(project => project.key !== id)
-        if(result.length === projects.length){
+        if (result.length === projects.length) {
             return Promise.reject(new Error(`Could not found project with id=${id}`))
         }
-        try{
+        try {
             localStorage.setItem('projects', JSON.stringify(result));
             return Promise.resolve(result)
                 .then(new Images(id).clear())
-        }catch (error){
+        } catch (error) {
             return Promise.reject(error)
         }
     }
 
-    update(id, data){
+    update(id, data) {
         return this.get(id).then((project) => {
-                project.data = project.data.map(item => {
-                    if(item.id === data.id){
-                        return {
-                            id: data.id,
-                            url: data.url,
-                            sequence: data.sequence,
-                            action: data.action,
-                            label: data.label,
-                            periode: data.periode,
-                            fx: data.fx,
-                        }
-                    }else{
-                        return item
+            project.data = project.data.map(item => {
+                if (item.id === data.id) {
+                    return {
+                        id: data.id,
+                        url: data.url,
+                        sequence: data.sequence,
+                        action: data.action,
+                        label: data.label,
+                        periode: data.periode,
+                        fx: data.fx,
                     }
-                })
-
-                if(data.label && project.colors[data.label] === undefined){
-                    project.colors[data.label] = this.colors[Object.keys(project.colors).length % this.colors.length]
+                } else {
+                    return item
                 }
+            })
 
-                this.save(id, project)
+            if (data.label && project.colors[data.label] === undefined) {
+                project.colors[data.label] = this.colors[Object.keys(project.colors).length % this.colors.length]
+            }
+
+            this.save(id, project)
         })
     }
 
-    updateColor(id, colors){
+    updateColor(id, colors) {
         return this.get(id).then((project) => {
-                Object.keys(colors).forEach((key) => {
-                    project.colors[key] = colors[key]
-                })
+            Object.keys(colors).forEach((key) => {
+                project.colors[key] = colors[key]
+            })
 
-                this.save(id, project)
+            this.save(id, project)
         })
     }
 
-    deleteColor(id, key){
+    deleteColor(id, key) {
         return this.get(id).then((project) => {
-                project.colors[key] = undefined;
-                project.data = project.data.map(item => {
-                    if(key === item.label){
-                        return Object.assign(item, {
-                            label: undefined,
-                        })
-                    }else{
-                        return item
-                    }
-                });
-                this.save(id, project)
+            project.colors[key] = undefined;
+            project.data = project.data.map(item => {
+                if (key === item.label) {
+                    return Object.assign(item, {
+                        label: undefined,
+                    })
+                } else {
+                    return item
+                }
+            });
+            this.save(id, project)
         });
     }
 
-    updateFontFamily(id, fontFamily){
+    updateFontFamily(id, fontFamily) {
         return this.get(id).then((project) => {
-                project.fontFamily = fontFamily;
-                this.save(id, project)
+            project.fontFamily = fontFamily;
+            this.save(id, project)
         })
     }
 
-    updateTemplate(id, template){
+    updateTemplate(id, template) {
         return this.get(id).then((project) => {
-                project.template = template;
-                this.save(id, project)
+            project.template = template;
+            this.save(id, project)
         })
     }
 
-    updateMainPicture(id, mainPicture){
+    updateMainPicture(id, mainPicture) {
         return this.get(id).then((project) => {
-                project.mainPicture = mainPicture;
-                this.save(id, project)
+            project.mainPicture = mainPicture;
+            this.save(id, project)
         })
     }
 
-    save(id, project){
+    save(id, project) {
         const projects = this._projects.map(p => {
-            if(project.key === p.key){
+            if (project.key === p.key) {
                 return project
-            }else{
+            } else {
                 return p
             }
         })
         localStorage.setItem('projects', JSON.stringify(projects));
     }
 
-    add(files){
+    add(files) {
         var projects = this._projects
         var identifier = uuidv4()
         var name = this._name(files, `Project (${projects.length})`)
         return Promise.all([
             new Images(identifier).execute(files),
             new Csv().execute(files)
-        ]).then( results => {
+        ]).then(results => {
             let [images, data] = results
 
             projects.push({
-              key: identifier,
-              name: name,
-              data: this._mergeDateWithImages(data, Array.from(images)),
-              colors: this._calculateColors(data),
-              template: "small",
+                key: identifier,
+                name: name,
+                data: this._mergeDateWithImages(data, Array.from(images)),
+                colors: this._calculateColors(data),
+                template: "small",
             })
-            try{
+            try {
                 localStorage.setItem('projects', JSON.stringify(projects));
                 return projects
-            }catch (error){
+            } catch (error) {
                 return Promise.reject(error)
             }
 
         })
     }
 
-    get _projects(){
-        return JSON.parse(localStorage.getItem('projects')) || []
+    get _projects() {
+        return JSON.parse(localStorage.getItem('projects')) || []
     }
 
-    _mergeDateWithImages(data, images){
-        return data.map(d =>{
+    _mergeDateWithImages(data, images) {
+        return data.map(d => {
             let results = images.filter(i => i.name.startsWith(`${d.id}.`))
-            if(results.length === 0){
+            if (results.length === 0) {
                 return d
-            }else{
+            } else {
                 return Object.assign(d, {
                     url: results[0].url
                 })
@@ -165,19 +165,19 @@ class Repository{
         })
     }
 
-    _calculateColors(data){
+    _calculateColors(data) {
         let unique = [...new Set(data.map(d => d.label).filter(p => p !== null && p !== ""))]
-        return Object.assign({}, ...unique.map((p, i) => ({[p]: this.colors[i % this.colors.length]})))
+        return Object.assign({}, ...unique.map((p, i) => ({ [p]: this.colors[i % this.colors.length] })))
     }
 
-    _name(files, defaultName){
-        if(files.length === 0){
+    _name(files, defaultName) {
+        if (files.length === 0) {
             return defaultName
         }
         let relativePath = files[0].webkitRelativePath
-        if(relativePath){
+        if (relativePath) {
             let name = relativePath.split('/')[0]
-            if(name){
+            if (name) {
                 return name
             }
         }

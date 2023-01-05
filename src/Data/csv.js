@@ -1,20 +1,19 @@
 import Papa from 'papaparse';
-class Csv{
+class Csv {
 
-    execute(files){
+    execute(files) {
         let result = Array.from(files).filter(file => file.name === "data.csv")
-        if(result.length === 0){
+        if (result.length === 0) {
             return Promise.reject(new Error('Could not found data.csv'))
         }
         return new Promise((resolve, reject) => Papa.parse(result[0], {
-            complete:resolve,
-            error:reject
-        }))
-        .then(parsed => {
+            complete: resolve,
+            error: reject
+        })).then(parsed => {
             var result = [];
             for (let r of parsed.data) {
                 const id = this.parseId(r[0])
-                if(id !== null){
+                if (id !== null) {
                     result.push({
                         id: id,
                         sequence: id,
@@ -29,13 +28,13 @@ class Csv{
         })
     }
 
-    parseId(id){
-        if(id === undefined || id === null){
+    parseId(id) {
+        if (id === undefined || id === null) {
             return null
         }
         const trimedId = id.trim()
         const pattern = /^\d/
-        if(trimedId.match(pattern) !== null){
+        if (trimedId.match(pattern) !== null) {
             return trimedId
         }
         return null

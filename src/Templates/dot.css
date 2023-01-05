@@ -6,6 +6,7 @@
     background-color: silver;
     margin-right: .8rem;
     -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 }
 
 .dot.hide {

@@ -2,21 +2,26 @@ html {
     height: 100%;
     font-size: 62.5%;
 }
+
 body {
     font-size: 1.6em;
     margin: 0;
 }
+
 @page {
     margin: 0;
 }
+
 .group:after {
     content: "";
     display: table;
     clear: both;
 }
+
 .md-button {
     text-transform: uppercase;
 }
+
 .md-button {
     height: 2.8rem;
     padding: 1rem;
@@ -26,6 +31,8 @@ body {
     background-color: transparent;
     float: right;
 }
-.md-button:hover, .md-button:focus {
+
+.md-button:hover,
+.md-button:focus {
     background-color: rgba(180, 220, 220, 0.5);
 }

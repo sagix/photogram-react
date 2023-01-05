@@ -6,87 +6,89 @@ import Header from '../Header';
 import NewProject from '../NewProject';
 import QuotaProgress from '../QuotaProgress';
 import Repository from '../Data';
-class ListProject extends Component{
-    constructor(props){
+class ListProject extends Component {
+    constructor(props) {
         super(props)
-        this.state ={
-            projects:[],
-            quotas:{max: 0, value: 0}
+        this.state = {
+            projects: [],
+            quotas: { max: 0, value: 0 }
         }
         this.repository = new Repository()
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this._checkQuotas()
         this.repository.list()
-        .then((projects) => this.setState({projects: projects}))
+            .then((projects) => this.setState({ projects: projects }))
 
     }
 
-    _checkQuotas(){
+    _checkQuotas() {
         navigator.storage.estimate()
-        .then(estimate =>
-            this.setState(
-                Object.assign(this.state, {quotas: {
-                    max: estimate.quota,
-                    value: estimate.usage
-                }})
-            )
-        );
+            .then(estimate =>
+                this.setState(
+                    Object.assign(this.state, {
+                        quotas: {
+                            max: estimate.quota,
+                            value: estimate.usage
+                        }
+                    })
+                )
+            );
     }
 
-    onNewProject(files){
+    onNewProject(files) {
         ReactGA.event({
-          category: 'Project',
-          action: 'create'
+            category: 'Project',
+            action: 'create'
         });
         this.repository.add(files)
-        .then((projects) => this.setState({projects: projects}))
-        .then(_ => this._checkQuotas())
-        .catch(error => console.log(error))
+            .then((projects) => this.setState({ projects: projects }))
+            .then(_ => this._checkQuotas())
+            .catch(error => console.log(error))
     }
 
-    onDeleteProject(key){
+    onDeleteProject(key) {
         ReactGA.event({
-          category: 'Project',
-          action: 'delete'
+            category: 'Project',
+            action: 'delete'
         });
         this.repository.delete(key)
-        .then((projects) => this.setState({projects: projects}))
-        .then(_ => this._checkQuotas())
-        .catch(error => console.log(error))
+            .then((projects) => this.setState({ projects: projects }))
+            .then(_ => this._checkQuotas())
+            .catch(error => console.log(error))
     }
 
-    render(){
+    render() {
         return (
-        <div className="projects-container">
-          <Header nav="projects"/>
-          <NewProject onNewProject={files => this.onNewProject(files)} />
-            {this.state.projects.length <= 0
-                ? (<img  className="projects-empty" src="/illus/undraw_empty_street_sfxm.svg" alt="No project"/>)
-                : null
-            }
-            <ul id="grid">{this.state.projects.map((project) => {
-                let src;
-                if(project.mainPicture){
-                    src = project.mainPicture;
-                } else if(project.data[0]){
-                    src = project.data[0].url;
+            <div className="projects-container">
+                <Header nav="projects" />
+                <NewProject onNewProject={files => this.onNewProject(files)} />
+                {this.state.projects.length <= 0
+                    ? (<img className="projects-empty" src="/illus/undraw_empty_street_sfxm.svg" alt="No project" />)
+                    : null
                 }
-                return (
-                  <li key={project.key}>
-                    <Link to={"/project/" + project.key}>
-                        <div className="picture"><img alt="project cover" src={src}/></div>
-                        <span>{project.name}</span>
-                        <button className="btn-delete" onClick={(event) => {
-                            event.preventDefault();
-                            this.onDeleteProject(project.key);
-                        }}>&#x2715;</button>
-                    </Link>
-                  </li>
-                );
-            })}</ul>
-            <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max}/>
+                <ul id="grid">{this.state.projects.map((project) => {
+                    let src;
+                    if (project.mainPicture) {
+                        src = project.mainPicture;
+                    } else if (project.data[0]) {
+                        src = project.data[0].url;
+                    }
+                    return (
+                        <li key={project.key}>
+                            <Link to={"/project/" + project.key}>
+                                <div className="picture"><img alt="project cover" src={src} /></div>
+                                <span>{project.name}</span>
+                                <button className="btn-delete" onClick={(event) => {
+                                    event.preventDefault();
+                                    this.onDeleteProject(project.key);
+                                }}>&#x2715;</button>
+                            </Link>
+                        </li>
+                    );
+                })}</ul>
+                <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max} />
             </div>
         )
     }

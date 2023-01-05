@@ -6,13 +6,13 @@ import svgS from './weather-sunset-down.svg';
 import svgNull from './weather-none.svg';
 import '../dot.css'
 import './index.css'
-class Periode extends Component{
-    render(){
+class Periode extends Component {
+    render() {
         return (
             <img
                 alt="period"
                 className={`dot period ${this._periodeToClassName(this.props.value)}`}
-                src={this._periodeToSrc(this.props.value)}/>
+                src={this._periodeToSrc(this.props.value)} />
         )
     }
 
