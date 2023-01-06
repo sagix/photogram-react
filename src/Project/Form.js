@@ -71,7 +71,7 @@ class Form extends Component {
   }
 
   close = (event) => {
-    this.setState({ data: undefined }, () => console.log(this.state))
+    this.setState({ data: undefined })
     this.props.onCancel()
   }
 
