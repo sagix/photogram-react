@@ -9,8 +9,10 @@ class Action extends Component {
         this.fontSizeAdjuster = new FontSizeAdjuster(.2, 2)
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        this.fontSizeAdjuster.apply(this.textNode.current)
+    componentDidUpdate(prevProps) {
+        if(prevProps.value !== this.props.value){
+            this.fontSizeAdjuster.apply(this.textNode.current)
+        }
     }
 
     componentDidMount() {
