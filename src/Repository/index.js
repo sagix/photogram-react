@@ -44,10 +44,10 @@ class Repository {
         } else {
             try {
                 this._localStorage.setItem('projects', JSON.stringify(result));
-                return Promise.resolve(result)
-                    .then(this._images.clear(id))
+                this._images.clear(id);
+                return Promise.resolve(result);
             } catch (error) {
-                return Promise.reject(error)
+                return Promise.reject(error);
             }
         }
     }
