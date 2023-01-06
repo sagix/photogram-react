@@ -14,7 +14,10 @@ export default function Tiles(props) {
                     colorDistribution: props.colorDistribution
                 })
             } else {
-                i = image
+                i = Object.assign(image, {
+                    color: undefined,
+                    colorDistribution: props.colorDistribution
+                })
             }
             return (
                 <TemplateFactory key={image.id} type={type} file={i} onTile={data => props.onTile(Object.assign({}, data))} />

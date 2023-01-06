@@ -68,7 +68,7 @@ class Repository {
             })
 
             if (data.label && project.colors[data.label] === undefined) {
-                project.colors[data.label] = this.colors[Object.keys(project.colors).length]
+                project.colors[data.label] = this.colors[Object.keys(project.colors).length % this.colors.length]
             }
 
             this.save(id, project)
@@ -87,7 +87,7 @@ class Repository {
 
     deleteColor(id, key) {
         return this.get(id).then((project) => {
-            project.colors[key] = undefined;
+            delete project.colors[key];
             project.data = project.data.map(item => {
                 if (key === item.label) {
                     return Object.assign(item, {
