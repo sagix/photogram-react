@@ -27,7 +27,13 @@ class Images {
     }
 
     clear(identifier) {
-        return this._caches.delete('image-cache-' + identifier)
+        return this._caches.delete('image-cache-' + identifier).then(result => {
+            if(result){
+                return Promise.resolve(null);
+            } else {
+                return Promise.reject(Error(`Cannot delete the cache: ${identifier}`));
+            }
+        })
     }
 
     _writeFile(identifier, event) {
@@ -57,17 +63,33 @@ class Images {
 
 export default Images
 
-class StubbedCaches {
-    open(name) {
-        return Promise.resolve(new StubbedCache());
+class StubbedCache {
+    constructor() {
+        this.cache = {};
     }
-    delete(name) {
 
+    put(request, response) {
+        this.cache[request.url] = response;
+        return Promise.resolve();
     }
 }
 
-class StubbedCache {
-    put(request, response) {
-        return Promise.resolve(null);
+class StubbedCaches {
+    constructor() {
+        this.caches = {};
+    }
+
+    open(cacheName) {
+        if (!this.caches[cacheName]) {
+            this.caches[cacheName] = new StubbedCache();
+        }
+        return Promise.resolve(this.caches[cacheName]);
+    }
+    delete(cacheName) {
+        if (this.caches[cacheName]) {
+            delete this.caches[cacheName];
+            return Promise.resolve(true);
+        }
+        return Promise.resolve(false)
     }
 }
