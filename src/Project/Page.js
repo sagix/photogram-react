@@ -28,6 +28,9 @@ class Page extends Component {
         if (project.template === undefined) {
           project.template = "small"
         }
+        if (project.colorDistribution === undefined) {
+          project.colorDistribution = "indicator"
+        }
         this.setState(Object.assign(this.state, { project: project }))
       }).catch(e => console.log(e))
   }
@@ -59,7 +62,7 @@ class Page extends Component {
           onCancel={() => this.setState(Object.assign(this.state, { data: undefined }))}
           onSave={data => this.repository.update(this.props.id, data).then(() => this.loadData())}
           onNewImage={file => {
-            new Image(this.props.id).execute(file).then((result) => {
+            Image.create().execute(this.props.id, file).then((result) => {
               this.setState(Object.assign(this.state,
                 Object.assign(this.state.data, { url: result[0].url }))
               )
@@ -85,7 +88,7 @@ class Page extends Component {
           </div>
           <div className="layout-left">
             <Tiles
-              colorDistribution={this.state.color_distribution}
+              colorDistribution={this.state.project.colorDistribution}
               colors={this.state.project.colors}
               value={this.state.project.data}
               type={this.state.project.template}
@@ -100,7 +103,7 @@ class Page extends Component {
               onChange={template => this.repository.updateTemplate(this.props.id, template).then(() => this.loadData())}
               onColorChange={color => this.repository.updateColor(this.props.id, color).then(() => this.loadData())}
               onDeleteColor={key => this.repository.deleteColor(this.props.id, key).then(() => this.loadData())}
-              onColorDistributionChange={full => this.setState(Object.assign(this.state, { color_distribution: full }))}
+              onColorDistributionChange={distribution => this.repository.updateColorDistribution(this.props.id, distribution).then(() => this.loadData())}
               onFontFamilyChange={fontFamily => this.repository.updateFontFamily(this.props.id, fontFamily).then(() => this.loadData())}
             />
           </div>

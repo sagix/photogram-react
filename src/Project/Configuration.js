@@ -104,7 +104,9 @@ class Configuration extends Component {
                     <h2>Labels</h2>
                     <div className="labels" >
                         <input id="color-distribution" type="checkBox"
-                            onChange={(event) => this.props.onColorDistributionChange(event.target.checked)} />
+                            onChange={(event) =>
+                                this.props.onColorDistributionChange(event.target.checked ? "card" : "indicator")
+                            } />
                         <label htmlFor="color-distribution">Background color</label>
                     </div>
                     <Colors className="labels"

@@ -11,7 +11,7 @@ export default function Tiles(props) {
             if (image.label) {
                 i = Object.assign(image, {
                     color: props.colors[image.label],
-                    colorDistribution: props.colorDistribution ? "full" : "limited"
+                    colorDistribution: props.colorDistribution
                 })
             } else {
                 i = image

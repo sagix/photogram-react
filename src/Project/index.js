@@ -5,7 +5,7 @@ import Page from './Page'
 class Project extends Component {
   constructor(props) {
     super(props);
-    this.repository = new Repository()
+    this.repository = Repository.create();
   }
 
   render() {

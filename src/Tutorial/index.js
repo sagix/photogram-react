@@ -22,7 +22,7 @@ class Example extends Component {
       fx: "fx",
       url: "/demo/1.jpg",
       color: colors[5],
-      colorDistribution: "limited"
+      colorDistribution: "indicator"
     }
   }
 

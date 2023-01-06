@@ -97,6 +97,13 @@ class Repository {
         });
     }
 
+    updateColorDistribution(id, distribution) {
+        return this.get(id).then((project) => {
+            project.colorDistribution = distribution;
+            this.save(id, project)
+        })
+    }
+
     updateFontFamily(id, fontFamily) {
         return this.get(id).then((project) => {
             project.fontFamily = fontFamily;

@@ -1,8 +1,20 @@
-import Images from './images'
-import Csv from './csv'
-import { uuidv4 } from './uuidv4.js'
+import FileParser from './FileParser'
 
 class Repository {
+
+    constructor(localStorage, fileParser) {
+        this._localStorage = localStorage
+        this._fileParser = fileParser;
+    }
+
+    static create() {
+        return new Repository(localStorage, FileParser.create());
+    }
+
+    static createNull() {
+        return new Repository(new StubbedLocalstorage(), FileParser.createNull());
+    }
+
     colors = [
         '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
         '#2196F3', '#03A9F4', '#00BCD4', '#009688',
@@ -29,9 +41,9 @@ class Repository {
             return Promise.reject(new Error(`Could not found project with id=${id}`))
         }
         try {
-            localStorage.setItem('projects', JSON.stringify(result));
+            this._localStorage.setItem('projects', JSON.stringify(result));
             return Promise.resolve(result)
-                .then(new Images(id).clear())
+                .then(this._images.clear(id))
         } catch (error) {
             return Promise.reject(error)
         }
@@ -89,6 +101,13 @@ class Repository {
         });
     }
 
+    updateColorDistribution(id, distribution) {
+        return this.get(id).then((project) => {
+            project.colorDistribution = distribution;
+            this.save(id, project)
+        })
+    }
+
     updateFontFamily(id, fontFamily) {
         return this.get(id).then((project) => {
             project.fontFamily = fontFamily;
@@ -118,56 +137,25 @@ class Repository {
                 return p
             }
         })
-        localStorage.setItem('projects', JSON.stringify(projects));
+        this._localStorage.setItem('projects', JSON.stringify(projects));
     }
 
     add(files) {
         var projects = this._projects
-        var identifier = uuidv4()
         var name = this._name(files, `Project (${projects.length})`)
-        return Promise.all([
-            new Images(identifier).execute(files),
-            new Csv().execute(files)
-        ]).then(results => {
-            let [images, data] = results
-
-            projects.push({
-                key: identifier,
-                name: name,
-                data: this._mergeDateWithImages(data, Array.from(images)),
-                colors: this._calculateColors(data),
-                template: "small",
-            })
+        return this._fileParser.parse(name, files).then(project => {
+            projects.push(project);
             try {
-                localStorage.setItem('projects', JSON.stringify(projects));
+                this._localStorage.setItem('projects', JSON.stringify(projects));
                 return projects
             } catch (error) {
                 return Promise.reject(error)
             }
-
-        })
+        });
     }
 
     get _projects() {
-        return JSON.parse(localStorage.getItem('projects')) || []
-    }
-
-    _mergeDateWithImages(data, images) {
-        return data.map(d => {
-            let results = images.filter(i => i.name.startsWith(`${d.id}.`))
-            if (results.length === 0) {
-                return d
-            } else {
-                return Object.assign(d, {
-                    url: results[0].url
-                })
-            }
-        })
-    }
-
-    _calculateColors(data) {
-        let unique = [...new Set(data.map(d => d.label).filter(p => p !== null && p !== ""))]
-        return Object.assign({}, ...unique.map((p, i) => ({ [p]: this.colors[i % this.colors.length] })))
+        return JSON.parse(this._localStorage.getItem('projects')) || []
     }
 
     _name(files, defaultName) {
@@ -187,3 +175,21 @@ class Repository {
 }
 
 export default Repository
+
+class StubbedLocalstorage {
+    constructor() {
+        this.store = {};
+    }
+    setItem(key, value) {
+        this.store[key] = value;
+    }
+    getItem(key) {
+        return this.store[key] || null;
+    }
+    removeItem(key) {
+        delete this.store[key];
+    }
+    clear() {
+        this.store = {};
+    }
+}

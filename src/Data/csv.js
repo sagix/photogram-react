@@ -1,5 +1,6 @@
 import Papa from 'papaparse';
-class Csv {
+
+export default class Csv {
 
     execute(files) {
         let result = Array.from(files).filter(file => file.name === "data.csv")
@@ -40,5 +41,3 @@ class Csv {
         return null
     }
 }
-
-export default Csv

@@ -4,7 +4,7 @@ class Container extends Component {
 
     render() {
         let backgroundColor
-        if (this.props.colorDistribution === "full") {
+        if (this.props.colorDistribution === "card") {
             backgroundColor = this.props.color
         } else {
             backgroundColor = null

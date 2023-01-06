@@ -16,7 +16,7 @@ class Landing extends Component {
             projects: [],
             quotas: { max: 0, value: 0 }
         }
-        this.repository = new Repository()
+        this.repository = Repository.create();
     }
 
     componentDidMount() {

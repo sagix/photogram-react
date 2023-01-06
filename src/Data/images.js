@@ -1,11 +1,19 @@
 import { readAsArrayBuffer } from './FileReader';
 
 class Images {
-    constructor(identifier) {
-        this.identifier = identifier
+    constructor(caches) {
+        this._caches = caches
     }
 
-    execute(files) {
+    static create() {
+        return new Images(caches)
+    }
+
+    static createNull() {
+        return new Images(new StubbedCaches())
+    }
+
+    execute(identifier, files) {
         let imageType = /^image\//;
         return Promise.all(
             Array.from(files)
@@ -13,24 +21,24 @@ class Images {
                 .map(file => readAsArrayBuffer(file))
         ).then(fileResults =>
             Promise.all(
-                fileResults.map(fileResult => this._writeFile(fileResult))
+                fileResults.map(fileResult => this._writeFile(identifier, fileResult))
             )
         )
     }
 
-    clear() {
-        return caches.delete('image-cache-' + this.identifier)
+    clear(identifier) {
+        return this._caches.delete('image-cache-' + identifier)
     }
 
-    _writeFile(event) {
-        return caches.open('image-cache-' + this.identifier)
+    _writeFile(identifier, event) {
+        return this._caches.open('image-cache-' + identifier)
             .then(cache => {
                 let h = new Headers()
                 h.append("Content-Type", event.file.type)
                 h.append("Content-Length", event.file.size)
 
                 return cache.put(
-                    new Request(`/project/${this.identifier}/images/${event.file.name}/`),
+                    new Request(`/project/${identifier}/images/${event.file.name}/`),
                     new Response(event.result, {
                         status: 200,
                         statusText: "From Cache",
@@ -40,7 +48,7 @@ class Images {
             }).then(_ => {
                 return {
                     name: event.file.name,
-                    url: `/project/${this.identifier}/images/${event.file.name}/`
+                    url: `/project/${identifier}/images/${event.file.name}/`
                 }
             })
 
@@ -48,3 +56,18 @@ class Images {
 }
 
 export default Images
+
+class StubbedCaches {
+    open(name) {
+        return Promise.resolve(new StubbedCache());
+    }
+    delete(name) {
+
+    }
+}
+
+class StubbedCache {
+    put(request, response) {
+        return Promise.resolve(null);
+    }
+}
