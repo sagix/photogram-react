@@ -5,7 +5,7 @@ import Creators from './Creators';
 import EmptyProject from './EmptyProject';
 import ListProject from './ListProject';
 import QuotaProgress from '../QuotaProgress';
-import Repository from '../Data';
+import Repository from '../Repository';
 import '../styles.css'
 import './index.css';
 

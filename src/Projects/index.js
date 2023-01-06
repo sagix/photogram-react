@@ -5,7 +5,7 @@ import './index.css';
 import Header from '../Header';
 import NewProject from '../NewProject';
 import QuotaProgress from '../QuotaProgress';
-import Repository from '../Data';
+import Repository from '../Repository';
 class ListProject extends Component {
     constructor(props) {
         super(props)

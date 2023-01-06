@@ -1,4 +1,4 @@
-import Csv from './csv';
+import Csv from './Csv';
 
 describe("Csv", () => {
     test("parse empty file", async () => {

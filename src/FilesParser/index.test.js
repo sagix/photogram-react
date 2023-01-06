@@ -1,5 +1,5 @@
-import FileParser from './FileParser'
-import Csv from './csv'
+import FilesParser from './index'
+import Csv from './Csv'
 import Uuidv4 from './uuidv4';
 
 describe('Parser', () => {
@@ -10,7 +10,7 @@ describe('Parser', () => {
         const png = createPngFile({ name: "1.png" });
         const data = await new Csv().execute([csv]);
         data[0].url = `/project/${identifier}/images/1.png/`
-        const result = FileParser.createNull().parse("name", [csv, png]);
+        const result = FilesParser.createNull().parse("name", [csv, png]);
         await expect(result).resolves.toEqual({
             key: identifier,
             name: "name",
@@ -23,7 +23,7 @@ describe('Parser', () => {
     test('parse only data.csv', async () => {
         const csv = createCsvFile({ name: "data.csv", content: "1" });
         const data = await new Csv().execute([csv]);
-        const result = FileParser.createNull().parse("name", [csv]);
+        const result = FilesParser.createNull().parse("name", [csv]);
         await expect(result).resolves.toEqual({
             key: Uuidv4.createNull().generate(),
             name: "name",
@@ -34,7 +34,7 @@ describe('Parser', () => {
     })
 
     test('fails with no files', async () => {
-        const result = FileParser.createNull().parse("name", []);
+        const result = FilesParser.createNull().parse("name", []);
         await expect(result).rejects.toThrow("Could not found data.csv")
     });
 });

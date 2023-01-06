@@ -1,18 +1,20 @@
-import FileParser from './FileParser'
+import FilesParser from '../FilesParser'
+import Images from '../FilesParser/Images'
 
 class Repository {
 
-    constructor(localStorage, fileParser) {
+    constructor(localStorage, filesParser, images) {
         this._localStorage = localStorage
-        this._fileParser = fileParser;
+        this._filesParser = filesParser;
+        this._images = images
     }
 
     static create() {
-        return new Repository(localStorage, FileParser.create());
+        return new Repository(localStorage, FilesParser.create(), Images.create());
     }
 
     static createNull() {
-        return new Repository(new StubbedLocalstorage(), FileParser.createNull());
+        return new Repository(new StubbedLocalstorage(), FilesParser.createNull(), Images.createNull());
     }
 
     colors = [
@@ -39,13 +41,14 @@ class Repository {
         let result = projects.filter(project => project.key !== id)
         if (result.length === projects.length) {
             return Promise.reject(new Error(`Could not found project with id=${id}`))
-        }
-        try {
-            this._localStorage.setItem('projects', JSON.stringify(result));
-            return Promise.resolve(result)
-                .then(this._images.clear(id))
-        } catch (error) {
-            return Promise.reject(error)
+        } else {
+            try {
+                this._localStorage.setItem('projects', JSON.stringify(result));
+                return Promise.resolve(result)
+                    .then(this._images.clear(id))
+            } catch (error) {
+                return Promise.reject(error)
+            }
         }
     }
 
@@ -143,7 +146,7 @@ class Repository {
     add(files) {
         var projects = this._projects
         var name = this._name(files, `Project (${projects.length})`)
-        return this._fileParser.parse(name, files).then(project => {
+        return this._filesParser.parse(name, files).then(project => {
             projects.push(project);
             try {
                 this._localStorage.setItem('projects', JSON.stringify(projects));

@@ -1,5 +1,5 @@
-import Images from './images'
-import Csv from './csv'
+import Images from './Images'
+import Csv from './Csv'
 import Uuidv4 from './uuidv4.js'
 
 export default class FileParser{

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
-import Image from '../Data/images';
+import Image from '../FilesParser/Images';
 import Toolbar from './Toolbar'
 import Configuration from './Configuration'
 import Tiles from './Tiles'

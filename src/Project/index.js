@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Repository from '../Data';
+import Repository from '../Repository';
 import Page from './Page'
 
 class Project extends Component {
