@@ -13,8 +13,10 @@ class Repository {
         return new Repository(localStorage, FilesParser.create(), Images.create());
     }
 
-    static createNull() {
-        return new Repository(new StubbedLocalstorage(), FilesParser.createNull(), Images.createNull());
+    static createNull({ localStorage } = { localStorage: {} }) {
+        // share image instance to share the memory cache
+        const images = Images.createNull();
+        return new Repository(new StubbedLocalstorage({ config: localStorage }), FilesParser.createNull(images), images);
     }
 
     colors = [
@@ -44,8 +46,9 @@ class Repository {
         } else {
             try {
                 this._localStorage.setItem('projects', JSON.stringify(result));
-                this._images.clear(id);
-                return Promise.resolve(result);
+                return this._images.clear(id).then(_ => {
+                    return result;
+                });
             } catch (error) {
                 return Promise.reject(error);
             }
@@ -133,13 +136,9 @@ class Repository {
     }
 
     save(id, project) {
-        const projects = this._projects.map(p => {
-            if (project.key === p.key) {
-                return project
-            } else {
-                return p
-            }
-        })
+        const projects = this._projects;
+        const pp = projects.find(p => project.key === p.key);
+        projects[projects.indexOf(pp)] = project
         this._localStorage.setItem('projects', JSON.stringify(projects));
     }
 
@@ -167,10 +166,7 @@ class Repository {
         }
         let relativePath = files[0].webkitRelativePath
         if (relativePath) {
-            let name = relativePath.split('/')[0]
-            if (name) {
-                return name
-            }
+            return relativePath.split('/')[0];
         }
         return defaultName
     }
@@ -180,19 +176,21 @@ class Repository {
 export default Repository
 
 class StubbedLocalstorage {
-    constructor() {
+    constructor({ config }) {
+        this._config = config;
         this.store = {};
     }
     setItem(key, value) {
+        if (this._config.setItem) {
+            this._config.setItem(key, value, () => this._setItem(key, value));
+        } else {
+            this._setItem(key, value)
+        }
+    }
+    _setItem(key, value) {
         this.store[key] = value;
     }
     getItem(key) {
         return this.store[key] || null;
-    }
-    removeItem(key) {
-        delete this.store[key];
-    }
-    clear() {
-        this.store = {};
     }
 }

@@ -9,8 +9,8 @@ class Images {
         return new Images(caches)
     }
 
-    static createNull() {
-        return new Images(new StubbedCaches())
+    static createNull({ factory } = { factory: () => { return new StubbedCache() } }) {
+        return new Images(new StubbedCaches(factory))
     }
 
     execute(identifier, files) {
@@ -28,7 +28,7 @@ class Images {
 
     clear(identifier) {
         return this._caches.delete('image-cache-' + identifier).then(result => {
-            if(result){
+            if (result) {
                 return Promise.resolve(null);
             } else {
                 return Promise.reject(Error(`Cannot delete the cache: ${identifier}`));
@@ -49,8 +49,8 @@ class Images {
                         status: 200,
                         statusText: "From Cache",
                         headers: h
-                    })).catch(error => Promise.reject(error))
-
+                    })
+                );
             }).then(_ => {
                 return {
                     name: event.file.name,
@@ -75,13 +75,14 @@ class StubbedCache {
 }
 
 class StubbedCaches {
-    constructor() {
+    constructor(factory) {
+        this.factory = factory;
         this.caches = {};
     }
 
     open(cacheName) {
         if (!this.caches[cacheName]) {
-            this.caches[cacheName] = new StubbedCache();
+            this.caches[cacheName] = this.factory(cacheName);
         }
         return Promise.resolve(this.caches[cacheName]);
     }

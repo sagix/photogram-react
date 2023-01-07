@@ -2,7 +2,14 @@ import Images from './Images'
 import Csv from './Csv'
 import Uuidv4 from './uuidv4.js'
 
-export default class FileParser{
+export default class FileParser {
+
+    colors = [
+        '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
+        '#2196F3', '#03A9F4', '#00BCD4', '#009688',
+        '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B',
+        '#FFC107', '#FF9800', '#FF5722', '#795548'
+    ]
 
     constructor(uuidv4, images) {
         this._uuidv4 = uuidv4;
@@ -11,11 +18,11 @@ export default class FileParser{
     }
 
     static create() {
-        return new FileParser( Uuidv4.create(), Images.create());
+        return new FileParser(Uuidv4.create(), Images.create());
     }
 
-    static createNull() {
-        return new FileParser( Uuidv4.createNull(), Images.createNull());
+    static createNull(images = Images.createNull()) {
+        return new FileParser(Uuidv4.createNull(), images);
     }
 
     parse(name, files) {
