@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './index.css'
 import svgEmpty from './empty.svg';
-class Fx extends Component {
+class Image extends Component {
     render() {
         const url = this.props.url
         return (
@@ -10,4 +10,4 @@ class Fx extends Component {
     }
 }
 
-export default Fx;
+export default Image;

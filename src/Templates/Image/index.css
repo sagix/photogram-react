@@ -1,3 +1,6 @@
 .img {
     width: 100%;
+    object-fit: contain;
+    background-color: #111;
+    aspect-ratio: 16/9;
 }
