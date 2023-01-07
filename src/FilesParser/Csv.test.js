@@ -8,6 +8,7 @@ describe("Csv", () => {
         })])).resolves.toEqual([]);
 
     });
+
     test("parse one line with just id", async () => {
         await expect(new Csv().execute([createFile({
             name: "data.csv",
@@ -20,8 +21,8 @@ describe("Csv", () => {
             periode: "",
             sequence: "1"
         }]);
-
     });
+
     test("parse one line with all information", async () => {
         await expect(new Csv().execute([createFile({
             name: "data.csv",
@@ -34,7 +35,13 @@ describe("Csv", () => {
             periode: "periode",
             sequence: "1"
         }]);
+    });
 
+    test("Ignore lines that do not start with number", async () => {
+        await expect(new Csv().execute([createFile({
+            name: "data.csv",
+            content: "A"
+        })])).resolves.toEqual([]);
     });
     test("fails with no files", async () => {
         await expect(new Csv().execute([createFile()])).rejects.toThrow("Could not found data.csv")

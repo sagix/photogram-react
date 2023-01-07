@@ -30,9 +30,6 @@ export default class Csv {
     }
 
     parseId(id) {
-        if (id === undefined || id === null) {
-            return null
-        }
         const trimedId = id.trim()
         const pattern = /^\d/
         if (trimedId.match(pattern) !== null) {

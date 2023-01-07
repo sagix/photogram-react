@@ -1,6 +1,19 @@
 import Images from './Images';
 
 describe("Images", () => {
+
+    describe("create", () => {
+        beforeAll(() => {
+            global.caches = null;
+        })
+        afterAll(() => {
+            global.caches = undefined;
+        })
+        test("happy path", () => {
+            expect(() => Images.create()).not.toThrowError();
+        })
+    });
+
     describe("execute", () => {
         test("put an image in storage", async () => {
             await expect(Images.createNull().execute("id", [createPng()])).resolves.toEqual([{

@@ -3,6 +3,20 @@ import FilesParser from "../FilesParser";
 
 describe("Repository", () => {
 
+    describe("create", () => {
+        beforeAll(() => {
+            global.crypto = null;
+            global.caches = null;
+        })
+        afterAll(() => {
+            global.crypto = undefined;
+            global.caches = undefined;
+        })
+        test("happy path", () => {
+            expect(() => Repository.create()).not.toThrowError();
+        })
+    });
+
     describe("add", () => {
         test("csv", async () => {
             const csv = createCsv();

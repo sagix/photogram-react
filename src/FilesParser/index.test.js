@@ -4,6 +4,20 @@ import Uuidv4 from './uuidv4';
 
 describe('Parser', () => {
 
+    describe("create", () => {
+        beforeAll(() => {
+            global.crypto = null;
+            global.caches = null;
+        })
+        afterAll(() => {
+            global.crypto = undefined;
+            global.caches = undefined;
+        })
+        test("happy path", () => {
+            expect(() => FilesParser.create()).not.toThrowError();
+        })
+    });
+
     test('parse data.csv and image', async () => {
         const identifier = Uuidv4.createNull().generate();
         const csv = createCsvFile({ name: "data.csv", content: "1" });
