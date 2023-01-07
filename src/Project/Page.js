@@ -40,7 +40,7 @@ class Page extends Component {
       category: 'Project',
       action: 'back'
     });
-    window.history.back();
+    this.props.onBack();
   }
 
   print() {

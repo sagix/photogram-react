@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useHistory } from "react-router-dom";
 import Repository from '../Repository';
 import Page from './Page'
 
-class Project extends Component {
-  constructor(props) {
-    super(props);
-    this.repository = Repository.create();
-  }
+export default function Project(props) {
+  const repository = Repository.create();
+  const history = useHistory();
 
-  render() {
-    return (
-      <Page repository={this.repository} id={this.props.match.params.id} />
-    );
-  }
+  return (
+    <Page repository={repository} onBack={() => history.goBack()} id={props.match.params.id} />
+  );
 }
-
-export default Project;
