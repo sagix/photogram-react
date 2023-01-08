@@ -4,7 +4,7 @@ import Images from '../FilesParser/Images'
 class Application {
 
     constructor(localStorage, filesParser, images) {
-        this._localStorage = localStorage
+        this._localStorage = new AsyncLocalstorage(localStorage);
         this._filesParser = filesParser;
         this._images = images
     }
@@ -26,138 +26,120 @@ class Application {
         '#FFC107', '#FF9800', '#FF5722', '#795548'
     ]
 
-    list() {
-        return Promise.resolve(this._projects)
+    async list() {
+        return await this._projects();
     }
 
-    get(id) {
-        let result = this._projects.filter(project => project.key === id)
+    async get(id) {
+        let result = (await this._projects()).filter(project => project.key === id)
         if (result.length === 0) {
-            return Promise.reject(new Error(`Could not found project with id=${id}`))
+            throw new Error(`Could not found project with id=${id}`);
         }
-        return Promise.resolve(result[0])
+        return result[0];
     }
 
-    delete(id) {
-        var projects = this._projects
+    async delete(id) {
+        const projects = await this._projects();
         let result = projects.filter(project => project.key !== id)
         if (result.length === projects.length) {
-            return Promise.reject(new Error(`Could not found project with id=${id}`))
+            throw new Error(`Could not found project with id=${id}`);
         } else {
-            try {
-                this._localStorage.setItem('projects', JSON.stringify(result));
-                return this._images.clear(id).then(_ => {
-                    return result;
-                });
-            } catch (error) {
-                return Promise.reject(error);
-            }
+            await this._localStorage.setItem('projects', JSON.stringify(result));
+            await this._images.clear(id);
+            return result;
         }
     }
 
-    update(id, data) {
-        return this.get(id).then((project) => {
-            project.data = project.data.map(item => {
-                if (item.id === data.id) {
-                    return {
-                        id: data.id,
-                        url: data.url,
-                        sequence: data.sequence,
-                        action: data.action,
-                        label: data.label,
-                        periode: data.periode,
-                        fx: data.fx,
-                    }
-                } else {
-                    return item
-                }
-            })
-
-            if (data.label && project.colors[data.label] === undefined) {
-                project.colors[data.label] = this.colors[Object.keys(project.colors).length % this.colors.length]
+    async update(id, data) {
+        const project = await this.get(id);
+        project.data = project.data.map(item => {
+            if (item.id === data.id) {
+                return {
+                    id: data.id,
+                    url: data.url,
+                    sequence: data.sequence,
+                    action: data.action,
+                    label: data.label,
+                    periode: data.periode,
+                    fx: data.fx,
+                };
+            } else {
+                return item;
             }
-
-            this.save(id, project)
-        })
-    }
-
-    updateColor(id, colors) {
-        return this.get(id).then((project) => {
-            Object.keys(colors).forEach((key) => {
-                project.colors[key] = colors[key]
-            })
-
-            this.save(id, project)
-        })
-    }
-
-    deleteColor(id, key) {
-        return this.get(id).then((project) => {
-            project.colors[key] = undefined;
-            project.data = project.data.map(item => {
-                if (key === item.label) {
-                    return Object.assign(item, {
-                        label: undefined,
-                    })
-                } else {
-                    return item
-                }
-            });
-            this.save(id, project)
         });
+        if (data.label && project.colors[data.label] === undefined) {
+            project.colors[data.label] = this.colors[Object.keys(project.colors).length % this.colors.length];
+        }
+        await this.save(id, project);
     }
 
-    updateColorDistribution(id, distribution) {
-        return this.get(id).then((project) => {
-            project.colorDistribution = distribution;
-            this.save(id, project)
-        })
+    async updateColor(id, colors) {
+        const project = await this.get(id);
+        Object.keys(colors).forEach((key) => {
+            project.colors[key] = colors[key];
+        });
+        await this.save(id, project);
     }
 
-    updateFontFamily(id, fontFamily) {
-        return this.get(id).then((project) => {
-            project.fontFamily = fontFamily;
-            this.save(id, project)
-        })
+    async deleteColor(id, key) {
+        const project = await this.get(id);
+        project.colors[key] = undefined;
+        project.data = project.data.map(item => {
+            if (key === item.label) {
+                return Object.assign(item, {
+                    label: undefined,
+                });
+            } else {
+                return item;
+            }
+        });
+        await this.save(id, project);
     }
 
-    updateTemplate(id, template) {
-        return this.get(id).then((project) => {
-            project.template = template;
-            this.save(id, project)
-        })
+    async updateColorDistribution(id, distribution) {
+        const project = await this.get(id);
+        project.colorDistribution = distribution;
+        await this.save(id, project);
     }
 
-    updateMainPicture(id, mainPicture) {
-        return this.get(id).then((project) => {
-            project.mainPicture = mainPicture;
-            this.save(id, project)
-        })
+    async updateFontFamily(id, fontFamily) {
+        const project = await this.get(id);
+        project.fontFamily = fontFamily;
+        await this.save(id, project);
     }
 
-    save(id, project) {
-        const projects = this._projects;
+    async updateTemplate(id, template) {
+        const project = await this.get(id);
+        project.template = template;
+        await this.save(id, project);
+    }
+
+    async updateMainPicture(id, mainPicture) {
+        const project = await this.get(id);
+        project.mainPicture = mainPicture;
+        await this.save(id, project);
+    }
+
+    async save(id, project) {
+        const projects = await this._projects();
         const pp = projects.find(p => project.key === p.key);
         projects[projects.indexOf(pp)] = project
-        this._localStorage.setItem('projects', JSON.stringify(projects));
+        await this._localStorage.setItem('projects', JSON.stringify(projects));
     }
 
-    add(files) {
-        var projects = this._projects
-        var name = this._name(files, `Project (${projects.length})`)
-        return this._filesParser.parse(name, files).then(project => {
-            projects.push(project);
-            try {
-                this._localStorage.setItem('projects', JSON.stringify(projects));
-                return projects
-            } catch (error) {
-                return Promise.reject(error)
-            }
-        });
+    async add(files) {
+        const fileArray = Array.from(files);
+        const projects = await this._projects()
+        const name = this._name(files, `Project (${projects.length})`)
+        const project = await this._filesParser.parse(name, fileArray);
+        projects.push(project);
+        await this._localStorage.setItem('projects', JSON.stringify(projects));
+        return projects
     }
 
-    get _projects() {
-        return JSON.parse(this._localStorage.getItem('projects')) || []
+    async _projects() {
+        const projects = await this._localStorage.getItem('projects')
+        return JSON.parse(projects) || [];
     }
 
     _name(files, defaultName) {
@@ -174,6 +156,34 @@ class Application {
 }
 
 export default Application
+
+class AsyncLocalstorage{
+    /**
+     * 
+     * @param {WindowLocalStorage} localStorage 
+     */
+    constructor(localStorage){
+        this._localStorage = localStorage
+    }
+    async setItem(key, value){
+        return new Promise((resolve, reject) => {
+            try{
+                resolve(this._localStorage.setItem(key, value));
+            } catch (error){
+                reject(error)
+            }
+        });
+    }
+    async getItem(key){
+        return new Promise((resolve, reject) => {
+            try{
+                resolve(this._localStorage.getItem(key));
+            } catch (error){
+                reject(error)
+            }
+        });
+    }
+}
 
 class StubbedLocalstorage {
     constructor({ config }) {
