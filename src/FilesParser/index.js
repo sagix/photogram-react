@@ -11,6 +11,11 @@ export default class FileParser {
         '#FFC107', '#FF9800', '#FF5722', '#795548'
     ]
 
+    /**
+     * Create FileParser.
+     * @param {Uuidv4} uuidv4 
+     * @param {Images} images 
+     */
     constructor(uuidv4, images) {
         this._uuidv4 = uuidv4;
         this._images = images;
@@ -32,7 +37,7 @@ export default class FileParser {
         return {
             key: identifier,
             name: name,
-            data: this._mergeDateWithImages(data, Array.from(images)),
+            data: this._mergeDateWithImages(data, images),
             colors: this._calculateColors(data),
             template: "small",
         };
