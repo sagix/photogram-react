@@ -25,21 +25,17 @@ export default class FileParser {
         return new FileParser(Uuidv4.createNull(), images);
     }
 
-    parse(name, files) {
-        var identifier = this._uuidv4.generate()
-        return Promise.all([
-            this._images.execute(identifier, files),
-            this._csv.execute(files)
-        ]).then(results => {
-            let [images, data] = results
-            return {
-                key: identifier,
-                name: name,
-                data: this._mergeDateWithImages(data, Array.from(images)),
-                colors: this._calculateColors(data),
-                template: "small",
-            }
-        })
+    async parse(name, files) {
+        const identifier = this._uuidv4.generate()
+        const images = await this._images.execute(identifier, files);
+        const data = await this._csv.execute(files);
+        return {
+            key: identifier,
+            name: name,
+            data: this._mergeDateWithImages(data, Array.from(images)),
+            colors: this._calculateColors(data),
+            template: "small",
+        };
     }
 
     _mergeDateWithImages(data, images) {
