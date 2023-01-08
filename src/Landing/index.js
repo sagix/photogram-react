@@ -5,7 +5,7 @@ import Creators from './Creators';
 import EmptyProject from './EmptyProject';
 import ListProject from './ListProject';
 import QuotaProgress from '../QuotaProgress';
-import Repository from '../Repository';
+import Application from '../Application';
 import '../styles.css'
 import './index.css';
 
@@ -16,12 +16,12 @@ class Landing extends Component {
             projects: [],
             quotas: { max: 0, value: 0 }
         }
-        this.repository = Repository.create();
+        this.application = Application.create();
     }
 
     componentDidMount() {
         this._checkQuotas()
-        this.repository.list()
+        this.application.list()
             .then((projects) => this.setState({ projects: projects }))
 
     }
@@ -44,7 +44,7 @@ class Landing extends Component {
             category: 'Project',
             action: 'create'
         });
-        this.repository.add(files)
+        this.application.add(files)
             .then((projects) => this.setState({ projects: projects }))
             .then(_ => this._checkQuotas())
             .catch(error => console.log(error))
@@ -55,7 +55,7 @@ class Landing extends Component {
             category: 'Project',
             action: 'delete'
         });
-        this.repository.delete(key)
+        this.application.delete(key)
             .then((projects) => this.setState({ projects: projects }))
             .then(_ => this._checkQuotas())
             .catch(error => console.log(error))

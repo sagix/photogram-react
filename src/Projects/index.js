@@ -5,7 +5,7 @@ import './index.css';
 import Header from '../Header';
 import NewProject from '../NewProject';
 import QuotaProgress from '../QuotaProgress';
-import Repository from '../Repository';
+import Application from '../Application';
 class ListProject extends Component {
     constructor(props) {
         super(props)
@@ -13,12 +13,12 @@ class ListProject extends Component {
             projects: [],
             quotas: { max: 0, value: 0 }
         }
-        this.repository = Repository.create();
+        this.application = Application.create();
     }
 
     componentDidMount() {
         this._checkQuotas()
-        this.repository.list()
+        this.application.list()
             .then((projects) => this.setState({ projects: projects }))
 
     }
@@ -42,7 +42,7 @@ class ListProject extends Component {
             category: 'Project',
             action: 'create'
         });
-        this.repository.add(files)
+        this.application.add(files)
             .then((projects) => this.setState({ projects: projects }))
             .then(_ => this._checkQuotas())
             .catch(error => console.log(error))
@@ -53,7 +53,7 @@ class ListProject extends Component {
             category: 'Project',
             action: 'delete'
         });
-        this.repository.delete(key)
+        this.application.delete(key)
             .then((projects) => this.setState({ projects: projects }))
             .then(_ => this._checkQuotas())
             .catch(error => console.log(error))

@@ -1,13 +1,13 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
-import Repository from '../Repository';
+import Application from '../Application';
 import Page from './Page'
 
 export default function Project(props) {
-  const repository = Repository.create();
+  const application = Application.create();
   const history = useHistory();
 
   return (
-    <Page repository={repository} onBack={() => history.goBack()} id={props.match.params.id} />
+    <Page application={application} onBack={() => history.goBack()} id={props.match.params.id} />
   );
 }

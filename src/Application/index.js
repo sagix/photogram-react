@@ -1,7 +1,7 @@
 import FilesParser from '../FilesParser'
 import Images from '../FilesParser/Images'
 
-class Repository {
+class Application {
 
     constructor(localStorage, filesParser, images) {
         this._localStorage = localStorage
@@ -10,13 +10,13 @@ class Repository {
     }
 
     static create() {
-        return new Repository(localStorage, FilesParser.create(), Images.create());
+        return new Application(localStorage, FilesParser.create(), Images.create());
     }
 
     static createNull({ localStorage } = { localStorage: {} }) {
         // share image instance to share the memory cache
         const images = Images.createNull();
-        return new Repository(new StubbedLocalstorage({ config: localStorage }), FilesParser.createNull(images), images);
+        return new Application(new StubbedLocalstorage({ config: localStorage }), FilesParser.createNull(images), images);
     }
 
     colors = [
@@ -173,7 +173,7 @@ class Repository {
 
 }
 
-export default Repository
+export default Application
 
 class StubbedLocalstorage {
     constructor({ config }) {

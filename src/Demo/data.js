@@ -1,13 +1,13 @@
 import Csv from './csv'
 
-class Repository {
+class Application {
 
     constructor() {
         this.project = null
     }
 
     static create(){
-        return new Repository();
+        return new Application();
     }
 
     colors = [
@@ -147,4 +147,4 @@ class Repository {
     }
 }
 
-export default Repository
+export default Application

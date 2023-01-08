@@ -11,7 +11,7 @@ import './Page.css'
 class Page extends Component {
   constructor(props) {
     super(props);
-    this.repository = props.repository
+    this.application = props.application
     this.state = {
       project: {},
       template: "small"
@@ -23,7 +23,7 @@ class Page extends Component {
   }
 
   loadData() {
-    this.repository.get(this.props.id)
+    this.application.get(this.props.id)
       .then((project) => {
         if (project.template === undefined) {
           project.template = "small"
@@ -60,7 +60,7 @@ class Page extends Component {
           data={this.state.data}
           colors={this.state.project.colors}
           onCancel={() => this.setState(Object.assign(this.state, { data: undefined }))}
-          onSave={data => this.repository.update(this.props.id, data).then(() => this.loadData())}
+          onSave={data => this.application.update(this.props.id, data).then(() => this.loadData())}
           onNewImage={file => {
             Image.create().execute(this.props.id, file).then((result) => {
               this.setState(Object.assign(this.state,
@@ -75,7 +75,7 @@ class Page extends Component {
           }
           }
           setAsMain={url => {
-            this.repository.updateMainPicture(this.props.id, url)
+            this.application.updateMainPicture(this.props.id, url)
             this.setState(Object.assign(this.state, { data: undefined }))
           }}
         />
@@ -100,11 +100,11 @@ class Page extends Component {
               colors={this.state.project.colors}
               template={this.state.project.template}
               fontFamily={this.state.project.fontFamily}
-              onChange={template => this.repository.updateTemplate(this.props.id, template).then(() => this.loadData())}
-              onColorChange={color => this.repository.updateColor(this.props.id, color).then(() => this.loadData())}
-              onDeleteColor={key => this.repository.deleteColor(this.props.id, key).then(() => this.loadData())}
-              onColorDistributionChange={distribution => this.repository.updateColorDistribution(this.props.id, distribution).then(() => this.loadData())}
-              onFontFamilyChange={fontFamily => this.repository.updateFontFamily(this.props.id, fontFamily).then(() => this.loadData())}
+              onChange={template => this.application.updateTemplate(this.props.id, template).then(() => this.loadData())}
+              onColorChange={color => this.application.updateColor(this.props.id, color).then(() => this.loadData())}
+              onDeleteColor={key => this.application.deleteColor(this.props.id, key).then(() => this.loadData())}
+              onColorDistributionChange={distribution => this.application.updateColorDistribution(this.props.id, distribution).then(() => this.loadData())}
+              onFontFamilyChange={fontFamily => this.application.updateFontFamily(this.props.id, fontFamily).then(() => this.loadData())}
             />
           </div>
         </div>
