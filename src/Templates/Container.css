@@ -6,6 +6,17 @@
     text-align: left;
     page-break-inside: avoid;
     box-sizing: border-box;
+    cursor: pointer;
+    transition: transform 200ms ease-out;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+}
+
+.ele:hover {
+    transform: scale(1.05);
+}
+
+.ele:active {
+    transition-delay: 100ms;
+    transform: scale(1.06);
 }
