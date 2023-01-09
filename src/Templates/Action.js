@@ -16,7 +16,9 @@ class Action extends Component {
     }
 
     componentDidMount() {
-        this.fontSizeAdjuster.apply(this.textNode.current)
+        setTimeout(() => {
+            this.fontSizeAdjuster.apply(this.textNode.current);
+        }, 200);
     }
 
     render() {
