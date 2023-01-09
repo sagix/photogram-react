@@ -1,5 +1,6 @@
 import Application from "./index";
 import FilesParser from "../FilesParser";
+import ProjectsDataSource from "./ProjectsDataSource";
 
 describe("Application", () => {
 
@@ -44,14 +45,12 @@ describe("Application", () => {
             await expect(Application.createNull().add([])).rejects.toThrow("Could not found data.csv");
         });
 
-        test("fails if quota is exceeded", async () => {
+        test("fails if project cannot be saved", async () => {
             const csv = createCsv();
-            await expect(Application.createNull({
-                localStorage: {
-                    setItem: () => { throw new DOMException("QuotaExceededError") }
-                }
-            }).add([csv]))
-                .rejects.toThrow("QuotaExceededError");
+            const source = Application.createNull({
+                dataSource: ProjectsDataSource.createNull({ saveInError: true })
+            });
+            await expect(source.add([csv])).rejects.toThrow("QuotaExceededError");
         });
     });
 
@@ -77,23 +76,6 @@ describe("Application", () => {
 
         test("fails is project not present", async () => {
             await expect(Application.createNull().delete("id")).rejects.toThrow("Could not found project with id=id");
-        });
-
-
-        test("fails if quota is exceeded", async () => {
-            const application = Application.createNull({
-                localStorage: {
-                    setItem: (_, value, action) => {
-                        if (value === "[]") {
-                            throw new DOMException("QuotaExceededError")
-                        } else {
-                            action()
-                        }
-                    }
-                }
-            });
-            const project = await addProject(application);
-            await expect(application.delete(project.key)).rejects.toThrow("QuotaExceededError");
         });
     });
 

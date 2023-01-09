@@ -1,22 +1,29 @@
 import FilesParser from '../FilesParser'
 import Images from '../FilesParser/Images'
+import ProjectsDataSource from './ProjectsDataSource';
 
 class Application {
 
-    constructor(localStorage, filesParser, images) {
-        this._localStorage = new AsyncLocalstorage(localStorage);
+    /**
+     * 
+     * @param {ProjectsDataSource} dataSource 
+     * @param {FilesParser} filesParser 
+     * @param {Images} images 
+     */
+    constructor(dataSource, filesParser, images) {
+        this._dataSource = dataSource;
         this._filesParser = filesParser;
         this._images = images
     }
 
     static create() {
-        return new Application(localStorage, FilesParser.create(), Images.create());
+        return new Application(ProjectsDataSource.create(), FilesParser.create(), Images.create());
     }
 
-    static createNull({ localStorage } = { localStorage: {} }) {
+    static createNull({ dataSource } = { dataSource: ProjectsDataSource.createNull() }) {
         // share image instance to share the memory cache
         const images = Images.createNull();
-        return new Application(new StubbedLocalstorage({ config: localStorage }), FilesParser.createNull(images), images);
+        return new Application(dataSource, FilesParser.createNull(images), images);
     }
 
     colors = [
@@ -27,27 +34,17 @@ class Application {
     ]
 
     async list() {
-        return await this._projects();
+        return await this._dataSource.list();
     }
 
     async get(id) {
-        let result = (await this._projects()).filter(project => project.key === id)
-        if (result.length === 0) {
-            throw new Error(`Could not found project with id=${id}`);
-        }
-        return result[0];
+        return this._dataSource.get(id);
     }
 
     async delete(id) {
-        const projects = await this._projects();
-        let result = projects.filter(project => project.key !== id)
-        if (result.length === projects.length) {
-            throw new Error(`Could not found project with id=${id}`);
-        } else {
-            await this._localStorage.setItem('projects', JSON.stringify(result));
-            await this._images.clear(id);
-            return result;
-        }
+        const projects = await this._dataSource.delete(id);
+        await this._images.clear(id);
+        return projects;
     }
 
     async update(id, data) {
@@ -70,7 +67,7 @@ class Application {
         if (data.label && project.colors[data.label] === undefined) {
             project.colors[data.label] = this.colors[Object.keys(project.colors).length % this.colors.length];
         }
-        await this.save(id, project);
+        await this._dataSource.save(project);
     }
 
     async updateColor(id, colors) {
@@ -78,7 +75,7 @@ class Application {
         Object.keys(colors).forEach((key) => {
             project.colors[key] = colors[key];
         });
-        await this.save(id, project);
+        await this._dataSource.save(project);
     }
 
     async deleteColor(id, key) {
@@ -93,53 +90,39 @@ class Application {
                 return item;
             }
         });
-        await this.save(id, project);
+        await this._dataSource.save(project);
     }
 
     async updateColorDistribution(id, distribution) {
         const project = await this.get(id);
         project.colorDistribution = distribution;
-        await this.save(id, project);
+        await this._dataSource.save(project);
     }
 
     async updateFontFamily(id, fontFamily) {
         const project = await this.get(id);
         project.fontFamily = fontFamily;
-        await this.save(id, project);
+        await this._dataSource.save(project);
     }
 
     async updateTemplate(id, template) {
         const project = await this.get(id);
         project.template = template;
-        await this.save(id, project);
+        await this._dataSource.save(project);
     }
 
     async updateMainPicture(id, mainPicture) {
         const project = await this.get(id);
         project.mainPicture = mainPicture;
-        await this.save(id, project);
-    }
-
-    async save(id, project) {
-        const projects = await this._projects();
-        const pp = projects.find(p => project.key === p.key);
-        projects[projects.indexOf(pp)] = project
-        await this._localStorage.setItem('projects', JSON.stringify(projects));
+        await this._dataSource.save(project);
     }
 
     async add(files) {
         const fileArray = Array.from(files);
-        const projects = await this._projects()
+        const projects = await this._dataSource.list();
         const name = this._name(files, `Project (${projects.length})`)
         const project = await this._filesParser.parse(name, fileArray);
-        projects.push(project);
-        await this._localStorage.setItem('projects', JSON.stringify(projects));
-        return projects
-    }
-
-    async _projects() {
-        const projects = await this._localStorage.getItem('projects')
-        return JSON.parse(projects) || [];
+        return await this._dataSource.add(project);
     }
 
     _name(files, defaultName) {
@@ -156,51 +139,3 @@ class Application {
 }
 
 export default Application
-
-class AsyncLocalstorage{
-    /**
-     * 
-     * @param {WindowLocalStorage} localStorage 
-     */
-    constructor(localStorage){
-        this._localStorage = localStorage
-    }
-    async setItem(key, value){
-        return new Promise((resolve, reject) => {
-            try{
-                resolve(this._localStorage.setItem(key, value));
-            } catch (error){
-                reject(error)
-            }
-        });
-    }
-    async getItem(key){
-        return new Promise((resolve, reject) => {
-            try{
-                resolve(this._localStorage.getItem(key));
-            } catch (error){
-                reject(error)
-            }
-        });
-    }
-}
-
-class StubbedLocalstorage {
-    constructor({ config }) {
-        this._config = config;
-        this.store = {};
-    }
-    setItem(key, value) {
-        if (this._config.setItem) {
-            this._config.setItem(key, value, () => this._setItem(key, value));
-        } else {
-            this._setItem(key, value)
-        }
-    }
-    _setItem(key, value) {
-        this.store[key] = value;
-    }
-    getItem(key) {
-        return this.store[key] || null;
-    }
-}
