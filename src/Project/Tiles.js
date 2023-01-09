@@ -24,7 +24,8 @@ export default function Tiles(props) {
             );
         })
         return (
-            <div className="tiles-container" style={{ fontFamily: props.fontFamily }}>{images}</div>
+            // key is set as fontFamily to update all tiles if font changes.
+            <div key={props.fontFamily} className="tiles-container" style={{ fontFamily: props.fontFamily }}>{images}</div>
         )
     } else {
         return null
