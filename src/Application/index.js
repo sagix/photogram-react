@@ -3,6 +3,13 @@ import Images from '../FilesParser/Images';
 import Uuidv4 from '../FilesParser/uuidv4';
 import ProjectsDataSource from './ProjectsDataSource';
 
+const colors = [
+    '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
+    '#2196F3', '#03A9F4', '#00BCD4', '#009688',
+    '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B',
+    '#FFC107', '#FF9800', '#FF5722', '#795548'
+]
+
 class Application {
 
     /**
@@ -28,13 +35,6 @@ class Application {
     } = {}) {
         return new Application(dataSource, images, Uuidv4.createNull());
     }
-
-    colors = [
-        '#F44336', '#E91E63', '#9C27B0', '#3F51B5',
-        '#2196F3', '#03A9F4', '#00BCD4', '#009688',
-        '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B',
-        '#FFC107', '#FF9800', '#FF5722', '#795548'
-    ]
 
     async list() {
         return await this._dataSource.list();
@@ -68,7 +68,7 @@ class Application {
             }
         });
         if (data.label && project.colors[data.label] === undefined) {
-            project.colors[data.label] = this.colors[Object.keys(project.colors).length % this.colors.length];
+            project.colors[data.label] = colors[Object.keys(project.colors).length % colors.length];
         }
         await this._dataSource.save(project);
     }
@@ -131,7 +131,7 @@ class Application {
             key: identifier,
             name: name,
             data: this._mergeDateWithImages(data, images),
-            colors: this._calculateColors(data),
+            colors: Application._calculateColors(data),
             template: "small",
         };
         return await this._dataSource.add(project);
@@ -150,9 +150,9 @@ class Application {
         });
     }
 
-    _calculateColors(data) {
+    static _calculateColors(data) {
         let unique = [...new Set(data.map(d => d.label).filter(p => p !== null && p !== ""))]
-        return Object.assign({}, ...unique.map((p, i) => ({ [p]: this.colors[i % this.colors.length] })))
+        return Object.assign({}, ...unique.map((p, i) => ({ [p]: colors[i % colors.length] })))
     }
 
     _name(files, defaultName) {

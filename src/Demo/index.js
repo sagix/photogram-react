@@ -26,7 +26,7 @@ export default function Project() {
         key: "demo",
         name: "Le fardeau (démo)",
         data: data,
-        colors: {},
+        colors: Application._calculateColors(data),
         template: "small",
       }
       return Application.createNull({
