@@ -7,7 +7,11 @@ export default class ProjectsDataSource {
         return new ProjectsDataSource(localStorage);
     }
 
-    static createNull({ initialValue, saveInError } = { initialValue: undefined, saveInError: false }) {
+    static createNull({ projects, saveInError } = { projects: undefined, saveInError: false }) {
+        let initialValue;
+        if (projects !== undefined) {
+            initialValue = { projects: JSON.stringify(projects) };
+        }
         return new ProjectsDataSource(
             saveInError ? new QuotaExceededLocalstorage(initialValue) : new StubbedLocalstorage(initialValue)
         );

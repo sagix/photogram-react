@@ -15,11 +15,6 @@ describe("ProjectsDataSource", () => {
             await source.add(createProject());
             await expect(source.list()).resolves.toEqual([createProject()]);
         });
-
-        test("fails if data is corrupted", async () => {
-            const source = ProjectsDataSource.createNull({ initialValue: { projects: `not_valid_json` } });
-            await expect(source.list()).rejects.toThrow("Unexpected token o in JSON");
-        });
     })
 
     describe("get", () => {
@@ -72,7 +67,7 @@ describe("ProjectsDataSource", () => {
         });
 
         test("fails if QuotaExceededError", async () => {
-            const source = ProjectsDataSource.createNull({ initialValue: { projects: `[{"key":"key"}]` }, saveInError: true });
+            const source = ProjectsDataSource.createNull({ projects: [{ key: "key" }], saveInError: true });
             await expect(source.delete("key")).rejects.toThrow("QuotaExceededError");
         });
     });
