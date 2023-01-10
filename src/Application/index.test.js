@@ -1,6 +1,7 @@
 import Application from "./index";
-import FilesParser from "../FilesParser";
+import Csv from "../FilesParser/Csv";
 import ProjectsDataSource from "./ProjectsDataSource";
+import Uuidv4 from "../FilesParser/uuidv4";
 
 describe("Application", () => {
 
@@ -19,27 +20,58 @@ describe("Application", () => {
     });
 
     describe("add", () => {
-        test("csv", async () => {
+        test("empty csv", async () => {
             const csv = createCsv();
-            const expected = await FilesParser.createNull().parse("default_name", [csv]);
-            expected.name = "Project (0)";
+            const expected = {
+                key: Uuidv4.createNull().generate(),
+                name: "Project (0)",
+                data: await new Csv().execute([csv]),
+                colors: {},
+                template: "small",
+            };
             await expect(Application.createNull().add([csv])).resolves.toEqual([expected]);
         });
 
-        test("csv with webkitRelativePath", async () => {
+        test("empty csv with webkitRelativePath", async () => {
             const csv = createCsv();
             csv.webkitRelativePath = "csv"
-            const expected = await FilesParser.createNull().parse("default_name", [csv]);
-            expected.name = "csv";
+            const expected = {
+                key: Uuidv4.createNull().generate(),
+                name: "csv",
+                data: await new Csv().execute([csv]),
+                colors: {},
+                template: "small",
+            };
             await expect(Application.createNull().add([csv])).resolves.toEqual([expected]);
         });
 
-        test("csv with one line ", async () => {
+        test("csv with one line", async () => {
             const csv = createCsv({ content: "1;action;label;periode;fx" });
-            const expected = await FilesParser.createNull().parse("default_name", [csv]);
-            expected.name = "Project (0)";
+            const expected = {
+                key: Uuidv4.createNull().generate(),
+                name: "Project (0)",
+                data: await new Csv().execute([csv]),
+                colors: { "label": "#F44336" },
+                template: "small",
+            };
             await expect(Application.createNull().add([csv])).resolves.toEqual([expected]);
         });
+
+        test('csv with one line and image', async () => {
+            const identifier = Uuidv4.createNull().generate();
+            const csv = createCsv({ content: "1;action;label;periode;fx" });
+            const png = createPng({ name: "1.png" });
+            const data = await new Csv().execute([csv]);
+            data[0].url = `/project/${identifier}/images/1.png/`
+            const expected = {
+                key: identifier,
+                name: "Project (0)",
+                data: data,
+                colors: { "label": "#F44336" },
+                template: "small",
+            };
+            await expect(Application.createNull().add([csv, png])).resolves.toEqual([expected]);
+        })
 
         test("fails if no data.csv is present", async () => {
             await expect(Application.createNull().add([])).rejects.toThrow("Could not found data.csv");

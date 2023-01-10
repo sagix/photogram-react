@@ -1,29 +1,29 @@
-import FilesParser from '../FilesParser'
-import Images from '../FilesParser/Images'
+import Csv from '../FilesParser/Csv';
+import Images from '../FilesParser/Images';
+import Uuidv4 from '../FilesParser/uuidv4';
 import ProjectsDataSource from './ProjectsDataSource';
 
 class Application {
 
     /**
-     * 
+     * Create Application
      * @param {ProjectsDataSource} dataSource 
-     * @param {FilesParser} filesParser 
      * @param {Images} images 
+     * @param {Uuidv4} uuidv4 
      */
-    constructor(dataSource, filesParser, images) {
+    constructor(dataSource, images, uuidv4) {
+        this._csv = new Csv();
         this._dataSource = dataSource;
-        this._filesParser = filesParser;
-        this._images = images
+        this._images = images;
+        this._uuidv4 = uuidv4;
     }
 
     static create() {
-        return new Application(ProjectsDataSource.create(), FilesParser.create(), Images.create());
+        return new Application(ProjectsDataSource.create(), Images.create(), Uuidv4.create());
     }
 
     static createNull({ dataSource } = { dataSource: ProjectsDataSource.createNull() }) {
-        // share image instance to share the memory cache
-        const images = Images.createNull();
-        return new Application(dataSource, FilesParser.createNull(images), images);
+        return new Application(dataSource, Images.createNull(), Uuidv4.createNull());
     }
 
     colors = [
@@ -120,9 +120,36 @@ class Application {
     async add(files) {
         const fileArray = Array.from(files);
         const projects = await this._dataSource.list();
-        const name = this._name(files, `Project (${projects.length})`)
-        const project = await this._filesParser.parse(name, fileArray);
+        const name = this._name(fileArray, `Project (${projects.length})`)
+        const identifier = this._uuidv4.generate()
+        const images = await this._images.execute(identifier, fileArray);
+        const data = await this._csv.execute(fileArray);
+        const project = {
+            key: identifier,
+            name: name,
+            data: this._mergeDateWithImages(data, images),
+            colors: this._calculateColors(data),
+            template: "small",
+        };
         return await this._dataSource.add(project);
+    }
+
+    _mergeDateWithImages(data, images) {
+        return data.map(d => {
+            let results = images.filter(i => i.name.startsWith(`${d.id}.`))
+            if (results.length === 0) {
+                return d
+            } else {
+                return Object.assign(d, {
+                    url: results[0].url
+                })
+            }
+        });
+    }
+
+    _calculateColors(data) {
+        let unique = [...new Set(data.map(d => d.label).filter(p => p !== null && p !== ""))]
+        return Object.assign({}, ...unique.map((p, i) => ({ [p]: this.colors[i % this.colors.length] })))
     }
 
     _name(files, defaultName) {
