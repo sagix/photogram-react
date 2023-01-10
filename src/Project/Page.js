@@ -32,7 +32,7 @@ class Page extends Component {
           project.colorDistribution = "indicator"
         }
         this.setState(Object.assign(this.state, { project: project }))
-      }).catch(e => console.log(e))
+      }).catch(e => console.error(e))
   }
 
   back() {
