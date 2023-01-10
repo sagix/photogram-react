@@ -2,6 +2,7 @@ import Application from "./index";
 import Csv from "../FilesParser/Csv";
 import ProjectsDataSource from "./ProjectsDataSource";
 import Uuidv4 from "../FilesParser/uuidv4";
+import Images from "../FilesParser/Images";
 
 describe("Application", () => {
 
@@ -70,7 +71,9 @@ describe("Application", () => {
                 colors: { "label": "#F44336" },
                 template: "small",
             };
-            await expect(Application.createNull().add([csv, png])).resolves.toEqual([expected]);
+            const images = Images.createNull();
+            await expect(Application.createNull({images: images}).add([csv, png])).resolves.toEqual([expected]);
+            await expect(images.has(identifier)).resolves.toEqual(true);
         })
 
         test("fails if no data.csv is present", async () => {
@@ -101,9 +104,11 @@ describe("Application", () => {
 
     describe("delete", () => {
         test("delete one item", async () => {
-            const application = Application.createNull();
+            const images = Images.createNull();
+            const application = Application.createNull({images : images});
             const project = await addProject(application);
             await expect(application.delete(project.key)).resolves.toEqual([]);
+            await expect(images.has(project.key)).resolves.toEqual(false);
         });
 
         test("fails is project not present", async () => {

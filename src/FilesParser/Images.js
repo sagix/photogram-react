@@ -20,11 +20,10 @@ class Images {
             const fileResult = await readAsArrayBuffer(file);
             return this._writeFile(identifier, fileResult);
         }));
-    
     }
 
     async clear(identifier) {
-        const result = await this._caches.delete('image-cache-' + identifier)
+        const result = await this._caches.delete(this._name(identifier))
         if (result) {
             return null;
         } else {
@@ -32,8 +31,16 @@ class Images {
         }
     }
 
+    async has(identifier) {
+        return Promise.resolve(this._caches.has(this._name(identifier)))
+    }
+
+    _name(identifier) {
+        return 'image-cache-' + identifier;
+    }
+
     async _writeFile(identifier, event) {
-        const cache = await this._caches.open('image-cache-' + identifier);
+        const cache = await this._caches.open(this._name(identifier));
         const headers = new Headers()
         headers.append("Content-Type", event.file.type)
         headers.append("Content-Length", event.file.size)
@@ -74,16 +81,19 @@ class StubbedCaches {
     }
 
     open(cacheName) {
-        if (!this.caches[cacheName]) {
+        if (!this.has[cacheName]) {
             this.caches[cacheName] = this.factory(cacheName);
         }
         return Promise.resolve(this.caches[cacheName]);
     }
     delete(cacheName) {
-        if (this.caches[cacheName]) {
+        if (this.has(cacheName)) {
             delete this.caches[cacheName];
             return Promise.resolve(true);
         }
         return Promise.resolve(false)
+    }
+    has(cacheName) {
+        return this.caches[cacheName] !== undefined;
     }
 }

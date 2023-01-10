@@ -22,8 +22,11 @@ class Application {
         return new Application(ProjectsDataSource.create(), Images.create(), Uuidv4.create());
     }
 
-    static createNull({ dataSource } = { dataSource: ProjectsDataSource.createNull() }) {
-        return new Application(dataSource, Images.createNull(), Uuidv4.createNull());
+    static createNull({
+        dataSource = ProjectsDataSource.createNull(),
+        images = Images.createNull()
+    } = {}) {
+        return new Application(dataSource, images, Uuidv4.createNull());
     }
 
     colors = [

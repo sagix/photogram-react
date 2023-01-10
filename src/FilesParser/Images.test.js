@@ -39,7 +39,7 @@ describe("Images", () => {
             await images.execute("id", [createPng()]);
             await expect(images.clear("id")).resolves.toEqual(null);
         });
-        
+
         test("fails if not present", async () => {
             await expect(Images.createNull().clear("id")).rejects.toThrow("Cannot delete the cache: id");
         });
@@ -48,6 +48,18 @@ describe("Images", () => {
             const images = Images.createNull();
             await images.execute("id", []);
             await expect(Images.createNull().clear("id")).rejects.toThrow("Cannot delete the cache: id");
+        });
+    })
+
+    describe("has", () => {
+        test("returns true if present", async () => {
+            const images = Images.createNull();
+            await images.execute("id", [createPng()]);
+            await expect(images.has("id")).resolves.toEqual(true);
+        });
+
+        test("return false if not present", async () => {
+            await expect(Images.createNull().has("id")).resolves.toEqual(false);
         });
     })
 });
