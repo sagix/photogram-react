@@ -39,7 +39,7 @@ export default class ProjectsDataSource {
     async save(project) {
         const projects = await this._projects();
         const pp = projects.find(p => project.key === p.key);
-        if (pp != undefined) {
+        if (pp !== undefined) {
             projects[projects.indexOf(pp)] = project;
         }
         await this._localStorage.setItem('projects', JSON.stringify(projects));
