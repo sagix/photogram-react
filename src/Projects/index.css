@@ -4,8 +4,8 @@
     padding: 0 6.4rem;
 }
 
-.projects-container .new-project {
-    text-align: center;
+.projects-container .import-project {
+    text-align: right;
 }
 
 .projects-empty {

@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import './index.css'
 
-class NewProject extends Component {
+class ImportProject extends Component {
 
     render() {
         return (
-            <form className="new-project">
-                <input type="file" id="new-project-file"
+            <form className="import-project">
+                <input type="file" id="import-project-file"
                     webkitdirectory={true.toString()}
                     directory={true.toString()}
                     multiple={true}
                     onChange={(event) => {
-                        this.props.onNewProject(event.target.files)
+                        this.props.onProject(event.target.files)
                         event.target.form.reset()
                     }} />
-                <label htmlFor="new-project-file" id="new-project-label">New project</label>
+                <label htmlFor="import-project-file" id="import-project-label">Import project</label>
             </form>
         )
     }
 }
 
-export default NewProject;
+export default ImportProject;

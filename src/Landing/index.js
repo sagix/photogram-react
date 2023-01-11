@@ -39,7 +39,7 @@ class Landing extends Component {
         );
     }
 
-    onNewProject(files) {
+    onImportProject(files) {
         ReactGA.event({
             category: 'Project',
             action: 'create'
@@ -70,12 +70,12 @@ class Landing extends Component {
                     : (
                         <div>
                             <ListProject value={this.state.projects}
-                                onDelete={(key) => this.onDeleteProject(key)}
-                                onNewProject={files => this.onNewProject(files)} />
+                                onDeleteProject={(key) => this.onDeleteProject(key)}
+                                onImportProject={files => this.onImportProject(files)} />
                         </div>
                     )
                 }
-                <EmptyProject onNewProject={files => this.onNewProject(files)} />
+                <EmptyProject onImportProject={files => this.onImportProject(files)} />
                 <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max} />
                 <Creators />
             </div>

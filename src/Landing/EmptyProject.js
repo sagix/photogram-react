@@ -34,7 +34,7 @@ class EmptyProject extends Component {
             directory={true.toString()}
             multiple={true}
             onChange={(event) => {
-              this.props.onNewProject(event.target.files)
+              this.props.onImportProject(event.target.files)
               event.target.form.reset()
             }} />
           <label htmlFor="new-project-file">

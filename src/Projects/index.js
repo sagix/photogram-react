@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import './index.css';
 import Header from '../Header';
-import NewProject from '../NewProject';
+import ImportProject from '../ImportProject';
 import QuotaProgress from '../QuotaProgress';
 import Application from '../Application';
 import Card from './Card';
@@ -37,7 +37,7 @@ class ListProject extends Component {
             );
     }
 
-    onNewProject(files) {
+    onImportProject(files) {
         ReactGA.event({
             category: 'Project',
             action: 'create'
@@ -63,13 +63,13 @@ class ListProject extends Component {
         return (
             <div className="projects-container">
                 <Header nav="projects" />
-                <NewProject onNewProject={files => this.onNewProject(files)} />
+                <ImportProject onProject={files => this.onImportProject(files)} />
                 {this.state.projects.length <= 0
                     ? (<img className="projects-empty" src="/illus/undraw_empty_street_sfxm.svg" alt="No project" />)
                     : null
                 }
                 <ul id="grid">{this.state.projects.map((project) => {
-                    return (<Card  key={project.key} project={project} onDeleteProject={key => this.onDeleteProject(key)}/>)
+                    return (<Card key={project.key} project={project} onDeleteProject={key => this.onDeleteProject(key)} />)
                 })}</ul>
                 <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max} />
             </div>
