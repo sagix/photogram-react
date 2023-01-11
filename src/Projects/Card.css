@@ -1,0 +1,47 @@
+.projects-card {
+    position: relative;
+    display: flex;
+    align-content: flex-end;
+    flex-direction: column;
+    width: 24rem;
+    min-width: 12rem;
+    margin: 1.2rem;
+    padding: .8rem;
+    padding-bottom: 0;
+    text-align: center;
+    border: 1px solid silver;
+    background-color: #FFF;
+}
+
+.projects-card:hover {
+    outline: .3rem solid #CCC;
+    cursor: pointer;
+}
+
+.projects-card:hover .btn-delete {
+    opacity: 1;
+}
+
+.projects-card .picture {
+    min-height: 16rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    background-color: #000;
+}
+
+.projects-card .picture img {
+    width: 100%;
+    display: block;
+}
+
+.projects-card span {
+    padding: 1.6rem;
+    display: block;
+    color: #000000BB
+}
+
+.list-project #grid a {
+    text-decoration: none;
+}

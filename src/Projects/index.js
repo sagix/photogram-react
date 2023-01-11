@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import ReactGA from 'react-ga';
 import './index.css';
 import Header from '../Header';
 import NewProject from '../NewProject';
 import QuotaProgress from '../QuotaProgress';
 import Application from '../Application';
+import Card from './Card';
 class ListProject extends Component {
     constructor(props) {
         super(props)
@@ -69,24 +69,7 @@ class ListProject extends Component {
                     : null
                 }
                 <ul id="grid">{this.state.projects.map((project) => {
-                    let src;
-                    if (project.mainPicture) {
-                        src = project.mainPicture;
-                    } else if (project.data[0]) {
-                        src = project.data[0].url;
-                    }
-                    return (
-                        <li key={project.key}>
-                            <Link to={"/project/" + project.key}>
-                                <div className="picture"><img alt="project cover" src={src} /></div>
-                                <span>{project.name}</span>
-                                <button className="btn-delete" onClick={(event) => {
-                                    event.preventDefault();
-                                    this.onDeleteProject(project.key);
-                                }}>&#x2715;</button>
-                            </Link>
-                        </li>
-                    );
+                    return (<Card  key={project.key} project={project} onDeleteProject={key => this.onDeleteProject(key)}/>)
                 })}</ul>
                 <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max} />
             </div>
