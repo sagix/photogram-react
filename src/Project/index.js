@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useHistory } from "react-router-dom";
 import Application from '../Application';
 import Page from './Page'
 
 export default function Project(props) {
-  const application = Application.create();
+  const application = useMemo(() => Application.create(), []);
   const history = useHistory();
 
   return (
