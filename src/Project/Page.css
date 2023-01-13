@@ -40,3 +40,41 @@
     display: none;
   }
 }
+
+.prompt-permission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120px 0;
+  text-align: center;
+}
+
+.prompt-permission-button {
+  display: inline-block;
+  font-weight: bold;
+  cursor: pointer;
+
+  padding: 12px 16px;
+  margin: 6px 8px 6px 8px;
+  min-width: 88px;
+  border-radius: 3px;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  outline: none;
+
+  color: #FFFFFFEE;
+  background-color: #d32f2f;
+  font-size: 16px;
+}
+
+.prompt-permission-img {
+  width: 320px;
+}
+
+.prompt-permission-description {
+  font-size: 1.2em;
+  margin-bottom: 0;
+}

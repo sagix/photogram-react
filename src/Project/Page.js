@@ -96,14 +96,14 @@ class Page extends Component {
           <div className="layout-left">
             {
               this.state.permission
-                ? (<button onClick={async () => {
+                ? (<PromtPermission promptPermission={async () => {
                   try {
                     await this.application.requestPermission(this.props.id);
                     this.loadData();
                   } catch (error) {
                     console.error(error);
                   }
-                }} >Open</button>)
+                }} />)
                 : (<Tiles
                   colorDistribution={this.state.project.colorDistribution}
                   colors={this.state.project.colors}
@@ -130,6 +130,17 @@ class Page extends Component {
       </div>
     )
   }
+}
+
+function PromtPermission(props) {
+  return (
+    <div className='prompt-permission'>
+      <img className='prompt-permission-img' src="/illus/undraw_secure_files_re_6vdh.svg" alt=""/>
+      <p className='prompt-permission-description'>Permission needs to be given again to access to the files.</p>
+      <p className='prompt-permission-reason'>Permission will be asked after each reload</p>
+      <button className='prompt-permission-button' onClick={() => { props.promptPermission() }} >Grant permission</button>
+    </div>
+  );
 }
 
 export default Page;
