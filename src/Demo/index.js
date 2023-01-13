@@ -34,7 +34,7 @@ export default function Project() {
       });
     }
     createApplication().then(app => setApplication(app)).catch(err => console.error(err));
-  });
+  }, []);
 
   async function createDataCsv() {
     let response = await fetch(new URL("demo/data.csv", new URL(window.location.href)));
