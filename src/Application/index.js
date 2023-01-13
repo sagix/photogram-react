@@ -1,6 +1,9 @@
 import Csv from '../FilesParser/Csv';
+import { readAsText } from '../FilesParser/FileReader';
 import Images from '../FilesParser/Images';
 import Uuidv4 from '../FilesParser/uuidv4';
+import IndexedDBProjectsDataSource from './IndexedDBProjectsDataSource';
+import MigrationDataSource from './MigrationDataSource';
 import ProjectsDataSource from './ProjectsDataSource';
 
 const colors = [
@@ -14,7 +17,7 @@ class Application {
 
     /**
      * Create Application
-     * @param {ProjectsDataSource} dataSource 
+     * @param {MigrationDataSource} dataSource 
      * @param {Images} images 
      * @param {Uuidv4} uuidv4 
      */
@@ -26,11 +29,17 @@ class Application {
     }
 
     static create() {
-        return new Application(ProjectsDataSource.create(), Images.create(), Uuidv4.create());
+        return new Application(new MigrationDataSource(
+            IndexedDBProjectsDataSource.create(),
+            ProjectsDataSource.create(),
+        ), Images.create(), Uuidv4.create());
     }
 
     static createNull({
-        dataSource = ProjectsDataSource.createNull(),
+        dataSource = new MigrationDataSource(
+            IndexedDBProjectsDataSource.createNull(),
+            ProjectsDataSource.createNull(),
+        ),
         images = Images.createNull()
     } = {}) {
         return new Application(dataSource, images, Uuidv4.createNull());
@@ -41,7 +50,31 @@ class Application {
     }
 
     async get(id) {
-        return this._dataSource.get(id);
+        return await this._dataSource.get(id);
+    }
+
+    async requestPermission(id) {
+        const dirHandle = (await this._dataSource.dirLink(id));
+        if (dirHandle) {
+            const options = { mode: 'readwrite' };
+            const permission = (await dirHandle.requestPermission(options));
+            if (permission !== 'granted') {
+                throw new Error(`Permission for ${dirHandle.name} was ${permission}`);
+            }
+        } else {
+            throw new Error("No directory is defined");
+        }
+    }
+
+    async needsPermission(id) {
+        const dirHandle = (await this._dataSource.dirLink(id));
+        if (dirHandle) {
+            const options = { mode: 'readwrite' };
+            const permission = (await dirHandle.queryPermission(options));
+            return permission === 'prompt'
+        } else {
+            return false;
+        }
     }
 
     async delete(id) {
@@ -135,6 +168,53 @@ class Application {
             template: "small",
         };
         return await this._dataSource.add(project);
+    }
+
+    /**
+     * Open a directory.
+     * @param {FileSystemDirectoryHandle} dirHandle 
+     * @returns list of projects
+     */
+    async open(dirHandle) {
+        const project = await this._parse(dirHandle);
+        return await this._dataSource.add(project);
+    }
+
+    async _parse(dirHandle) {
+        const fileArray = [];
+        for await (const value of dirHandle.values()) {
+            if (value.kind === "file") {
+                fileArray.push(await value.getFile());
+            }
+        }
+        const jsonData = fileArray.find(file => file.name === "data.json")
+
+        if (jsonData) {
+            const json = (await readAsText(jsonData)).result;
+            const project = JSON.parse(json);
+            project.dirLink = dirHandle;
+            await this._images.execute(project.key, fileArray);
+            return project;
+        } else {
+            const identifier = this._uuidv4.generate();
+
+            const urls = await this._images.execute(identifier, fileArray);
+            const name = dirHandle.name;
+            const data = await this._csv.execute(fileArray);
+
+            const project = {
+                key: identifier,
+                name: name,
+                data: this._mergeDateWithImages(data, urls),
+                colors: Application._calculateColors(data),
+                template: "small",
+                dirLink: dirHandle,
+            };
+            if (project.data.length !== 0) {
+                project.mainPicture = project.data[0].url;
+            }
+            return project;
+        }
     }
 
     _mergeDateWithImages(data, images) {

@@ -29,6 +29,10 @@ export default class ProjectsDataSource {
         return result[0];
     }
 
+    async dirLink() {
+        return undefined;
+    }
+
     async add(project) {
         const projects = await this._projects()
         projects.push(project);

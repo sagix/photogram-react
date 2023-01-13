@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactGA from 'react-ga';
 import Header from '../Header';
 import Creators from './Creators';
@@ -8,79 +8,84 @@ import QuotaProgress from '../QuotaProgress';
 import Application from '../Application';
 import '../styles.css'
 import './index.css';
+import { useHistory } from 'react-router-dom';
 
-class Landing extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            projects: [],
-            quotas: { max: 0, value: 0 }
-        }
-        this.application = Application.create();
-    }
+export default function Landing() {
 
-    componentDidMount() {
-        this._checkQuotas()
-        this.application.list()
-            .then((projects) => this.setState({ projects: projects }))
+    const application = useMemo(() => Application.create(), []);
+    const history = useHistory();
 
-    }
+    const [projects, setProjects] = useState([])
+    const [quotas, setQuotas] = useState({ max: 0, value: 0 });
 
-    _checkQuotas() {
+    useEffect(() => {
+        _checkQuotas()
+        application.list().then((projects) => setProjects(projects))
+    }, [application]);
+
+    function _checkQuotas() {
         navigator.storage.estimate().then(estimate =>
-            this.setState(
-                Object.assign(this.state, {
-                    quotas: {
-                        max: estimate.quota,
-                        value: estimate.usage
-                    }
-                })
-            )
+            setQuotas({
+                max: estimate.quota,
+                value: estimate.usage
+            })
         );
     }
 
-    onImportProject(files) {
+    function onImportProject(files) {
         ReactGA.event({
             category: 'Project',
             action: 'create'
         });
-        this.application.add(files)
-            .then((projects) => this.setState({ projects: projects }))
-            .then(_ => this._checkQuotas())
+        application.add(files)
+            .then((projects) => setProjects(projects))
+            .then(_ => _checkQuotas())
             .catch(error => console.log(error))
     }
 
-    onDeleteProject(key) {
+    function onDeleteProject(key) {
         ReactGA.event({
             category: 'Project',
             action: 'delete'
         });
-        this.application.delete(key)
-            .then((projects) => this.setState({ projects: projects }))
-            .then(_ => this._checkQuotas())
+        application.delete(key)
+            .then((projects) => setProjects(projects))
+            .then(_ => _checkQuotas())
             .catch(error => console.log(error))
     }
 
-    render() {
-        return (
-            <div className="landing-container">
-                <Header />
-                {this.state.projects.length <= 0
-                    ? null
-                    : (
-                        <div>
-                            <ListProject value={this.state.projects}
-                                onDeleteProject={(key) => this.onDeleteProject(key)}
-                                onImportProject={files => this.onImportProject(files)} />
-                        </div>
-                    )
-                }
-                <EmptyProject onImportProject={files => this.onImportProject(files)} />
-                <QuotaProgress value={this.state.quotas.value} max={this.state.quotas.max} />
-                <Creators />
-            </div>
-        )
+    async function onLinkProject(key) {
+        try {
+            console.log(key);
+            console.log("caca");
+            const needsPermission = await application.needsPermission(key);
+            if (needsPermission) {
+                await application.requestPermission(key);
+            }
+            history.push(`/project/${key}`);
+        } catch (error) {
+            console.error(error);
+        }
     }
-}
 
-export default Landing;
+
+    return (
+        <div className="landing-container">
+            <Header />
+            {projects.length <= 0
+                ? null
+                : (
+                    <div>
+                        <ListProject value={projects}
+                            onDeleteProject={(key) => onDeleteProject(key)}
+                            onImportProject={files => onImportProject(files)}
+                            onLinkProject={(key) => onLinkProject(key)} />
+                    </div>
+                )
+            }
+            <EmptyProject onImportProject={files => onImportProject(files)} />
+            <QuotaProgress value={quotas.value} max={quotas.max} />
+            <Creators />
+        </div>
+    )
+}

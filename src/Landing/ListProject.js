@@ -13,7 +13,10 @@ class ListProject extends Component {
                 </div>
                 <div className="list-project-container">
                     <ul id="grid">{this.props.value.map((project) => {
-                        return (<Card key={project.key} project={project} onDeleteProject={key => this.props.onDeleteProject(key)} />);
+                        return (<Card key={project.key}
+                            project={project}
+                            onDeleteProject={key => this.props.onDeleteProject(key)}
+                            onLinkProject={key => this.props.onLinkProject(key)} />);
                     })}</ul>
                 </div>
             </div>

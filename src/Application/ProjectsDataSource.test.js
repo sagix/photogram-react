@@ -72,6 +72,11 @@ describe("ProjectsDataSource", () => {
         });
     });
 
+    test("dirLink", async () => {
+        const source = ProjectsDataSource.createNull();
+        await expect(source.dirLink("key")).resolves.toBeUndefined()
+    })
+
 });
 
 function createProject({ data } = { data: [] }) {

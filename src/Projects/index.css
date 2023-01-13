@@ -4,8 +4,9 @@
     padding: 0 6.4rem;
 }
 
-.projects-container .import-project {
-    text-align: right;
+.action-project {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .projects-empty {

@@ -14,7 +14,8 @@ class Page extends Component {
     this.application = props.application
     this.state = {
       project: {},
-      template: "small"
+      template: "small",
+      permission: false,
     };
   }
 
@@ -22,17 +23,23 @@ class Page extends Component {
     this.loadData()
   }
 
-  loadData() {
-    this.application.get(this.props.id)
-      .then((project) => {
-        if (project.template === undefined) {
-          project.template = "small"
-        }
-        if (project.colorDistribution === undefined) {
-          project.colorDistribution = "indicator"
-        }
-        this.setState(Object.assign(this.state, { project: project }))
-      }).catch(e => console.error(e))
+  async loadData() {
+    if (await this.application.needsPermission(this.props.id)) {
+      this.setState(Object.assign(this.state, { permission: true }))
+    } else {
+      this.application.get(this.props.id)
+        .then((project) => {
+          if (project.template === undefined) {
+            project.template = "small"
+          }
+          if (project.colorDistribution === undefined) {
+            project.colorDistribution = "indicator"
+          }
+          this.setState(Object.assign(this.state, { project: project, permission: false }))
+        }).catch(e => {
+          console.error(e);
+        })
+    }
   }
 
   back() {
@@ -87,13 +94,25 @@ class Page extends Component {
               onBack={() => this.back()} />
           </div>
           <div className="layout-left">
-            <Tiles
-              colorDistribution={this.state.project.colorDistribution}
-              colors={this.state.project.colors}
-              value={this.state.project.data}
-              type={this.state.project.template}
-              fontFamily={this.state.project.fontFamily}
-              onTile={data => this.setState(Object.assign(this.state, { data: data }))} />
+            {
+              this.state.permission
+                ? (<button onClick={async () => {
+                  try {
+                    await this.application.requestPermission(this.props.id);
+                    this.loadData();
+                  } catch (error) {
+                    console.error(error);
+                  }
+                }} >Open</button>)
+                : (<Tiles
+                  colorDistribution={this.state.project.colorDistribution}
+                  colors={this.state.project.colors}
+                  value={this.state.project.data}
+                  type={this.state.project.template}
+                  fontFamily={this.state.project.fontFamily}
+                  onTile={data => this.setState(Object.assign(this.state, { data: data }))} />)
+            }
+
           </div>
           <div className="layout-right">
             <Configuration
