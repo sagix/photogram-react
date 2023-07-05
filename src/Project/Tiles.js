@@ -15,7 +15,7 @@ export default function Tiles(props) {
                 })
             } else {
                 i = Object.assign(image, {
-                    color: undefined,
+                    color: props.defaultColor,
                     colorDistribution: props.colorDistribution
                 })
             }

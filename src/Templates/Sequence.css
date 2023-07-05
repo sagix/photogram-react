@@ -14,6 +14,10 @@
     print-color-adjust: exact;
 }
 
-.sequence-colored {
+.sequence-colored-dark {
+    color: #000000;
+}
+
+.sequence-colored-light {
     color: #FFFFFF;
 }

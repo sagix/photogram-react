@@ -3,9 +3,10 @@ import './Configuration.css'
 import Colors from './Colors'
 import LargeImage from '../Templates/Large'
 import SmallImage from '../Templates/Small'
+import ColorWrapper from './ColorWrapper';
 
 class Configuration extends Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -126,6 +127,19 @@ class Configuration extends Component {
                             } />
                         <label htmlFor="color-distribution">Background color</label>
                     </div>
+                    <table className="labels" >
+                        <tbody>
+                            <tr>
+                                <td><ColorWrapper
+                                    color={this.props.defaultColor || '#FFFFFF'}
+                                    onChangeComplete={(color, event) => {
+                                        this.props.onDefaultColorChange(color.hex)
+                                    }}
+                                /></td>
+                                <td>Default</td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <Colors className="labels"
                         colors={this.props.colors}
                         onColorChange={this.props.onColorChange}

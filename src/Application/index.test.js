@@ -375,6 +375,21 @@ describe("Application", () => {
     });
 
     describe("update", () => {
+        describe("default color", () => {
+            test("update", async () => {
+                const application = Application.createNull();
+                const project = await addProject(application, createCsv());
+
+                await application.updateDefaultColor(project.key, "#000000");
+
+                const actual = await application.get(project.key);
+                expect(actual.defaultColor).toEqual("#000000");
+            });
+
+            test("fails is project not found", async () => {
+                await expect(Application.createNull().updateDefaultColor("id", "#000000")).rejects.toThrow("Could not found project with id=id");
+            });
+        });
         describe("font family", () => {
             test("update", async () => {
                 const application = Application.createNull();
@@ -417,7 +432,7 @@ describe("Application", () => {
                 expect(actual.template).toEqual("large");
             });
             test("fails is project not found", async () => {
-                await expect(Application.createNull().updateColorDistribution("id", null)).rejects.toThrow("Could not found project with id=id");
+                await expect(Application.createNull().updateTemplate("id", "large")).rejects.toThrow("Could not found project with id=id");
             });
         });
 
@@ -434,7 +449,7 @@ describe("Application", () => {
             });
 
             test("fails is project not found", async () => {
-                await expect(Application.createNull().updateColorDistribution("id", null)).rejects.toThrow("Could not found project with id=id");
+                await expect(Application.createNull().updateMainPicture("id", "é")).rejects.toThrow("Could not found project with id=id");
             });
         });
     });

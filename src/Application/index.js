@@ -114,6 +114,12 @@ class Application {
         await this._dataSource.save(project);
     }
 
+    async updateDefaultColor(id, color) {
+        const project = await this.get(id);
+        project.defaultColor = color
+        await this._dataSource.save(project);
+    }
+
     async deleteColor(id, key) {
         const project = await this.get(id);
         project.colors[key] = undefined;

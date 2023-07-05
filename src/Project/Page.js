@@ -106,6 +106,7 @@ class Page extends Component {
                 }} />)
                 : (<Tiles
                   colorDistribution={this.state.project.colorDistribution}
+                  defaultColor={this.state.project.defaultColor}
                   colors={this.state.project.colors}
                   value={this.state.project.data}
                   type={this.state.project.template}
@@ -117,11 +118,13 @@ class Page extends Component {
           </div>
           <div className="layout-right">
             <Configuration
+              defaultColor={this.state.project.defaultColor}
               colors={this.state.project.colors}
               template={this.state.project.template}
               fontFamily={this.state.project.fontFamily}
               printSpaceAround={this.state.project.printSpaceAround}
               onChange={template => this.application.updateTemplate(this.props.id, template).then(() => this.loadData())}
+              onDefaultColorChange={color => this.application.updateDefaultColor(this.props.id, color).then(() => this.loadData())}
               onColorChange={color => this.application.updateColor(this.props.id, color).then(() => this.loadData())}
               onDeleteColor={key => this.application.deleteColor(this.props.id, key).then(() => this.loadData())}
               onColorDistributionChange={distribution => this.application.updateColorDistribution(this.props.id, distribution).then(() => this.loadData())}
@@ -138,7 +141,7 @@ class Page extends Component {
 function PromtPermission(props) {
   return (
     <div className='prompt-permission'>
-      <img className='prompt-permission-img' src="/illus/undraw_secure_files_re_6vdh.svg" alt=""/>
+      <img className='prompt-permission-img' src="/illus/undraw_secure_files_re_6vdh.svg" alt="" />
       <p className='prompt-permission-description'>Permission needs to be given again to access to the files.</p>
       <p className='prompt-permission-reason'>Permission will be asked after each reload</p>
       <button className='prompt-permission-button' onClick={() => { props.promptPermission() }} >Grant permission</button>
