@@ -141,6 +141,12 @@ class Application {
         await this._dataSource.save(project);
     }
 
+    async updatePrintSpaceAround(id, printSpaceAround) {
+        const project = await this.get(id);
+        project.printSpaceAround = printSpaceAround;
+        await this._dataSource.save(project);
+    }
+
     async updateTemplate(id, template) {
         const project = await this.get(id);
         project.template = template;

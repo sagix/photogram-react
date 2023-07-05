@@ -110,6 +110,7 @@ class Page extends Component {
                   value={this.state.project.data}
                   type={this.state.project.template}
                   fontFamily={this.state.project.fontFamily}
+                  printSpaceAround={this.state.project.printSpaceAround}
                   onTile={data => this.setState(Object.assign(this.state, { data: data }))} />)
             }
 
@@ -119,11 +120,13 @@ class Page extends Component {
               colors={this.state.project.colors}
               template={this.state.project.template}
               fontFamily={this.state.project.fontFamily}
+              printSpaceAround={this.state.project.printSpaceAround}
               onChange={template => this.application.updateTemplate(this.props.id, template).then(() => this.loadData())}
               onColorChange={color => this.application.updateColor(this.props.id, color).then(() => this.loadData())}
               onDeleteColor={key => this.application.deleteColor(this.props.id, key).then(() => this.loadData())}
               onColorDistributionChange={distribution => this.application.updateColorDistribution(this.props.id, distribution).then(() => this.loadData())}
               onFontFamilyChange={fontFamily => this.application.updateFontFamily(this.props.id, fontFamily).then(() => this.loadData())}
+              onPrintSpaceAroundChange={printSpaceAround => this.application.updatePrintSpaceAround(this.props.id, printSpaceAround).then(() => this.loadData())}
             />
           </div>
         </div>

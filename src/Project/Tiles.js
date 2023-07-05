@@ -25,7 +25,7 @@ export default function Tiles(props) {
         })
         return (
             // key is set as fontFamily to update all tiles if font changes.
-            <div key={props.fontFamily} className="tiles-container" style={{ fontFamily: props.fontFamily }}>{images}</div>
+            <div key={props.fontFamily} className={ props.printSpaceAround ? "tiles-container print-space-around" : "tiles-container print-no-space"} style={{ fontFamily: props.fontFamily }}>{images}</div>
         )
     } else {
         return null

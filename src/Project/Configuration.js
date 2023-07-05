@@ -5,7 +5,7 @@ import LargeImage from '../Templates/Large'
 import SmallImage from '../Templates/Small'
 
 class Configuration extends Component {
-
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -21,6 +21,11 @@ class Configuration extends Component {
         }
     }
 
+    onPrintSpaceAroundChange = (event) => {
+        event.preventDefault();
+        this.props.onPrintSpaceAroundChange(event.target.checked);
+    }
+
     onFontFamilyChange = (event) => {
         event.preventDefault();
         this.props.onFontFamilyChange(event.target.value);
@@ -29,6 +34,18 @@ class Configuration extends Component {
     render() {
         return (
             <div className="configuration">
+                <section>
+                    <h2>Print options</h2>
+                    <div className="labels" >
+                        <form onSubmit={(event) => { event.preventDefault(); }}>
+                            <input id="print-space-around" type="checkbox" list="font-list"
+                                onChange={this.onPrintSpaceAroundChange}
+                                checked={this.props.printSpaceAround === undefined ? true : this.props.printSpaceAround}
+                            />
+                            <label htmlFor="print-space-around">Space around cards</label>
+                        </form>
+                    </div>
+                </section>
                 <section>
                     <h2>Font</h2>
                     <form onSubmit={(event) => { event.preventDefault(); }}>

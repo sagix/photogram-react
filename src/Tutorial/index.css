@@ -1,5 +1,5 @@
 .tutorial-container {
-  background-image: url("/illus/undraw_editable_dywm.svg"), url("/illus/undraw_detailed_examination_joef.svg");
+  background-image: url("../illus/undraw_editable_dywm.svg"), url("../illus/undraw_detailed_examination_joef.svg");
   background-position: left 1.6rem bottom, right 1.6rem bottom;
   background-size: 25.6rem;
   background-repeat: no-repeat;

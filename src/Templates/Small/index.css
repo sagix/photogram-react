@@ -5,8 +5,11 @@
 }
 
 @media print {
-    .tpl-small.ele {
-        margin: 2.8rem;
+    .print-space-around > .tpl-small.ele {
+        margin: 2.2rem;
+    }
+    .print-no-space > .tpl-small.ele {
+        margin: 0rem;
     }
 }
 

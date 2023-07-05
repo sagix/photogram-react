@@ -15,8 +15,11 @@
 }
 
 @media print {
-    .tpl-large-ele {
-        margin: 2.8rem;
+    .print-space-around > .tpl-large-ele {
+        margin: 2.0rem;
+    }
+    .print-no-space > .tpl-large-ele {
+        margin: 0rem;
     }
 }
 

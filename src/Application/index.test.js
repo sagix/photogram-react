@@ -387,7 +387,22 @@ describe("Application", () => {
             });
 
             test("fails is project not found", async () => {
-                await expect(Application.createNull().updateColorDistribution("id", null)).rejects.toThrow("Could not found project with id=id");
+                await expect(Application.createNull().updateFontFamily("id", "font")).rejects.toThrow("Could not found project with id=id");
+            });
+        });
+        describe("print space around", () => {
+            test("update", async () => {
+                const application = Application.createNull();
+                const project = await addProject(application, createCsv());
+
+                await application.updatePrintSpaceAround(project.key, true);
+
+                const actual = await application.get(project.key);
+                expect(actual.printSpaceAround).toEqual(true);
+            });
+
+            test("fails is project not found", async () => {
+                await expect(Application.createNull().updatePrintSpaceAround("id", true)).rejects.toThrow("Could not found project with id=id");
             });
         });
 

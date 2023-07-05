@@ -4,7 +4,7 @@
   align-content: center;
   padding-bottom: 7.2rem;
 
-  background-image: url("/illus/undraw_web_developer_p3e5.svg"), url("/illus/undraw_videographer_nnc7.svg");
+  background-image: url("../illus/undraw_web_developer_p3e5.svg"), url("../illus/undraw_videographer_nnc7.svg");
   background-position: left 1.6rem center, right 1.6rem center;
   background-size: 19.2rem;
   background-repeat: no-repeat;

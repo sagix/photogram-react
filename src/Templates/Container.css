@@ -1,7 +1,7 @@
 .ele {
     display: inline-block;
     border: 1px solid silver;
-    overflow: auto;
+    overflow: unset;
     background-color: #FFF;
     text-align: left;
     page-break-inside: avoid;
